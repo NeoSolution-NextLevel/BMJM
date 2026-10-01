@@ -1,0 +1,414 @@
+/* ===================================================================
+   bmjm — mobile content layout only
+   No app tab bar / extra chrome. Navigation stays in the mobile app
+   and in the existing website sidebar.
+   =================================================================== */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 900px) {
+  input,
+  select,
+  textarea,
+  button {
+    font-size: 16px;
+    max-width: 100%;
+  }
+
+  /* Layout: content uses full width; existing website sidebar still works */
+  .dashboard2-app,
+  .dashboard3-app,
+  .ud2c-app,
+  .ud2d-app,
+  .ud2e-app,
+  .payment-new-app {
+    grid-template-columns: 1fr !important;
+    grid-template-areas: "topbar" "main" !important;
+    min-height: auto !important;
+  }
+
+  .dashboard2-topbar,
+  .dashboard3-topbar,
+  .ud2c-topbar,
+  .ud2d-topbar,
+  .ud2e-topbar,
+  .payment-new-topbar {
+    padding: 10px 16px !important;
+    min-height: 56px;
+    gap: 10px;
+  }
+
+  .dashboard2-topbar-heading h1,
+  .dashboard3-topbar-heading h1,
+  .ud2c-topbar-heading h1,
+  .ud2d-topbar-heading h1,
+  .ud2e-topbar-heading h1,
+  .payment-new-topbar-heading h1 {
+    font-size: 16px !important;
+    line-height: 1.25;
+  }
+
+  .dashboard2-main,
+  .dashboard3-main,
+  .ud2c-main,
+  .ud2d-main,
+  .ud2e-main,
+  .payment-new-main {
+    padding: 14px 14px 96px !important;
+    min-height: auto !important;
+  }
+
+  /* Profile / stats */
+  .profile-hero {
+    flex-direction: column !important;
+    text-align: center;
+    gap: 14px !important;
+    padding: 22px 18px !important;
+  }
+
+  .hero-name {
+    font-size: 22px !important;
+  }
+
+  .hero-sub {
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    gap: 8px 14px !important;
+    font-size: 12.5px !important;
+  }
+
+  #user_dashboard_01_A .stats-grid,
+  #user_dashboard_02_A .stats-grid,
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    margin-bottom: 16px !important;
+  }
+
+  #user_dashboard_01_A .stat-value {
+    font-size: 22px !important;
+  }
+
+  #user_dashboard_02_A .stat-info .stat-value {
+    font-size: 20px !important;
+  }
+
+  .dash-panel-header,
+  .settings-panel-header,
+  .ledger-card-header {
+    padding: 16px !important;
+  }
+
+  .dash-panel-body {
+    padding: 4px 12px 16px !important;
+  }
+
+  .ledger-card-header h2 {
+    font-size: 16px !important;
+    line-height: 1.3;
+  }
+
+  .settings-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .settings-form-body,
+  .ud2c-panel-body,
+  .ud2d-body,
+  .ud2e-body {
+    padding: 16px !important;
+  }
+
+  .ud2c-options-grid,
+  .payment-new-options,
+  .ud2b-projects-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ud2e-amount-input {
+    width: 100% !important;
+    max-width: 100% !important;
+    font-size: 28px !important;
+  }
+
+  .ud2d-form-row,
+  .ud2e-footer-actions,
+  .ud2d-footer-actions {
+    grid-template-columns: 1fr !important;
+    flex-direction: column;
+    gap: 10px !important;
+  }
+
+  .ud2d-footer-actions a,
+  .ud2d-footer-actions button,
+  .ud2e-footer-actions button,
+  .ud2c-back-btn,
+  .btn-submit {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  /* Payment / dashboard tables become stacked rows */
+  .ledger-table {
+    min-width: 0 !important;
+    border-spacing: 0 !important;
+  }
+
+  .ledger-table thead,
+  #user_dashboard_01_A table thead {
+    display: none;
+  }
+
+  .ledger-table,
+  .ledger-table tbody,
+  #user_dashboard_01_A table,
+  #user_dashboard_01_A table tbody {
+    display: block;
+    width: 100%;
+  }
+
+  .ledger-table tr.ledger-row,
+  #dashboard2-tbody tr {
+    display: block;
+    width: 100%;
+    margin: 0 0 12px;
+    padding: 12px 14px 8px;
+    background: #fff;
+    border: 1px solid #E6E0D0;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(11, 46, 36, 0.05);
+  }
+
+  .ledger-table td,
+  #dashboard2-tbody td {
+    display: flex !important;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100% !important;
+    text-align: right !important;
+    padding: 8px 0 !important;
+    border: 0 !important;
+    white-space: normal !important;
+  }
+
+  .ledger-table td::before,
+  #dashboard2-tbody td::before {
+    content: attr(data-label);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #8B978F;
+    text-align: left;
+    flex: 0 0 92px;
+    max-width: 38%;
+    padding-top: 2px;
+  }
+
+  .ud-ref-block,
+  .ledger-table td > *:not(button),
+  #dashboard2-tbody td > *:not(button) {
+    flex: 1;
+    min-width: 0;
+    text-align: right;
+  }
+
+  .ud-ref-block .ref-code,
+  .ud-ref-block .ref-sub,
+  .dashboard2-ref,
+  .dashboard2-date {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    max-width: none !important;
+  }
+
+  .ud-btn-view-receipt {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .ledger-table-wrap,
+  #user_dashboard_01_A .dash-panel > div {
+    padding: 8px 12px 16px !important;
+    overflow: visible !important;
+  }
+
+  .ledger-toolbar {
+    padding: 14px !important;
+  }
+
+  .search-wrapper {
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+
+  #user_dashboard_02_A .filter-group {
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+  }
+
+  #user_dashboard_02_A .filter-group .btn-filter,
+  #user_dashboard_02_A .filter-group .btn-pay-action {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  #user_dashboard_02_A .date-picker {
+    width: 100%;
+    min-width: 0;
+  }
+
+  #user-summary-receipt-modal-backdrop,
+  #user-payment-receipt-modal-backdrop {
+    padding: 8px !important;
+    align-items: stretch !important;
+  }
+
+  #user-summary-receipt-modal-backdrop > div,
+  #user-payment-receipt-modal-backdrop > div {
+    height: auto !important;
+    max-height: 100% !important;
+    max-width: 100% !important;
+    border-radius: 12px !important;
+    flex: 1;
+  }
+}
+
+/* Login — stacked website card, not an app shell */
+@media (max-width: 760px) {
+  body:has(.login-card) {
+    padding: 16px !important;
+    align-items: flex-start;
+  }
+
+  .login-card {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    border-radius: 18px;
+  }
+
+  .login-brand {
+    padding: 24px 22px 18px !important;
+  }
+
+  .login-brand-logo {
+    width: 84px !important;
+    height: 84px !important;
+    flex: none !important;
+  }
+
+  .login-brand-copy h1 {
+    font-size: 22px !important;
+  }
+
+  .login-form-panel {
+    padding: 24px 20px 28px !important;
+  }
+
+  .login-input,
+  .login-submit,
+  .login-google-btn {
+    height: 48px;
+    font-size: 16px;
+  }
+
+  .login-row-between {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+/* Sign-up — one column, keep card look */
+@media (max-width: 820px) {
+  body:has(.erp-registration-card) {
+    padding: 16px !important;
+    align-items: flex-start;
+  }
+
+  .erp-registration-card {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .erp-registration-card__header {
+    min-height: 0 !important;
+    padding: 24px 22px 18px !important;
+  }
+
+  .erp-registration-card__logo {
+    width: 84px !important;
+    height: 84px !important;
+  }
+
+  .erp-registration-card__title {
+    font-size: 22px !important;
+  }
+
+  .erp-registration-card__body {
+    padding: 22px 18px 28px !important;
+  }
+
+  .erp-form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+  }
+
+  .erp-form__control,
+  .erp-btn {
+    height: 48px;
+    font-size: 16px;
+  }
+}
+
+/* Membership form content */
+@media (max-width: 768px) {
+  .background {
+    padding: 12px !important;
+    align-items: flex-start !important;
+  }
+
+  .form-container {
+    margin: 0 auto !important;
+    margin-top: 0 !important;
+    width: 100%;
+  }
+
+  .form-container:hover {
+    transform: none !important;
+  }
+
+  .form-header h2 {
+    font-size: 1.35rem !important;
+  }
+
+  .member-form {
+    padding: 16px !important;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .cancel-btn,
+  .process-btn {
+    width: 100%;
+  }
+}

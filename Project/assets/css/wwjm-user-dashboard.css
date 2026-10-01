@@ -1,0 +1,311 @@
+/* ===================================================================
+   bmjm member dashboard — shared layout
+   Loaded last so Home / Payments / Settings / wizards share one shell.
+   =================================================================== */
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+  background: #FAF7F0;
+  padding-bottom: 0;
+  color: #1E2B26;
+}
+
+.dashboard2-icon-btn svg,
+.dashboard3-icon-btn svg,
+.ud2c-icon-btn svg,
+.ud2d-icon-btn svg,
+.ud2e-icon-btn svg,
+.payment-new-icon-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+@media (min-width: 901px) {
+  .dashboard2-app,
+  .dashboard3-app,
+  .ud2c-app,
+  .ud2d-app,
+  .ud2e-app,
+  .payment-new-app {
+    grid-template-columns: 248px minmax(0, 1fr) !important;
+    grid-template-rows: 64px 1fr !important;
+  }
+
+  .bmjm-sidebar {
+    width: 248px;
+    padding: 20px 16px 18px;
+  }
+
+  .bmjm-sidebar-brand {
+    padding: 8px 8px 20px 8px;
+    margin-bottom: 16px;
+  }
+
+  .bmjm-sidebar-brand-mark {
+    width: 92px;
+  }
+
+  .dashboard2-topbar,
+  .dashboard3-topbar,
+  .ud2c-topbar,
+  .ud2d-topbar,
+  .ud2e-topbar,
+  .payment-new-topbar {
+    height: 64px;
+    padding: 0 28px !important;
+    box-sizing: border-box;
+  }
+
+  .dashboard2-topbar-heading h1,
+  .dashboard3-topbar-heading h1,
+  .ud2c-topbar-heading h1,
+  .ud2d-topbar-heading h1,
+  .ud2e-topbar-heading h1,
+  .payment-new-topbar-heading h1 {
+    font-family: 'Poppins', Inter, sans-serif !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0;
+  }
+
+  .dashboard2-topbar-heading p,
+  .dashboard3-topbar-heading p,
+  .ud2c-topbar-heading p,
+  .ud2d-topbar-heading p,
+  .ud2e-topbar-heading p,
+  .payment-new-topbar-heading p {
+    font-size: 12px !important;
+    margin-top: 2px !important;
+  }
+
+  .dashboard2-topbar-actions,
+  .dashboard3-topbar-actions,
+  .ud2c-topbar-actions,
+  .ud2d-topbar-actions,
+  .ud2e-topbar-actions,
+  .payment-new-topbar-actions {
+    gap: 10px !important;
+  }
+
+  .dashboard2-icon-btn,
+  .dashboard3-icon-btn,
+  .ud2c-icon-btn,
+  .ud2d-icon-btn,
+  .ud2e-icon-btn,
+  .payment-new-icon-btn {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 10px !important;
+    border: 1px solid #E6E0D0 !important;
+    background: #F2EDE0 !important;
+    color: #123832 !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  .dashboard2-icon-btn:hover,
+  .dashboard3-icon-btn:hover,
+  .ud2c-icon-btn:hover,
+  .ud2d-icon-btn:hover,
+  .ud2e-icon-btn:hover,
+  .payment-new-icon-btn:hover {
+    background: #E4C766 !important;
+    border-color: #C9A227 !important;
+    color: #0B2E24 !important;
+    transform: none !important;
+  }
+
+  .dashboard2-main,
+  .dashboard3-main,
+  .ud2c-main,
+  .ud2d-main,
+  .ud2e-main,
+  .payment-new-main {
+    padding: 28px 32px 36px !important;
+  }
+
+  #user_dashboard_01_A .dashboard2-main > *,
+  #user_dashboard_02_A .dashboard2-main > *,
+  #user_dashboard_03_A .dashboard3-main > * {
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Home */
+  #user_dashboard_01_A .profile-hero {
+    padding: 28px 32px !important;
+    margin-bottom: 24px !important;
+    border-radius: 16px !important;
+    gap: 0 !important;
+  }
+
+  #user_dashboard_01_A .hero-name {
+    font-size: 26px;
+    line-height: 1.25;
+  }
+
+  #user_dashboard_01_A .hero-badge {
+    margin-bottom: 10px;
+  }
+
+  #user_dashboard_01_A .stats-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 20px !important;
+    margin-bottom: 24px !important;
+  }
+
+  #user_dashboard_01_A .stat-card {
+    padding: 22px !important;
+    border-radius: 16px !important;
+    min-height: 148px;
+  }
+
+  #user_dashboard_01_A .stat-icon {
+    margin-bottom: 14px;
+  }
+
+  #user_dashboard_01_A .stat-value {
+    font-size: 26px !important;
+  }
+
+  #user_dashboard_01_A .dashboard-content-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  #user_dashboard_01_A .dash-panel {
+    border-radius: 16px;
+  }
+
+  #user_dashboard_01_A .dash-panel-header {
+    padding: 18px 24px;
+  }
+
+  #user_dashboard_01_A .dash-panel-header h2 {
+    font-size: 16px;
+  }
+
+  #user_dashboard_01_A .dash-panel-body {
+    padding: 8px 24px 20px;
+    overflow-x: auto;
+  }
+
+  #user_dashboard_01_A .dash-panel-body table {
+    margin-top: 0;
+  }
+
+  #user_dashboard_01_A .dash-panel-body th,
+  #user_dashboard_01_A .dash-panel-body td {
+    padding: 12px 10px;
+  }
+
+  #user_dashboard_01_A .status-approved {
+    background: #DCFCE7;
+    color: #15803D;
+    border: 1px solid #86EFAC;
+  }
+
+  /* Payments */
+  #user_dashboard_02_A .stats-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 20px !important;
+    margin-bottom: 24px !important;
+  }
+
+  #user_dashboard_02_A .stat-card {
+    padding: 20px 22px !important;
+    border-radius: 16px !important;
+    min-height: 108px;
+  }
+
+  #user_dashboard_02_A .stat-info .stat-value {
+    font-size: 22px !important;
+    font-family: Inter, sans-serif;
+  }
+
+  #user_dashboard_02_A .ledger-card {
+    border-radius: 16px;
+    border-color: #E6E0D0;
+  }
+
+  #user_dashboard_02_A .ledger-card-header {
+    padding: 20px 24px;
+    align-items: center;
+  }
+
+  #user_dashboard_02_A .ledger-card-header h2 {
+    font-size: 18px;
+  }
+
+  #user_dashboard_02_A .ledger-toolbar {
+    padding: 16px 24px;
+    gap: 12px;
+  }
+
+  #user_dashboard_02_A .ledger-table-wrap {
+    padding: 4px 24px 20px;
+  }
+
+  #user_dashboard_02_A .amount-display {
+    font-family: Inter, sans-serif;
+  }
+
+  #user_dashboard_02_A .site-footer {
+    padding-top: 20px;
+  }
+
+  /* Settings */
+  #user_dashboard_03_A .settings-grid {
+    gap: 24px;
+  }
+
+  #user_dashboard_03_A .settings-panel {
+    border-radius: 16px;
+  }
+
+  #user_dashboard_03_A .settings-panel-header {
+    padding: 18px 24px;
+  }
+
+  #user_dashboard_03_A .settings-panel-header h2 {
+    font-size: 16px;
+  }
+
+  #user_dashboard_03_A .settings-form-body {
+    padding: 24px;
+  }
+
+  /* Payment wizards */
+  .ud2c-main,
+  .ud2d-main,
+  .ud2e-main,
+  .payment-new-main {
+    align-items: flex-start !important;
+  }
+
+  .ud2c-panel,
+  .ud2d-panel,
+  .ud2e-panel,
+  .payment-new-panel {
+    border-radius: 16px;
+  }
+
+  .ud2c-panel-header,
+  .ud2d-panel-header,
+  .ud2e-panel-header,
+  .payment-new-panel-header {
+    padding: 20px 24px;
+  }
+
+  .ud2c-panel-body,
+  .ud2d-body,
+  .ud2e-body {
+    padding: 28px 24px;
+  }
+
+  .payment-new-options {
+    padding: 28px 24px 32px;
+  }
+}
