@@ -1,14 +1,13 @@
 <?php 
 $pth = "../";
 $active_page = "dashboard2";
-$page_title = "Payment History · bmjm Member";
+$page_title = "Payment History · Bmjm Member";
 
 if (!isset($BMJM_FEATURE_DONATION) || !isset($BMJM_FEATURE_COLLECTION)) {
-    include_once '../../../imports/feature_flags/feature_flags.php';
-}
-// include '../UxUI-Back/Includes/header.php';  
+        include_once '../imports/feature_flags/feature_flags.php';
+    }
+bmjm_feature_flags_js(); 
 ?>
-<?php bmjm_feature_flags_js(); ?>
 <style>
   /* ===================================================================
      bmjm Admin — Design tokens (shared values, same as member-list.php)

@@ -6,8 +6,16 @@ $pre_amount = isset($_GET['pre_amount']) ? floatval($_GET['pre_amount']) : 0;
 include_once '../../imports/security/key_list.php';
 include_once '../../imports/security/encrypt_decrypt.php';
 include_once '../../imports/need/DB.php';
+include_once '../../imports/feature_flags/feature_flags.php';
 include_once '../../Controller/IPG_Send_By_URL/IPG_Send_By_URL_Sec_id_SINGLE_DATA.php';
 include_once '../../Controller/projects/wwjm_projects_collection_list/wwjm_projects_collection_list_SINGLE_DATA.php';
+
+// Guard: if Collection Payment is disabled, block public access to project pay forms.
+if (!$BMJM_FEATURE_COLLECTION) {
+    http_response_code(403);
+    echo '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Unavailable</title></head><body style="font-family:sans-serif;text-align:center;padding:60px;"><h2>Feature Temporarily Unavailable</h2><p>Collection Payment is currently not available. Please check back later.</p></body></html>';
+    exit;
+}
 
 $Advance_Security_Key_List_obj = new Advance_Security_Key_List();
 $Advance_Security_obj = new Advance_Security();

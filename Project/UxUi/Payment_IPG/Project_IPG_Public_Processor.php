@@ -6,6 +6,12 @@ include_once __DIR__ . '/../../Controller/IPG_Send_By_URL/IPG_Send_By_URL_ADD_UP
 include_once __DIR__ . '/../../Controller/bmjm_member_list_has_IPG_Send_By_URL/bmjm_member_list_has_IPG_Send_By_URL_ADD_UPDATE.php';
 include_once __DIR__ . '/../../imports/security/key_list.php';
 include_once __DIR__ . '/../../imports/security/encrypt_decrypt.php';
+include_once __DIR__ . '/../../imports/feature_flags/feature_flags.php';
+
+// Backend guard: reject all project IPG payment processing when feature is disabled.
+if (!$BMJM_FEATURE_COLLECTION) {
+    bmjm_feature_guard(false, 'Collection Payment');
+}
 
 $project_id = isset($_POST['project_id']) ? $_POST['project_id'] : '';
 $project_name = isset($_POST['project_name']) ? $_POST['project_name'] : 'Unknown Project';
@@ -27,7 +33,7 @@ if ($is_member === '1') {
         exit;
     }
     $db = new DataBase();
-    $q = "SELECT id FROM bmjm_member_list WHERE membership_no = '".$db->real_escape_string($member_no)."' AND ast=1";
+    $q = "SELECT id FROM wwjm_member_list WHERE membership_no = '".$db->real_escape_string($member_no)."' AND ast=1";
     $r = $db->get_result($q);
     if ($r && $row = $r->fetch_assoc()) {
          $actual_member_id = $row['id'];
