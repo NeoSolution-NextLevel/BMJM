@@ -144,6 +144,9 @@ if (!defined('BMJM_FEATURE_FLAGS_LOADED')) {
     <li class="bmjm-sidebar-nav-item" data-page="notifications" onclick="if(typeof Main_Dashboard_06_A_OPEN === 'function'){ Main_Dashboard_06_A_OPEN(); }">
       <a href="javascript:void(0);"><svg class="bmjm-sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 10a6 6 0 1 1 12 0c0 4 1.5 5.5 1.5 5.5H4.5S6 14 6 10Z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>Notifications</a>
     </li>
+    <li class="bmjm-sidebar-nav-item" data-page="financial-report" onclick="if(typeof Main_Dashboard_07_A_OPEN === 'function'){ Main_Dashboard_07_A_OPEN(); }">
+      <a href="javascript:void(0);"><svg class="bmjm-sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="18" y="3" width="4" height="18"/><rect x="10" y="8" width="4" height="13"/><rect x="2" y="13" width="4" height="8"/></svg>Financial Report</a>
+    </li>
     <li class="bmjm-sidebar-nav-item" data-page="settings" onclick="if(typeof main_dashboard_05_01_OPEN === 'function'){ main_dashboard_05_01_OPEN(); }">
       <a href="javascript:void(0);"><svg class="bmjm-sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="2.6"/><path d="M19.4 13.4a7.6 7.6 0 0 0 0-2.8l2-1.5-2-3.4-2.3.9a7.5 7.5 0 0 0-2.4-1.4L14.3 3h-4l-.4 2.2a7.5 7.5 0 0 0-2.4 1.4l-2.3-.9-2 3.4 2 1.5a7.6 7.6 0 0 0 0 2.8l-2 1.5 2 3.4 2.3-.9c.7.6 1.5 1.1 2.4 1.4L10.3 21h4l.4-2.2c.9-.3 1.7-.8 2.4-1.4l2.3.9 2-3.4-2-1.5Z"/></svg>Settings</a>
     </li>

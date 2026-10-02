@@ -33,7 +33,8 @@
         "Main_Dashboard_05_03_A",
         "Main_Dashboard_05_03_B",
         "Main_Dashboard_05_04_A",
-        "Main_Dashboard_06_A"
+        "Main_Dashboard_06_A",
+        "Main_Dashboard_07_A"
     ];
 
     function main_dashboard_storage_key() {
@@ -82,7 +83,8 @@
             'Main_Dashboard_05_03_A': main_dashboard_05_03_A_OPEN,
             'Main_Dashboard_05_03_B': main_dashboard_05_03_B_OPEN,
             'Main_Dashboard_05_04_A': main_dashboard_05_04_A_OPEN,
-            'Main_Dashboard_06_A': Main_Dashboard_06_A_OPEN
+            'Main_Dashboard_06_A': Main_Dashboard_06_A_OPEN,
+            'Main_Dashboard_07_A': Main_Dashboard_07_A_OPEN
         };
         (pages[state.pageId] || main_dashboard_00_OPEN)();
     }
@@ -369,7 +371,14 @@
         }
     }
 
-     
+    function Main_Dashboard_07_A_OPEN() {
+        main_dashboard_close_all();
+        mainDashboardSetDisplay("Main_Dashboard_07_A", "");
+        mainDashboardSetHeader("Main_Dashboard_07_A", "Financial Report", "Income & Expense Analysis");
+        setSidebarActive('financial-report');
+    }
+
+    
 
 
     

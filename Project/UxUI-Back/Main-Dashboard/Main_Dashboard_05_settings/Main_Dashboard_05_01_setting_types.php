@@ -281,7 +281,7 @@ include '../UxUI-Back/Includes/header.php';
         </a>
 
         <!-- Node 4 -->
-        <a class="settings-card" onclick="main_dashboard_05_04_A_OPEN()">
+        <!-- <a class="settings-card" onclick="main_dashboard_05_04_A_OPEN()">
             <div class="settings-card-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
             </div>
@@ -289,7 +289,7 @@ include '../UxUI-Back/Includes/header.php';
                 <h3>Income / Expense Taxonomy <svg class="settings-card-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></h3>
                 <p>Classify and categorize raw transaction variables globally.</p>
             </div>
-        </a>
+        </a> -->
 
         <!-- Node 5 -->
         <!-- <a class="settings-card" href="settings-add-old-members.php">

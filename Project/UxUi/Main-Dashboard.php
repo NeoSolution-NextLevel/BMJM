@@ -171,6 +171,9 @@ include_once '../Controller/Main/Cook_Managment/Cook_Managing.php';
 
             include_once '../UxUI-Back/Main-Dashboard/Main_Dashboard_06_notifications/Main_Dashboard_06_A_notifications.php';
             
+            include_once '../UxUI-Back/Main-Dashboard/Main_Dashboard_07_financial_report/Main_Dashboard_07_A_financial_report.php';
+            include_once '../UxUI-Back/Main-Dashboard/Main_Dashboard_07_financial_report/JS/Main_Dashboard_07_A_JS.php';
+            
             ?>
 
         <?php 
