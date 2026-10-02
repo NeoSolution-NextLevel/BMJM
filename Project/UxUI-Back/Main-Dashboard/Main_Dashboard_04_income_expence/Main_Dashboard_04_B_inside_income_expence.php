@@ -1,7 +1,7 @@
 <?php 
     $pth = "../"; 
     $active_page = "income-tracker"; 
-    $page_title = "Inside Income Overview · bmjm Admin";
+    $page_title = "Inside Income Overview · BMJM Admin";
     $type_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 include '../UxUI-Back/Includes/header.php'; 
@@ -28,7 +28,7 @@ include '../UxUI-Back/Includes/header.php';
   .income-inside-icon-btn { width:36px;height:36px;border-radius:50%; display:flex;align-items:center;justify-content:center; background:var(--projc-cream-100);color:var(--projc-green-800); border:none;cursor:pointer;transition:all .3s ease; margin-left:12px; }
   .income-inside-icon-btn:hover { background:var(--projc-gold-300); transform:translateY(-2px); color: var(--projc-green-950); }
   
-  .income-inside-main { grid-area:main; padding:30px 40px; display: flex; flex-direction: column; animation: fadeSlideUp 0.6s var(--projc-cubic) forwards; }
+  .income-inside-main { grid-area:main; min-width:0; padding:30px 40px; display: flex; flex-direction: column; animation: fadeSlideUp 0.6s var(--projc-cubic) forwards; }
   @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   
   .income-inside-breadcrumb { font-size:13px;color:var(--projc-ink-400);margin-bottom:24px; display: flex; gap: 8px; align-items: center; }
@@ -36,10 +36,11 @@ include '../UxUI-Back/Includes/header.php';
   .income-inside-breadcrumb a:hover { color:var(--projc-green-700); }
   .income-inside-breadcrumb span { color:var(--projc-green-700);font-weight:600; background: rgba(27, 75, 65, 0.08); padding: 4px 10px; border-radius: 12px; }
 
-  .income-inside-panel { flex: 1; background: var(--projc-white); border-radius: var(--projc-radius-lg); box-shadow: var(--projc-shadow); overflow: hidden; border: 1px solid var(--projc-border); display: flex; flex-direction: column; }
-  .income-inside-panel-header { background: linear-gradient(135deg, var(--projc-green-800), var(--projc-green-950)); color: var(--projc-cream-50); padding: 30px 34px; display: flex; align-items: center; justify-content: space-between; position: relative; overflow: hidden; }
+  .income-inside-panel { flex:1 0 auto; min-width:0; background: var(--projc-white); border-radius: var(--projc-radius-lg); box-shadow: var(--projc-shadow); overflow: hidden; border: 1px solid var(--projc-border); display: flex; flex-direction: column; }
+  .income-inside-panel-header { background: linear-gradient(135deg, var(--projc-green-800), var(--projc-green-950)); color: var(--projc-cream-50); padding: 16px 30px; display: flex; align-items: center; justify-content: space-between; position: relative; overflow: hidden; }
   .income-inside-panel-header::before { content: ''; position: absolute; left: -20px; top: -50px; width: 250px; height: 250px; border-radius: 50%; background: var(--projc-gold-500); filter: blur(50px); opacity: 0.15; pointer-events: none; }
   .income-inside-panel-title { display:flex;align-items:center;gap:14px; font-family:'Poppins',sans-serif; font-size:22px;font-weight:600; position: relative; z-index: 2; }
+  .income-inside-panel-title svg { width:80px;height:80px;flex:none; }
   .income-inside-panel-close { width:36px;height:36px;border-radius:50%; border:1px solid rgba(250,247,240,0.25); background:transparent;color:var(--projc-cream-50); display:flex;align-items:center;justify-content:center; text-decoration:none; position: relative; z-index: 2; cursor:pointer;transition:all .3s ease; }
   .income-inside-panel-close:hover { background: rgba(250,247,240,0.15); transform: rotate(90deg); }
 
@@ -58,8 +59,8 @@ include '../UxUI-Back/Includes/header.php';
   .income-inside-totals { font-size:14px; font-weight:700; color:var(--projc-ink-600); display:flex; gap:10px; align-items:center; }
   .income-inside-totals-val { font-size:22px; color:var(--projc-green-950); font-weight:800; font-variant-numeric:tabular-nums; }
 
-  .list-content-area { padding: 34px; flex: 1; display: flex; flex-direction: column; min-height: 350px; }
-  .premium-table-wrap { width: 100%; border-collapse: separate; border-spacing: 0; box-shadow: 0 4px 16px rgba(11,46,36,0.03); border-radius: 12px; background: var(--projc-white); overflow: hidden; border: 1px solid var(--projc-border); }
+  .list-content-area { padding: 34px; flex:1 0 auto; min-width:0; display: flex; flex-direction: column; min-height: 350px; }
+  .premium-table-wrap { flex:0 0 auto; width: 100%; max-width:100%; min-width:0; border-collapse: separate; border-spacing: 0; box-shadow: 0 4px 16px rgba(11,46,36,0.03); border-radius: 12px; background: var(--projc-white); overflow-x: auto; overflow-y: hidden; border: 1px solid var(--projc-border); }
   .premium-table { width: 100%; border-collapse: collapse; text-align: left; }
   .premium-table thead th { background: rgba(250, 247, 240, 0.6); color: var(--projc-ink-600); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 16px 24px; border-bottom: 1px solid var(--projc-cream-100); }
   .premium-table tbody td { padding: 18px 24px; font-size: 14px; font-weight: 500; color: var(--projc-ink-900); border-bottom: 1px solid var(--projc-cream-100); }
@@ -68,7 +69,33 @@ include '../UxUI-Back/Includes/header.php';
   .td-bold-price { font-weight: 700 !important; color: var(--projc-green-800) !important; font-variant-numeric: tabular-nums; }
   .empty-state { text-align:center; padding: 60px; color: var(--projc-ink-400); font-weight: 600; }
   
-  @media (max-width: 900px) { .income-inside-app{grid-template-columns:1fr;grid-template-areas:"topbar" "main";} .income-inside-main { padding: 20px; } .income-inside-toolbar { flex-direction:column; align-items:stretch;} .income-inside-searchbox { max-width:none;} .premium-table-wrap { overflow-x: auto; white-space: nowrap; } }
+  @media (max-width: 900px) {
+    .income-inside-app{grid-template-columns:minmax(0,1fr);grid-template-areas:"topbar" "main";}
+    .income-inside-main { padding:20px; }
+    .income-inside-toolbar { flex-direction:column; align-items:stretch; }
+    .income-inside-searchbox { max-width:none; width:100%; }
+    .income-inside-datebox { width:100%; flex-wrap:wrap; }
+    .income-inside-date-input { min-width:0; flex:1 1 120px; }
+    .income-inside-totals { flex-wrap:wrap; }
+    .premium-table-wrap { white-space:nowrap; }
+  }
+  @media (max-width: 600px) {
+    .income-inside-topbar { padding:0 16px; }
+    .income-inside-main { padding:16px 12px; }
+    .income-inside-breadcrumb { flex-wrap:wrap; margin-bottom:16px; }
+    .income-inside-panel-header { padding:20px 18px; }
+    .income-inside-panel-title { gap:10px; font-size:18px; }
+    .income-inside-panel-title svg { width:34px; height:34px; flex:none; }
+    .income-inside-toolbar { padding:16px; gap:12px; }
+    .income-inside-datebox { gap:8px; }
+    .income-inside-date-input { flex-basis:110px; }
+    .income-inside-filter-btn { flex:1 0 100%; }
+    .income-inside-totals { justify-content:space-between; }
+    .income-inside-totals-val { font-size:19px; }
+    .list-content-area { min-height:0; padding:16px; }
+    .premium-table { min-width:640px; }
+    .premium-table thead th, .premium-table tbody td { padding:14px 16px; }
+  }
 </style>
 
 <div data-page="project" id="Main_Dashboard_04_B">

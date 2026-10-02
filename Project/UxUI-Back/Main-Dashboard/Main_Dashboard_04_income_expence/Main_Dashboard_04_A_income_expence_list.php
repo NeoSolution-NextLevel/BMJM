@@ -1,13 +1,13 @@
 <?php 
     $pth = "../"; 
     $active_page = "income-tracker"; // Sidebar tracker
-    $page_title = "Income Control System · bmjm Admin";
+    $page_title = "Income Control System · BMJM Admin";
 include '../UxUI-Back/Includes/header.php'; 
 ?>
 
 <style>
   /* ===================================================================
-     bmjm Admin — Design tokens (Income Overview Grid - Premium UX)
+     WWJM Admin — Design tokens (Income Overview Grid - Premium UX)
      =================================================================== */
   :root{
     --projc-green-950:#0B2E24;
@@ -178,6 +178,10 @@ include '../UxUI-Back/Includes/header.php';
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 24px; padding: 34px;
       background: var(--projc-white);
+      max-height: max(220px, calc(100vh - 430px));
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      align-content: start;
   }
 
   /* Search Toolbar Component */

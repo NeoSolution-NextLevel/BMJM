@@ -68,7 +68,7 @@
             categoryTotal += amount;
             
             htmlContent += `
-            <tr style="animation: fadeSlideUp 0.4s ease forwards; opacity: 0; transform: translateY(10px); animation-delay: ${(idx * 0.03).toFixed(2)}s;">
+            <tr>
                 <td style="color:var(--projc-ink-400);">#${item.id}</td>
                 <td style="font-weight:600;">${item.date}</td>
                 <td>${item.description || '-'}</td>
