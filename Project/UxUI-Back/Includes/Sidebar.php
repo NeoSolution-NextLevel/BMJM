@@ -101,6 +101,13 @@
   }
 </style>
 
+<?php
+// Ensure feature flags are loaded when sidebar is included standalone.
+if (!defined('BMJM_FEATURE_FLAGS_LOADED')) {
+    include_once __DIR__ . '/../../imports/feature_flags/feature_flags.php';
+}
+?>
+
 <aside class="bmjm-sidebar">
   <a href="dashboard.php" class="bmjm-sidebar-brand">
     <div class="bmjm-sidebar-brand-mark" aria-hidden="true">
@@ -125,12 +132,14 @@
       <a href="javascript:void(0);"><svg class="bmjm-sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="1.8"/><path d="M3 10h18"/></svg>Payment</a>
     </li>    
 
+    <?php if ($BMJM_FEATURE_COLLECTION): ?>
     <li class="bmjm-sidebar-nav-item" data-page="project" onclick="if(typeof Main_Dashboard_03_B_OPEN === 'function'){ Main_Dashboard_03_B_OPEN(); }">
       <a href="javascript:void(0);"><svg class="bmjm-sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="4" width="17" height="16" rx="1.6"/><path d="M8 2.5v3M16 2.5v3M3.5 9.5h17"/></svg>Project</a>
     </li>
+    <?php endif; ?>
     
     <li class="bmjm-sidebar-nav-item" data-page="accounts" onclick="if(typeof Main_Dashboard_04_A_OPEN === 'function'){ Main_Dashboard_04_A_OPEN(); }">
-      <a href="javascript:void(0);"><svg class="bmjm-sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>Income & Expense</a>
+      <a href="javascript:void(0);"><svg class="bmjm-sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>Income &amp; Expense</a>
     </li>
     <li class="bmjm-sidebar-nav-item" data-page="notifications" onclick="if(typeof Main_Dashboard_06_A_OPEN === 'function'){ Main_Dashboard_06_A_OPEN(); }">
       <a href="javascript:void(0);"><svg class="bmjm-sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 10a6 6 0 1 1 12 0c0 4 1.5 5.5 1.5 5.5H4.5S6 14 6 10Z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>Notifications</a>
@@ -162,3 +171,4 @@
     });
   })();
 </script>
+

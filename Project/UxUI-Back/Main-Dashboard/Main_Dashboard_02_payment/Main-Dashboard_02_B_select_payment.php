@@ -2,8 +2,13 @@
     $pth = "../"; 
     $active_page = "payment-new"; // Tells the sidebar to highlight this tab
     $page_title = "Create Payment · bmjm Admin";
-include '../UxUI-Back/Includes/header.php';  
+    if (!isset($BMJM_FEATURE_DONATION) || !isset($BMJM_FEATURE_COLLECTION)) {
+        include_once '../imports/feature_flags/feature_flags.php';
+    }
+include '../UxUI-Back/Includes/header.php';
+bmjm_feature_flags_js();
 ?>
+
 
 <style>
   /* ===================================================================
@@ -269,6 +274,7 @@ include '../UxUI-Back/Includes/header.php';
           <span class="payment-new-option-title">Zakath</span>
         </a>
 
+        <?php if ($BMJM_FEATURE_DONATION): ?>
         <a class="payment-new-option" onclick="selectPaymentReason('Donation')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <rect x="3" y="8" width="18" height="4" rx="1"/>
@@ -278,7 +284,9 @@ include '../UxUI-Back/Includes/header.php';
           </svg>
           <span class="payment-new-option-title">Donation</span>
         </a>
+        <?php endif; ?>
 
+        <?php if ($BMJM_FEATURE_COLLECTION): ?>
         <a class="payment-new-option" onclick="main_dashboard_02_C2_OPEN()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path d="M2 7l10 5 10-5-10-5Z"/>
@@ -287,6 +295,7 @@ include '../UxUI-Back/Includes/header.php';
           </svg>
           <span class="payment-new-option-title">Projects</span>
         </a>
+        <?php endif; ?>
 
         <a class="payment-new-option payment-new-option-back" onclick="main_dashboard_02_A_OPEN()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

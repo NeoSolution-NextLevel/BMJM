@@ -7,8 +7,6 @@ include_once '../Controller/Main/Cook_Managment/Cook_Managing.php';
 
 
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 

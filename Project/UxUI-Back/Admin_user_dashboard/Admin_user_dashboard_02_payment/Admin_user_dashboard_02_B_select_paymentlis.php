@@ -2,8 +2,13 @@
     $pth = "../"; 
     $active_page = "payment-new"; // Tells the sidebar to highlight this tab
     $page_title = "Create Payment · bmjm Admin";
-include '../UxUI-Back/Includes/header.php';  
+    if (!isset($BMJM_FEATURE_DONATION) || !isset($BMJM_FEATURE_COLLECTION)) {
+        include_once '../imports/feature_flags/feature_flags.php';
+    }
+include '../UxUI-Back/Includes/header.php';
+bmjm_feature_flags_js();
 ?>
+
 
 <style>
   /* ===================================================================
@@ -196,10 +201,15 @@ include '../UxUI-Back/Includes/header.php';
         <input type="hidden" id="DashBord_Payment_body_paying_type_default" value="subcription">
         <a class="payment-new-option" onclick="selectPaymentReason('subcription')">Subscription</a>
         <a class="payment-new-option" onclick="selectPaymentReason('Zakath')">Zakatha</a>
+        <?php if ($BMJM_FEATURE_DONATION): ?>
         <a class="payment-new-option" onclick="selectPaymentReason('Donation')">Donation</a>
+        <?php endif; ?>
+        <?php if ($BMJM_FEATURE_COLLECTION): ?>
         <a class="payment-new-option" onclick="selectPaymentReason('Projects')">Projects</a>
+        <?php endif; ?>
         <a class="payment-new-option payment-new-option-back" onclick="Admin_user_dashboard_02_A_OPEN()">Back</a>
       </div>
+
 
     </section>
   </main>
