@@ -2,12 +2,20 @@
 include_once '../imports/need/session_setup.php';
 include_once '../imports/need/DB.php';
 include_once '../Controller/Main/Cook_Managment/Cook_Managing.php';
+include_once '../imports/feature_flags/feature_flags.php';
+
+// Guard (entire Collection Dashboard is inaccessible while the feature is disabled.)
+if (!$BMJM_FEATURE_COLLECTION) {
+    http_response_code(403);
+    echo '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Unavailable</title></head>'
+       . '<body style="font-family:sans-serif;text-align:center;padding:80px;">'
+       . '<h2>Collection Payment - Temporarily Unavailable!</h2>'
+       . '<p>This feature is currently disabled by the administrator.</p>'
+       . '</body></html>';
+    exit;
+}
 
 ?>
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
