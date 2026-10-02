@@ -2,11 +2,11 @@
 class notification_template_bank_deposit_cancel_aprrove_user
 {
   private $form_url = "https://www.wbmjm.lk/UxUi/Verification-Process/bank_deposit_varification_manager.php";
-  public function __construct($encrypt_bmjm_payment_slip_id)
+  public function __construct($encrypt_wwjm_payment_slip_id)
   {
     $company_obj = new Company_Info_Variable_List();
 
-    $this->form_url = $company_obj->get_app_URL() . "/UxUi/Verification-Process/bank_deposit_varification_receipt_user.php?id=" . $encrypt_bmjm_payment_slip_id;
+    $this->form_url = $company_obj->get_app_URL() . "/UxUi/Verification-Process/bank_deposit_varification_receipt_user.php?id=" . $encrypt_wwjm_payment_slip_id;
   }
 
 

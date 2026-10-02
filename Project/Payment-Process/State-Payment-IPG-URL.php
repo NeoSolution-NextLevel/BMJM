@@ -35,7 +35,7 @@ if (isset($input['transaction_id'])) {
 
         if ($input['status'] == "1") {
             $update_obj->set_transaction_payment_success();
-            // TODO: If you want to deduct from the member balance directly, query the bmjm_member_list using bmjm_member_list_has_IPG_Send_By_URL mapping here!
+            // TODO: If you want to deduct from the member balance directly, query the wwjm_member_list using bmjm_member_list_has_IPG_Send_By_URL mapping here!
         } else if ($input['status'] == "0") {
             $update_obj->set_transaction_payment_fail();
         }

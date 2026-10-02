@@ -3,7 +3,7 @@ class notification_template_payment_slip
 {
 
   private $form_url = "https://www.bmjm.lk/UxUi/User_dashboard_02_F_view_receipt.php";
-  public function __construct($encrypt_bmjm_payment_slip_id)
+  public function __construct($encrypt_wwjm_payment_slip_id)
   {
     $company_obj = new Company_Info_Variable_List();
     $base_url = trim((string) $company_obj->get_app_URL());
@@ -14,7 +14,7 @@ class notification_template_payment_slip
       $host = isset($_SERVER['HTTP_HOST']) ? preg_replace('/[^A-Za-z0-9.:-]/', '', $_SERVER['HTTP_HOST']) : 'www.bmjm.lk';
       $base_url = $scheme . '://' . $host;
     }
-    $this->form_url = rtrim($base_url, '/') . "/UxUi/User_dashboard_02_F_view_receipt.php?id=" . urlencode($encrypt_bmjm_payment_slip_id);
+    $this->form_url = rtrim($base_url, '/') . "/UxUi/User_dashboard_02_F_view_receipt.php?id=" . urlencode($encrypt_wwjm_payment_slip_id);
   }
 
 

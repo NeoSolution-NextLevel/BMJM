@@ -34,7 +34,7 @@ class notification_template_bank_deposit
         
         <!-- Header -->
         <div style='background: linear-gradient(135deg, #123832, #0B2E24); padding: 24px 30px; color: #ffffff;'>
-          <h2 style='margin: 0; font-size: 20px; font-weight: bold;'>bmjm Finance Admin Notification</h2>
+          <h2 style='margin: 0; font-size: 20px; font-weight: bold;'>Bmjm Finance Admin Notification</h2>
           <p style='margin: 4px 0 0; font-size: 13px; opacity: 0.85;'>Bank Deposit Review Required</p>
         </div>
 
@@ -115,12 +115,12 @@ class notification_template_bank_deposit
 
   public function email_subject()
   {
-    return "Review Required: Bank Deposit - bmjm Finance";
+    return "Review Required: Bank Deposit - Bmjm Finance";
   }
 
   public function form_by_sms()
   {
-    $sms = "bmjm Finance Alert\n"
+    $sms = "Bmjm Finance Alert\n"
       . "Bank deposit waiting for review.\n"
       . "Member: " . $this->person_name . "\n"
       . "Amount: LKR " . $this->amount . "\n"

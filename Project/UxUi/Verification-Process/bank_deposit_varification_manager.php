@@ -5,7 +5,7 @@ include_once __DIR__ . '/../../imports/security/key_list.php';
 include_once __DIR__ . '/../../imports/security/encrypt_decrypt.php';
 include_once __DIR__ . '/../../imports/Company_Info/Company_Info_Variable_List.php';
 include_once __DIR__ . '/../../Controller/User-Login/Cook_Managment/Cook_Managing.php';
-include_once __DIR__ . '/../../Controller/bmjm_bank_deposit_slip/bmjm_bank_deposit_slip_ADD_UPDATE.php';
+include_once __DIR__ . '/../../Controller/wwjm_bank_deposit_slip/wwjm_bank_deposit_slip_ADD_UPDATE.php';
 include_once __DIR__ . '/../../imports/notification/auto_notify.php';
 
 $is_ajax_request = isset($_POST['ajax']) && $_POST['ajax'] === '1';
@@ -67,13 +67,13 @@ $action_msg = "";
 
 if ($payment_slip_id > 0) {
     // 1. Payment Slip
-    $res_pay = $db->get_result("SELECT * FROM bmjm_payment_slip WHERE id = '$payment_slip_id'");
+    $res_pay = $db->get_result("SELECT * FROM wwjm_payment_slip WHERE id = '$payment_slip_id'");
     if ($res_pay && $row_pay = $res_pay->fetch_assoc()) {
         $payment_slip_data = $row_pay;
     }
 
     // 2. Bank Deposit Slip
-    $res_dep = $db->get_result("SELECT * FROM bmjm_bank_deposit_slip WHERE bmjm_payment_slip_id = '$payment_slip_id' ORDER BY id DESC LIMIT 1");
+    $res_dep = $db->get_result("SELECT * FROM wwjm_bank_deposit_slip WHERE wwjm_payment_slip_id = '$payment_slip_id' ORDER BY id DESC LIMIT 1");
     if ($res_dep && $row_dep = $res_dep->fetch_assoc()) {
         $deposit_slip_data = $row_dep;
         if ($row_dep['approve_state'] == '1') {
@@ -95,9 +95,9 @@ if ($payment_slip_id > 0) {
 
     // 3. Member Profile Data Lookup (auto-resolve real member details)
     $m_no = isset($payment_slip_data['membership_no']) ? $db->real_escape_string($payment_slip_data['membership_no']) : '';
-    $res_mem = $db->get_result("SELECT m.* FROM bmjm_member_list m 
-        LEFT JOIN bmjm_member_payment_slilp mp ON mp.bmjm_member_list_id = m.id 
-        WHERE mp.bmjm_payment_slip_id = '$payment_slip_id' OR (m.membership_no != '' AND m.membership_no = '$m_no')
+    $res_mem = $db->get_result("SELECT m.* FROM wwjm_member_list m 
+        LEFT JOIN wwjm_member_payment_slilp mp ON mp.wwjm_member_list_id = m.id 
+        WHERE mp.wwjm_payment_slip_id = '$payment_slip_id' OR (m.membership_no != '' AND m.membership_no = '$m_no')
         ORDER BY m.id DESC LIMIT 1");
 
     if ($res_mem && $row_mem = $res_mem->fetch_assoc()) {
@@ -149,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_type']) && $de
         }
         $action_msg = "ERROR: Invalid verification action.";
     } else if ($action === 'approve') {
-        $deposit_updater = new bmjm_bank_deposit_slip_ADD_UPDATE($user_id);
+        $deposit_updater = new wwjm_bank_deposit_slip_ADD_UPDATE($user_id);
         $deposit_updater->set_id($deposit_id);
         $deposit_updater->is_not_approve_cancel();
         $deposit_updater->is_approve_state();
@@ -197,7 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_type']) && $de
             }
             $action_msg = "ERROR: Please enter a rejection reason.";
         } else {
-        $deposit_updater = new bmjm_bank_deposit_slip_ADD_UPDATE($user_id);
+        $deposit_updater = new wwjm_bank_deposit_slip_ADD_UPDATE($user_id);
         $deposit_updater->set_id($deposit_id);
         $deposit_updater->is_approve_cancel();
         $deposit_updater->is_not_approve_state();

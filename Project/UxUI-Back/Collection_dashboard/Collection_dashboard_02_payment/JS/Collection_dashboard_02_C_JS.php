@@ -140,7 +140,7 @@ function submitCollectionNewPayment() {
     }
 
     $.ajax({
-        url: "../../View-List/Payment/create_bmjm_payment_slip.php",
+        url: "../../View-List/Payment/create_wwjm_payment_slip.php",
         type: "POST",
         dataType: "json",
         data: sendingValue,

@@ -116,7 +116,7 @@
     btn.disabled = true;
     
     $.ajax({
-        url: "<?php echo isset($pth) ? $pth : '../'; ?>View-List/Payment/create_bmjm_payment_slip.php",
+        url: "<?php echo isset($pth) ? $pth : '../'; ?>View-List/Payment/create_wwjm_payment_slip.php",
         type: 'POST',
         data: sending_value,
         cache: false,

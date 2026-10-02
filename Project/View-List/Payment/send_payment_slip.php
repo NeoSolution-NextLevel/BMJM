@@ -43,7 +43,7 @@ if (!$payment->get_state() || (string) $payment->get_ast() !== '1') {
 
 $security_keys = new Advance_Security_Key_List();
 $security = new Advance_Security();
-$encrypted_id = $security->get_data_encrypt($security_keys->get_wwjm_payment_slip_id(), $payment_id);
+$encrypted_id = $security->get_data_encrypt($security_keys->get_bmjm_payment_slip_id(), $payment_id);
 $template = new notification_template_payment_slip($encrypted_id);
 $member_name = trim((string) $payment->get_person_name());
 $member_name = $member_name !== '' ? $member_name : 'Member';
