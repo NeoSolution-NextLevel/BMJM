@@ -2,8 +2,13 @@
     $pth = "../"; 
     $active_page = "payment-project"; 
     $page_title = "Select Project · bmjm Admin";
+    if (!defined('BMJM_FEATURE_FLAGS_LOADED')) {
+        include_once '../imports/feature_flags/feature_flags.php';
+    }
+    if (!$BMJM_FEATURE_COLLECTION) { return; } // Panel silently hidden when feature is disabled
 include '../UxUI-Back/Includes/header.php';  
 ?>
+
 
 <style>
   /* ===================================================================

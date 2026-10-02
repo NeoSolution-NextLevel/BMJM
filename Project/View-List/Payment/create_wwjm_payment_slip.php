@@ -8,10 +8,18 @@ include_once '../../Controller/User-Login/Cook_Managment/Cook_Managing.php';
 include_once '../../Controller/wwjm_member_list/wwjm_member_list_ADD_UPDATE.php';
 include_once '../../Controller/wwjm_member_list/wwjm_member_list_SINGLE_DATA.php';
 include_once '../../Controller/wwjm_member_list/wwjm_member_list_SINGLE_DATA_member_no.php';
+include_once '../../imports/feature_flags/feature_flags.php';
 
 $json = array();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (isset($_POST['pay_resion_donation']) && !$BMJM_FEATURE_DONATION) {
+        bmjm_feature_guard(false, 'Donation');
+    }
+    if (isset($_POST['pay_resion_projects']) && !$BMJM_FEATURE_COLLECTION) {
+        bmjm_feature_guard(false, 'Collection Payment');
+    }
+    
     $amount = isset($_POST['val_01']) ? $_POST['val_01'] : null;
     $dis = isset($_POST['val_02']) ? $_POST['val_02'] : null; 
     $person_name = isset($_POST['val_03']) ? $_POST['val_03'] : null;

@@ -17,13 +17,25 @@ include_once '../../imports/email/Email_Sending_Final.php';
 include_once '../../imports/sms/SMS_Sending.php';
 include_once '../../imports/security/key_list.php';
 include_once '../../imports/security/encrypt_decrypt.php';
+include_once '../../imports/feature_flags/feature_flags.php';
 
 include_once '../../Controller/income_expence_data/income_expence_data_ADD_UPDATE.php';
 //C:\Users\CHAMIKA\Documents\GitHub\WWJM\Controller\income_expence_data\income_expence_data_ADD_UPDATE.php
 $json = array();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    // ── Feature-flag backend guards ──────────────────────────────────────────
+    if (isset($_POST['pay_resion_donation']) && !$BMJM_FEATURE_DONATION) {
+        bmjm_feature_guard(false, 'Donation');
+    }
+    if (isset($_POST['pay_resion_projects']) && !$BMJM_FEATURE_COLLECTION) {
+        bmjm_feature_guard(false, 'Collection Payment');
+    }
+    // ─────────────────────────────────────────────────────────────────────────
+
     $amount = isset($_POST['val_01']) ? $_POST['val_01'] : null;
+
     $dis = isset($_POST['val_02']) ? $_POST['val_02'] : null;
     $person_name = isset($_POST['val_03']) ? $_POST['val_03'] : null;
     $address = isset($_POST['val_04']) ? $_POST['val_04'] : null;

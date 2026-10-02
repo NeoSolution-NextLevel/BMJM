@@ -3,9 +3,12 @@ $pth = "../";
 $active_page = "dashboard2";
 $page_title = "Payment History · bmjm Member";
 
+if (!isset($BMJM_FEATURE_DONATION) || !isset($BMJM_FEATURE_COLLECTION)) {
+    include_once '../../../imports/feature_flags/feature_flags.php';
+}
 // include '../UxUI-Back/Includes/header.php';  
 ?>
-
+<?php bmjm_feature_flags_js(); ?>
 <style>
   /* ===================================================================
      bmjm Admin — Design tokens (shared values, same as member-list.php)
@@ -342,6 +345,7 @@ $page_title = "Payment History · bmjm Member";
           <span class="payment-new-option-title">Zakatha</span>
         </a>
 
+        <?php if ($BMJM_FEATURE_DONATION): ?>
         <a class="payment-new-option" onclick="selectPaymentReason('Donation')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <rect x="3" y="8" width="18" height="4" rx="1"/>
@@ -351,7 +355,9 @@ $page_title = "Payment History · bmjm Member";
           </svg>
           <span class="payment-new-option-title">Donation</span>
         </a>
+        <?php endif; ?>
 
+        <?php if ($BMJM_FEATURE_COLLECTION): ?>
         <a class="payment-new-option" onclick="showProjectsList()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path d="M2 7l10 5 10-5-10-5Z"/>
@@ -360,6 +366,7 @@ $page_title = "Payment History · bmjm Member";
           </svg>
           <span class="payment-new-option-title">Projects</span>
         </a>
+        <?php endif; ?>
 
         <a class="payment-new-option payment-new-option-back" onclick="user_dashboard_02_A_OPEN()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
