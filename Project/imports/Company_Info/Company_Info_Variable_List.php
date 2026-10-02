@@ -76,6 +76,10 @@ class Company_Info_Variable_List
 
     private $needed_contact_person_count =0;
 
+    private $feature_donation_enabled = 0;
+    
+    private $feature_collection_payment_enabled = 0;
+
     #firebase
     private $firebase_project_id = "bmjm-197e1";
     private $fcmAllTopic = 'bmjm_all';
@@ -413,5 +417,15 @@ class Company_Info_Variable_List
     public function get_merchant_secret()
     {
         return $this->merchant_secret;
+    }
+
+    public function is_feature_donation_enabled()
+    {
+        return $this->feature_donation_enabled;
+    }
+
+    public function is_feature_collection_payment_enabled()
+    {
+        return $this->feature_collection_payment_enabled;
     }
 }
