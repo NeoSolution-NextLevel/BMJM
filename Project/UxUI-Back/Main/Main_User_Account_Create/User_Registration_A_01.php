@@ -16,7 +16,7 @@ $company_name = htmlspecialchars($company_obj->get_compnay_name(), ENT_QUOTES, '
                 <img src="<?php echo $home_page ?>assets/images/logo_dashboard.png" alt="" onerror="this.parentNode.classList.add('is-fallback')">
             </span>
             <span>
-                <strong>bmjm</strong>
+                <strong>Bmjm</strong>
                 <small>Member Signup</small>
             </span>
         </a>
