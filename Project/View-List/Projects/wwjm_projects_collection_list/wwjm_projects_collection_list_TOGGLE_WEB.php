@@ -2,7 +2,12 @@
 session_start();
 include_once '../../../imports/need/session_setup.php';
 include_once '../../../imports/need/DB.php';
+include_once '../../../imports/feature_flags/feature_flags.php';
 include_once '../../../Controller/projects/wwjm_projects_collection_list/wwjm_projects_collection_list_SINGLE_DATA.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$BMJM_FEATURE_COLLECTION) {
+    bmjm_feature_guard(false, 'Collection Payment');
+}
 
 $id = isset($_POST['id']) ? trim($_POST['id']) : "";
 

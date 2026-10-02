@@ -25,17 +25,15 @@ $json = array();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    // ── Feature-flag backend guards ──────────────────────────────────────────
+    //Feature-flag backend guards
     if (isset($_POST['pay_resion_donation']) && !$BMJM_FEATURE_DONATION) {
         bmjm_feature_guard(false, 'Donation');
     }
     if (isset($_POST['pay_resion_projects']) && !$BMJM_FEATURE_COLLECTION) {
         bmjm_feature_guard(false, 'Collection Payment');
     }
-    // ─────────────────────────────────────────────────────────────────────────
 
     $amount = isset($_POST['val_01']) ? $_POST['val_01'] : null;
-
     $dis = isset($_POST['val_02']) ? $_POST['val_02'] : null;
     $person_name = isset($_POST['val_03']) ? $_POST['val_03'] : null;
     $address = isset($_POST['val_04']) ? $_POST['val_04'] : null;
@@ -194,7 +192,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     //encrypt member list id 
                     $Advance_Security_Key_List_obj = new Advance_Security_Key_List();
                     $Advance_Security_obj = new Advance_Security();
-                    $encrypt_wwjm_payment_slip_id = $Advance_Security_obj->get_data_encrypt($Advance_Security_Key_List_obj->get_wwjm_payment_slip_id(), $wwjm_payment_slip_id);
+                    $encrypt_wwjm_payment_slip_id = $Advance_Security_obj->get_data_encrypt($Advance_Security_Key_List_obj->get_bmjm_payment_slip_id(), $wwjm_payment_slip_id);
 
 
                     $notification_template_bank_deposit_cancel_aprrove_user_obj = new notification_template_bank_deposit_cancel_aprrove_user($encrypt_wwjm_payment_slip_id);
@@ -265,7 +263,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                     $Advance_Security_Key_List_obj = new Advance_Security_Key_List();
                     $Advance_Security_obj = new Advance_Security();
-                    $encrypt_wwjm_payment_slip_id = $Advance_Security_obj->get_data_encrypt($Advance_Security_Key_List_obj->get_wwjm_payment_slip_id(), $wwjm_payment_slip_id);
+                    $encrypt_wwjm_payment_slip_id = $Advance_Security_obj->get_data_encrypt($Advance_Security_Key_List_obj->get_bmjm_payment_slip_id(), $wwjm_payment_slip_id);
 
                     $notification_template_bank_deposit_aprrove_user_obj = new notification_template_bank_deposit_aprrove_user($encrypt_wwjm_payment_slip_id);
                     $message = $notification_template_bank_deposit_aprrove_user_obj->form_by_sms();
@@ -634,7 +632,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 $Advance_Security_Key_List_obj = new Advance_Security_Key_List();
                 $Advance_Security_obj = new Advance_Security();
-                $wwjm_payment_slip_encrypt_id = $Advance_Security_obj->get_data_encrypt($Advance_Security_Key_List_obj->get_wwjm_payment_slip_id(), $wwjm_payment_slip_id);
+                $wwjm_payment_slip_encrypt_id = $Advance_Security_obj->get_data_encrypt($Advance_Security_Key_List_obj->get_bmjm_payment_slip_id(), $wwjm_payment_slip_id);
 
 
                 //sending email to manager 

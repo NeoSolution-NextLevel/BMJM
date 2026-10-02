@@ -5,9 +5,16 @@ include_once '../../../imports/need/DB.php';
 include_once '../../../Controller/projects/wwjm_projects_collection_list/wwjm_projects_collection_list_ADD_UPDATE.php';
 include_once '../../../Controller/projects/collection_ticket_tiers/collection_ticket_tiers_ADD_UPDATE.php';
 include_once '../../../Controller/projects/collection_bank_account/collection_bank_account_ADD_UPDATE.php';
+include_once '../../../imports/feature_flags/feature_flags.php';
+
+// Backend guard: block new collection transactions if feature is disabled.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$BMJM_FEATURE_COLLECTION) {
+    bmjm_feature_guard(false, 'Collection Payment');
+}
 
 // Validate User Session First
 $main_user_login_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 1; // Fallback to 1 if session is bypassed
+
 
 // Process basic POST parameters
 $name = isset($_POST['name']) ? trim($_POST['name']) : "";

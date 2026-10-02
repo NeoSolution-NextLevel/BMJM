@@ -4,6 +4,14 @@ include_once __DIR__ . '/../../../imports/need/DB.php';
 include_once __DIR__ . '/../../../imports/security/key_list.php';
 include_once __DIR__ . '/../../../imports/security/encrypt_decrypt.php';
 include_once __DIR__ . '/../../../Controller/projects/wwjm_projects_collection_list/wwjm_projects_collection_list_LIST.php';
+include_once __DIR__ . '/../../../imports/feature_flags/feature_flags.php';
+
+// Backend guard: return empty list if Collection Payment feature is disabled.
+if (!$BMJM_FEATURE_COLLECTION) {
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode([]);
+    exit;
+}
 
 $Advance_Security_Key_List_obj = new Advance_Security_Key_List();
 $Advance_Security_obj = new Advance_Security();

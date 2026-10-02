@@ -2,6 +2,14 @@
 include_once __DIR__ . '/../../../imports/need/session_setup.php';
 include_once __DIR__ . '/../../../imports/need/DB.php';
 include_once __DIR__ . '/../../../Controller/payment/wwjm_collection_payments/wwjm_collection_payments_LIST.php';
+include_once __DIR__ . '/../../../imports/feature_flags/feature_flags.php';
+
+// Backend guard: return empty array when feature is disabled.
+if (!$BMJM_FEATURE_COLLECTION) {
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode([]);
+    exit;
+}
 
 $json = array();
 $collection_id = isset($_POST['id']) ? $_POST['id'] : 0;

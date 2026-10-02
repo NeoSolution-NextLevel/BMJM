@@ -4,6 +4,14 @@ include_once __DIR__ . '/../../../imports/need/DB.php';
 include_once __DIR__ . '/../../../Controller/projects/wwjm_projects_collection_list/wwjm_projects_collection_list_SINGLE_DATA.php';
 include_once __DIR__ . '/../../../Controller/projects/collection_ticket_tiers/collection_ticket_tiers_LIST.php';
 include_once __DIR__ . '/../../../Controller/projects/collection_bank_account/collection_bank_account_LIST.php';
+include_once __DIR__ . '/../../../imports/feature_flags/feature_flags.php';
+
+// Backend guard: block access when feature is disabled.
+if (!$BMJM_FEATURE_COLLECTION) {
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['error' => 1, 'message' => 'Collection Payment is currently unavailable.']);
+    exit;
+}
 
 $json = array();
 $id = isset($_POST['id']) ? $_POST['id'] : 0;

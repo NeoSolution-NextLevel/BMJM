@@ -9,6 +9,7 @@ include_once '../../Controller/wwjm_member_list_has_IPG_Send_By_URL/wwjm_member_
 include_once '../../Controller/main_user_login_has_IPG_Send_By_URL/main_user_login_has_IPG_Send_By_URL_ADD_UPDATE.php';
 include_once '../../Controller/User-Login/Cook_Managment/Cook_Managing.php';
 include_once '../../imports/Company_Info/Company_Info_Variable_List.php';
+include_once '../../imports/feature_flags/feature_flags.php';
 
 include_once '../../imports/security/key_list.php';
 include_once '../../imports/security/encrypt_decrypt.php';
@@ -20,6 +21,14 @@ $json = array();
 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    //Feature-flag backend guards
+    if (isset($_POST['donation']) && !$BMJM_FEATURE_DONATION) {
+        bmjm_feature_guard(false, 'Donation');
+    }
+    if (isset($_POST['project']) && !$BMJM_FEATURE_COLLECTION) {
+        bmjm_feature_guard(false, 'Collection Payment');
+    }
 
     $amout = isset($_POST['val_01']) ? $_POST['val_01'] : "";  //amount
     $cus_name = isset($_POST['val_02']) ? $_POST['val_02'] : "";  // cus_name

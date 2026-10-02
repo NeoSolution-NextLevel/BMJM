@@ -1,6 +1,14 @@
 <?php
 include_once __DIR__ . '/../../../imports/need/session_setup.php';
 include_once __DIR__ . '/../../../imports/need/DB.php';
+include_once __DIR__ . '/../../../imports/feature_flags/feature_flags.php';
+
+// Backend guard: return error when feature is disabled.
+if (!$BMJM_FEATURE_COLLECTION) {
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['error' => 1, 'msg' => 'Collection Payment is currently unavailable.']);
+    exit;
+}
 
 $json = array();
 $payment_id = isset($_POST['id']) ? intval($_POST['id']) : 0;

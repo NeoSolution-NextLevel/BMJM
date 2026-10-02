@@ -2,6 +2,7 @@
 include_once __DIR__ . '/../../../imports/need/session_setup.php';
 include_once __DIR__ . '/../../../imports/need/DB.php';
 include_once __DIR__ . '/../../../Controller/User-Login/Cook_Managment/Cook_Managing.php';
+include_once __DIR__ . '/../../../imports/feature_flags/feature_flags.php';
 
 // Controllers for storing Income/Expense dependencies
 include_once __DIR__ . '/../../../Controller/income_expence_data/income_expence_data_ADD_UPDATE.php';
@@ -13,6 +14,11 @@ include_once __DIR__ . '/../../../Controller/income_expence_type/income_expence_
 $json = array();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Backend guard: block new collection expenses when feature is disabled.
+    if (!$BMJM_FEATURE_COLLECTION) {
+        bmjm_feature_guard(false, 'Collection Payment');
+    }
+
 
     $check_login_obj = new Cook_Management($user_main_cook_id);
 
