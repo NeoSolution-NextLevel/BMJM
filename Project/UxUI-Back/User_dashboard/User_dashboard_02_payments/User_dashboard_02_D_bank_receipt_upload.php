@@ -1,7 +1,7 @@
 <?php 
 $pth = "../";
 $active_page = "dashboard2";
-$page_title = "Upload Bank Receipt · bmjm Member";
+$page_title = "Upload Bank Receipt · Bmjm Member";
 
 // include '../UxUI-Back/Includes/header.php';  
 ?>

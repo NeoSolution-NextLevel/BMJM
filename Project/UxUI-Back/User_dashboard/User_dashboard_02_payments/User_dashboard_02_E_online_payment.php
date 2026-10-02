@@ -1,7 +1,7 @@
 <?php 
 $pth = "../";
 $active_page = "dashboard2";
-$page_title = "Pay Online · bmjm Member";
+$page_title = "Pay Online · Bmjm Member";
 
 include_once __DIR__ . '/../../../imports/Company_Info/Company_Info_Variable_List.php';
 $Company_Info = new Company_Info_Variable_List();

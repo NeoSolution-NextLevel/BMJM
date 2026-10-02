@@ -29,13 +29,13 @@ $cancel_reason = "";
 
 if ($payment_id > 0) {
     // 1. Fetch Payment Slip
-    $res_pay = $db->get_result("SELECT * FROM bmjm_payment_slip WHERE id = '$payment_id'");
+    $res_pay = $db->get_result("SELECT * FROM wwjm_payment_slip WHERE id = '$payment_id'");
     if ($res_pay && $row_pay = $res_pay->fetch_assoc()) {
         $payment_data = $row_pay;
     }
 
     // 2. Fetch Bank Deposit Slip if applicable
-    $res_dep = $db->get_result("SELECT * FROM bmjm_bank_deposit_slip WHERE bmjm_payment_slip_id = '$payment_id' ORDER BY id DESC LIMIT 1");
+    $res_dep = $db->get_result("SELECT * FROM wwjm_bank_deposit_slip WHERE wwjm_payment_slip_id = '$payment_id' ORDER BY id DESC LIMIT 1");
     if ($res_dep && $row_dep = $res_dep->fetch_assoc()) {
         $deposit_data = $row_dep;
         if ($row_dep['approve_state'] == '1') {
@@ -65,9 +65,9 @@ if ($payment_id > 0) {
 
     // 3. Resolve Member Details
     $m_no = isset($payment_data['membership_no']) ? $db->real_escape_string($payment_data['membership_no']) : '';
-    $res_mem = $db->get_result("SELECT m.* FROM bmjm_member_list m 
-        LEFT JOIN bmjm_member_payment_slilp mp ON mp.bmjm_member_list_id = m.id 
-        WHERE mp.bmjm_payment_slip_id = '$payment_id' OR (m.membership_no != '' AND m.membership_no = '$m_no')
+    $res_mem = $db->get_result("SELECT m.* FROM wwjm_member_list m 
+        LEFT JOIN wwjm_member_payment_slilp mp ON mp.wwjm_member_list_id = m.id 
+        WHERE mp.wwjm_payment_slip_id = '$payment_id' OR (m.membership_no != '' AND m.membership_no = '$m_no')
         ORDER BY m.id DESC LIMIT 1");
 
     if ($res_mem && $row_mem = $res_mem->fetch_assoc()) {
