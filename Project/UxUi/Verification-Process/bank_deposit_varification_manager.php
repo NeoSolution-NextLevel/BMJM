@@ -6,6 +6,7 @@ include_once __DIR__ . '/../../imports/security/encrypt_decrypt.php';
 include_once __DIR__ . '/../../imports/Company_Info/Company_Info_Variable_List.php';
 include_once __DIR__ . '/../../Controller/User-Login/Cook_Managment/Cook_Managing.php';
 include_once __DIR__ . '/../../Controller/wwjm_bank_deposit_slip/wwjm_bank_deposit_slip_ADD_UPDATE.php';
+include_once __DIR__ . '/../../Controller/wwjm_member_list/wwjm_member_list_ADD_UPDATE.php';
 include_once __DIR__ . '/../../imports/notification/auto_notify.php';
 
 $is_ajax_request = isset($_POST['ajax']) && $_POST['ajax'] === '1';
@@ -164,6 +165,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_type']) && $de
             $action_msg = "SUCCESS: Bank deposit slip #" . $deposit_id . " has been successfully APPROVED!";
             if ($resolved_member_list_id > 0) {
                 bmjm_notify_payment_received($resolved_member_list_id, $deposit_slip_data['amount']);
+
+              if (!isset($payment_slip_data['pay_resion_zakath']) || $payment_slip_data['pay_resion_zakath'] != '1') {
+                $member_update = new wwjm_member_list_ADD_UPDATE();
+                $member_update->set_id($resolved_member_list_id);
+                $member_update->set_due_pay_decreement($deposit_slip_data['amount']);
+                if (!$member_update->process_update()) {
+                  $action_msg .= ' Member due balance could not be updated; please reconcile it manually.';
+                }
+              }
             } else {
                 bmjm_notify_payment_for_slip($payment_slip_id, $deposit_slip_data['amount']);
             }

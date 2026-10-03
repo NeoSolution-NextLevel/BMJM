@@ -178,7 +178,7 @@
         "&val_11=" + encodeURIComponent(memberListId) +
         "&member_email=" + encodeURIComponent(memberEmail) +
         "&member_mobile_no=" + encodeURIComponent(memberMobile) +
-        "&bmjm_payment_sliip_id_bank_deposite=0" +
+        "&wwjm_payment_sliip_id_bank_deposite=0" +
         "&pay_resion_subcption=1" +
         "&is_member=1";
 

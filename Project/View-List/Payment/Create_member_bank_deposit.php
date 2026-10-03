@@ -619,7 +619,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                             if (isset($_POST['is_member']) && isset($_POST['val_11']) && $_POST['val_11'] > 0) {
                                 require_once __DIR__ . '/../../imports/notification/auto_notify.php';
-                                wwjm_notify_payment_received($_POST['val_11'], $amount);
+                                bmjm_notify_payment_received($_POST['val_11'], $amount);
                             }
                         }
                         // --- END ADMIN AUTO-APPROVAL BYPASS ---

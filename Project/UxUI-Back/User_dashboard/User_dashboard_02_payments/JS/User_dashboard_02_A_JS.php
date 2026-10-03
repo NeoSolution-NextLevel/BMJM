@@ -82,10 +82,9 @@
         }
 
         var tbody = document.getElementById("dashboard2-master-tbody");
-        var empty = document.getElementById("dashboard2-master-empty");
-
-        bodyHtml = '<tr><td colspan="6" style="text-align:center; padding: 40px; color: var(--bmjm-slate-400);">Loading payment ledger records...</td></tr>';
-        if (tbody) tbody.innerHTML = bodyHtml;
+        if (tbody) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 40px; color: var(--bmjm-slate-400);">Loading payment ledger records...</td></tr>';
+        }
 
         var sending_value = "filter_by_bmjm_member_list_id=" + encodeURIComponent(member_id) +
                            "&member_id=" + encodeURIComponent(member_id) +
@@ -99,127 +98,137 @@
             type: "POST",
             data: sending_value,
             success: function(response) {
-                try {
-                    var json_data = JSON.parse(response);
-                    if (!Array.isArray(json_data) || json_data.length === 0) {
-                        if (tbody) tbody.innerHTML = "";
-                        if (empty) empty.style.display = "block";
-                        $('#stat-total-amount').text("LKR 0.00");
-                        $('#stat-total-count').text("0");
-                        $('#stat-pending-count').text("0 Pending");
-                    } else {
-                        if (empty) empty.style.display = "none";
-                        json_data = sortUserDashboardPaymentsLatestFirst(json_data);
-                        
-                        var filtered_data = json_data;
-                        if (search_txt.trim().length > 0) {
-                            var q = search_txt.toLowerCase();
-                            filtered_data = json_data.filter(function(p) {
-                                var ref = (p.dis || p.slip_no || ('TRX-' + p.id)).toLowerCase();
-                                var type = "Payment";
-                                if (p.pay_resion_subcption == "1") type = "Subscription";
-                                else if (p.pay_resion_donation == "1") type = "Donation";
-                                else if (p.pay_resion_zakath == "1") type = "Zakath";
-                                else if (p.pay_resion_projects == "1") type = "Projects";
-                                type = type.toLowerCase();
-                                return ref.includes(q) || type.includes(q);
-                            });
-                        }
-
-                        // Compute Stats Metrics
-                        var totalSum = 0;
-                        var pendingCount = 0;
-                        json_data.forEach(function(p) {
-                            if (p.is_bank_deposit == "1" && p.bank_approve_state != "1" && p.bank_approve_cancel != "1") {
-                                pendingCount++;
-                            }
-                            if (p.is_bank_deposit != "1" || p.bank_approve_state == "1") {
-                                totalSum += parseFloat(p.val_01 || p.amount || 0);
-                            }
-                        });
-
-                        $('#stat-total-amount').text("LKR " + formatMoneyLK(totalSum));
-                        $('#stat-total-count').text(json_data.length);
-                        $('#stat-pending-count').text(pendingCount + " Pending");
-
-                        if (filtered_data.length === 0) {
-                            if (tbody) tbody.innerHTML = "";
-                            if (empty) empty.style.display = "block";
-                        } else {
-                            if (tbody) {
-                                tbody.innerHTML = filtered_data.map(function(p, idx) {
-                                    var payType = "Payment";
-                                    var catClass = "cat-subscription";
-                                    if (p.pay_resion_subcption == "1") { payType = "Subscription"; catClass = "cat-subscription"; }
-                                    else if (p.pay_resion_donation == "1") { payType = "Donation"; catClass = "cat-donation"; }
-                                    else if (p.pay_resion_zakath == "1") { payType = "Zakath"; catClass = "cat-zakath"; }
-                                    else if (p.pay_resion_projects == "1") { payType = "Projects"; catClass = "cat-projects"; }
-                                    
-                                    var gateway = "Direct";
-                                    if(p.is_bank_deposit == "1") { gateway = "Bank Slip"; }
-                                    else if(p.is_cash == "1") { gateway = "Cash"; }
-                                    else if(p.is_IPG == "1") { gateway = "Online IPG"; }
-
-                                    var rawDate = p.payment_date || p.sdt || '';
-                                    var dateParts = rawDate.split(' ');
-                                    var dateVal = dateParts[0] || 'N/A';
-                                    var timeVal = dateParts[1] || '';
-
-                                    var amountVal = parseFloat(p.val_01 || p.amount || 0);
-                                    var refCode = p.slip_no ? p.slip_no : ('TRX-' + p.id);
-                                    var noteText = p.dis ? p.dis : 'Member Payment Log';
-                                    var delay = (idx * 0.03).toFixed(2);
-
-                                    var statusHtml = '';
-                                    if (p.is_bank_deposit == "1") {
-                                        if (p.bank_approve_state == "1") {
-                                            statusHtml = '<span class="status-badge status-approved">Approved</span>';
-                                        } else if (p.bank_approve_cancel == "1") {
-                                            var reasonText = p.bank_cancel_reason ? p.bank_cancel_reason : 'Deposit slip verification rejected by Finance Admin';
-                                            statusHtml = '<span class="status-badge status-rejected" title="Click to view rejection reason: ' + reasonText.replace(/"/g, '&quot;') + '" onclick="openReceiptModal(' + p.id + ')" style="cursor:pointer;">Rejected</span>';
-                                        } else {
-                                            statusHtml = '<span class="status-badge status-pending">Pending Review</span>';
-                                        }
-                                    } else {
-                                        statusHtml = '<span class="status-badge status-approved">Completed</span>';
-                                    }
-
-                                    return '<tr class="ledger-row" style="animation: fadeIn 0.3s ease forwards; opacity: 0; animation-delay: ' + delay + 's;">' +
-                                           '  <td data-label="Date">' +
-                                           '    <div style="font-weight:700; color:var(--bmjm-slate-900);">' + dateVal + '</div>' +
-                                                (timeVal ? '<div style="font-size:11.5px; color:var(--bmjm-slate-400); margin-top:2px;">' + timeVal + '</div>' : '') +
-                                           '  </td>' +
-                                           '  <td data-label="Category"><span class="cat-pill">' + payType + '</span></td>' +
-                                           '  <td data-label="Reference">' +
-                                           '    <div class="ud-ref-block">' +
-                                           '      <div class="ref-code">#' + refCode + '</div>' +
-                                           '      <div class="ref-sub" title="' + noteText.replace(/"/g, '&quot;') + '">' + noteText + '</div>' +
-                                           '    </div>' +
-                                           '  </td>' +
-                                           '  <td data-label="Method"><span class="method-badge">' + gateway + '</span></td>' +
-                                           '  <td data-label="Status">' + statusHtml + '</td>' +
-                                           '  <td class="amount-display" data-label="Amount">LKR ' + formatMoneyLK(amountVal) + '</td>' +
-                                           '  <td data-label="Action">' +
-                                           '    <button type="button" onclick="openReceiptModal(' + p.id + ')" class="btn-filter" style="height:32px; padding:0 14px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; border-radius:8px; cursor:pointer; color:var(--bmjm-green-950); background:var(--bmjm-slate-100); border:1px solid var(--bmjm-slate-200);">' +
-                                           '      View' +
-                                           '    </button>' +
-                                           '  </td>' +
-                                           '</tr>';
-                                }).join('');
-                            }
-                        }
-                    }
-                } catch(e) {
-                    console.error("Error parsing payment list:", e);
-                    if (tbody) tbody.innerHTML = "";
-                    if (empty) empty.style.display = "block";
-                }
+                User_Dashboard_02_A_Render_Payments(response, search_txt);
             },
             error: function() {
-                if (tbody) tbody.innerHTML = "";
-                if (empty) empty.style.display = "block";
+                User_Dashboard_02_A_Render_Payment_Error();
             }
         });
+    }
+
+    function User_Dashboard_02_A_Render_Payments(response, search_txt) {
+        var tbody = document.getElementById("dashboard2-master-tbody");
+        var empty = document.getElementById("dashboard2-master-empty");
+
+        try {
+            var json_data = typeof response === 'string' ? JSON.parse(response) : response;
+            if (!Array.isArray(json_data) || json_data.length === 0) {
+                if (tbody) tbody.innerHTML = "";
+                if (empty) empty.style.display = "block";
+                $('#stat-total-amount').text("LKR 0.00");
+                $('#stat-total-count').text("0");
+                $('#stat-pending-count').text("0 Pending");
+                return;
+            }
+
+            if (empty) empty.style.display = "none";
+            json_data = sortUserDashboardPaymentsLatestFirst(json_data);
+
+            var filtered_data = json_data;
+            if (search_txt.trim().length > 0) {
+                var q = search_txt.toLowerCase();
+                filtered_data = json_data.filter(function(p) {
+                    var ref = (p.dis || p.slip_no || ('TRX-' + p.id)).toLowerCase();
+                    var type = "Payment";
+                    if (p.pay_resion_subcption == "1") type = "Subscription";
+                    else if (p.pay_resion_donation == "1") type = "Donation";
+                    else if (p.pay_resion_zakath == "1") type = "Zakath";
+                    else if (p.pay_resion_projects == "1") type = "Projects";
+                    return ref.includes(q) || type.toLowerCase().includes(q);
+                });
+            }
+
+            var totalSum = 0;
+            var pendingCount = 0;
+            json_data.forEach(function(p) {
+                if (p.is_bank_deposit == "1" && p.bank_approve_state != "1" && p.bank_approve_cancel != "1") {
+                    pendingCount++;
+                }
+                if (p.is_bank_deposit != "1" || p.bank_approve_state == "1") {
+                    totalSum += parseFloat(p.val_01 || p.amount || 0);
+                }
+            });
+
+            $('#stat-total-amount').text("LKR " + formatMoneyLK(totalSum));
+            $('#stat-total-count').text(json_data.length);
+            $('#stat-pending-count').text(pendingCount + " Pending");
+
+            if (filtered_data.length === 0) {
+                if (tbody) tbody.innerHTML = "";
+                if (empty) empty.style.display = "block";
+                return;
+            }
+
+            if (!tbody) return;
+            tbody.innerHTML = filtered_data.map(function(p, idx) {
+                var payType = "Payment";
+                if (p.pay_resion_subcption == "1") payType = "Subscription";
+                else if (p.pay_resion_donation == "1") payType = "Donation";
+                else if (p.pay_resion_zakath == "1") payType = "Zakath";
+                else if (p.pay_resion_projects == "1") payType = "Projects";
+
+                var gateway = "Direct";
+                if (p.is_bank_deposit == "1") gateway = "Bank Slip";
+                else if (p.is_cash == "1") gateway = "Cash";
+                else if (p.is_IPG == "1") gateway = "Online IPG";
+
+                var rawDate = p.payment_date || p.sdt || '';
+                var dateParts = rawDate.split(' ');
+                var dateVal = dateParts[0] || 'N/A';
+                var timeVal = dateParts[1] || '';
+                var amountVal = parseFloat(p.val_01 || p.amount || 0);
+                var refCode = p.slip_no ? p.slip_no : ('TRX-' + p.id);
+                var noteText = p.dis ? p.dis : 'Member Payment Log';
+                var delay = (idx * 0.03).toFixed(2);
+
+                var statusHtml = '';
+                if (p.is_bank_deposit == "1") {
+                    if (p.bank_approve_state == "1") {
+                        statusHtml = '<span class="status-badge status-approved">Approved</span>';
+                    } else if (p.bank_approve_cancel == "1") {
+                        var reasonText = p.bank_cancel_reason ? p.bank_cancel_reason : 'Deposit slip verification rejected by Finance Admin';
+                        statusHtml = '<span class="status-badge status-rejected" title="Click to view rejection reason: ' + reasonText.replace(/"/g, '&quot;') + '" onclick="openReceiptModal(' + p.id + ')" style="cursor:pointer;">Rejected</span>';
+                    } else {
+                        statusHtml = '<span class="status-badge status-pending">Pending Review</span>';
+                    }
+                } else {
+                    statusHtml = '<span class="status-badge status-approved">Completed</span>';
+                }
+
+                return '<tr class="ledger-row" style="animation: fadeIn 0.3s ease forwards; opacity: 0; animation-delay: ' + delay + 's;">' +
+                       '  <td data-label="Date">' +
+                       '    <div style="font-weight:700; color:var(--bmjm-slate-900);">' + dateVal + '</div>' +
+                            (timeVal ? '<div style="font-size:11.5px; color:var(--bmjm-slate-400); margin-top:2px;">' + timeVal + '</div>' : '') +
+                       '  </td>' +
+                       '  <td data-label="Category"><span class="cat-pill">' + payType + '</span></td>' +
+                       '  <td data-label="Reference">' +
+                       '    <div class="ud-ref-block">' +
+                       '      <div class="ref-code">#' + refCode + '</div>' +
+                       '      <div class="ref-sub" title="' + noteText.replace(/"/g, '&quot;') + '">' + noteText + '</div>' +
+                       '    </div>' +
+                       '  </td>' +
+                       '  <td data-label="Method"><span class="method-badge">' + gateway + '</span></td>' +
+                       '  <td data-label="Status">' + statusHtml + '</td>' +
+                       '  <td class="amount-display" data-label="Amount">LKR ' + formatMoneyLK(amountVal) + '</td>' +
+                       '  <td data-label="Action">' +
+                       '    <button type="button" onclick="openReceiptModal(' + p.id + ')" class="btn-filter" style="height:32px; padding:0 14px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; border-radius:8px; cursor:pointer; color:var(--bmjm-green-950); background:var(--bmjm-slate-100); border:1px solid var(--bmjm-slate-200);">' +
+                       '      View' +
+                       '    </button>' +
+                       '  </td>' +
+                       '</tr>';
+            }).join('');
+        } catch(e) {
+            console.error("Error parsing payment list:", e);
+            if (tbody) tbody.innerHTML = "";
+            if (empty) empty.style.display = "block";
+        }
+    }
+
+    function User_Dashboard_02_A_Render_Payment_Error() {
+        var tbody = document.getElementById("dashboard2-master-tbody");
+        var empty = document.getElementById("dashboard2-master-empty");
+        if (tbody) tbody.innerHTML = "";
+        if (empty) empty.style.display = "block";
     }
 
     function user_dashboard_pay_now() {

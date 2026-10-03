@@ -3,7 +3,7 @@
 include_once __DIR__ . '/../../imports/need/session_setup.php';
 include_once __DIR__ . '/../../imports/need/DB.php';
 include_once __DIR__ . '/../../Controller/IPG_Send_By_URL/IPG_Send_By_URL_ADD_UPDATE.php';
-include_once __DIR__ . '/../../Controller/bmjm_member_list_has_IPG_Send_By_URL/bmjm_member_list_has_IPG_Send_By_URL_ADD_UPDATE.php';
+include_once __DIR__ . '/../../Controller/wwjm_member_list_has_IPG_Send_By_URL/wwjm_member_list_has_IPG_Send_By_URL_ADD_UPDATE.php';
 include_once __DIR__ . '/../../imports/security/key_list.php';
 include_once __DIR__ . '/../../imports/security/encrypt_decrypt.php';
 include_once __DIR__ . '/../../imports/feature_flags/feature_flags.php';
@@ -67,7 +67,7 @@ if ($ipg_url_obj->process_new_record()) {
     
     // Member mapping if applicable
     if ($is_member === '1' && $actual_member_id) {
-         $member_user_ipg_url_obj = new bmjm_member_list_has_IPG_Send_By_URL_ADD_UPDATE();
+         $member_user_ipg_url_obj = new wwjm_member_list_has_IPG_Send_By_URL_ADD_UPDATE();
          $member_user_ipg_url_obj->get_data($actual_member_id, $IPG_Send_By_URL_id);
          $member_user_ipg_url_obj->process_new_record();
     }
