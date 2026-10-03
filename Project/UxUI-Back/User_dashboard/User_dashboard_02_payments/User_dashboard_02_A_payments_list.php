@@ -8,7 +8,7 @@ $page_title = "Payment History · Bmjm Member Portal";
 
 <style>
   /* ===================================================================
-     bmjm Executive Design Tokens (Fintech Grade)
+     BMJM Executive Design Tokens (Fintech Grade)
      =================================================================== */
   :root{
     --bmjm-green-950: #09261E;
@@ -377,7 +377,7 @@ $page_title = "Payment History · Bmjm Member Portal";
       </div>
     </div>
 
-    <p class="site-footer">© 2026 Bambalapitiya Jumma Mosque (bmjm) | Powered by Neo Solution</p>
+    <p class="site-footer">© 2026 Wellawatte Jumma Mosque (BMJM) | Powered by Neo Solution</p>
   </main>
 </div>
 
@@ -385,7 +385,7 @@ $page_title = "Payment History · Bmjm Member Portal";
 <div id="user-payment-receipt-modal-backdrop" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(9,38,30,0.6); z-index:9999; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(4px);">
   <div style="width:100%; max-width:820px; height:88vh; background:#FFFFFF; border-radius:16px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 24px 48px rgba(0,0,0,0.25);">
     <div style="padding:14px 24px; background:var(--bmjm-green-950); color:#FFFFFF; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid var(--bmjm-gold-500);">
-      <div style="font-weight:700; font-size:15px; color:#FFFFFF;">bmjm Member Payment Receipt Statement</div>
+      <div style="font-weight:700; font-size:15px; color:#FFFFFF;">BMJM Member Payment Receipt Statement</div>
       <button onclick="closeReceiptModal()" style="background:transparent; border:none; color:rgba(255,255,255,0.8); font-size:20px; cursor:pointer; padding:0 8px;">✕</button>
     </div>
     <iframe id="user-payment-receipt-modal-frame" src="" style="width:100%; flex:1; border:none;"></iframe>

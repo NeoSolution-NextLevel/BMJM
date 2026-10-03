@@ -1,14 +1,14 @@
 <?php
 $pth = "../";
 $active_page = "dashboard2";
-$page_title = "Member Profile · bmjm Admin";
+$page_title = "Member Profile · BMJM Admin";
 
 ?>
 
 
 <style>
   /* ===================================================================
-     bmjm Admin — Design tokens (Merged with Premium User Profile)
+     BMJM Admin — Design tokens (Merged with Premium User Profile)
      =================================================================== */
   :root{
     --dashboard2-green-950:#0B2E24;
@@ -344,7 +344,7 @@ $page_title = "Member Profile · bmjm Admin";
 <div id="user-summary-receipt-modal-backdrop" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(9,38,30,0.6); z-index:9999; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(4px);">
   <div style="width:100%; max-width:820px; height:88vh; background:#FFFFFF; border-radius:16px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 24px 48px rgba(0,0,0,0.25);">
     <div style="padding:14px 24px; background:var(--dashboard2-green-950); color:#FFFFFF; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid var(--dashboard2-gold-500);">
-      <div style="font-weight:700; font-size:15px; color:#FFFFFF;">bmjm Member Payment Receipt Statement</div>
+      <div style="font-weight:700; font-size:15px; color:#FFFFFF;">BMJM Member Payment Receipt Statement</div>
       <button onclick="closeReceiptModal()" style="background:transparent; border:none; color:rgba(255,255,255,0.8); font-size:20px; cursor:pointer; padding:0 8px;">✕</button>
     </div>
     <iframe id="user-summary-receipt-modal-frame" src="" style="width:100%; flex:1; border:none;"></iframe>
