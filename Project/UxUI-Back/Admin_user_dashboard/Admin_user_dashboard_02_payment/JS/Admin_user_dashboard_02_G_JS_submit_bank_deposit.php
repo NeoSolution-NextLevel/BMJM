@@ -87,7 +87,7 @@ function submitBankDeposit() {
             "&val_11=" + encodeURIComponent(member_list_id) +
             "&member_email=" + encodeURIComponent(memEmail) +
             "&member_mobile_no=" + encodeURIComponent(memMobile) +
-            "&bmjm_payment_sliip_id_bank_deposite=0";
+            "&wwjm_payment_sliip_id_bank_deposite=0";
 
         var pType = payingTypeEl ? payingTypeEl.value : "";
         if (pType === "subcription" || pType === "subscription") {

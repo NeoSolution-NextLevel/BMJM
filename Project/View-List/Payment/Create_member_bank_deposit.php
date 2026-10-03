@@ -1,4 +1,4 @@
-<?php
+bank_account_details_id<?php
 include_once '../../imports/need/session_setup.php';
 include_once '../../imports/need/DB.php';
 include_once '../../Controller/payment/wwjm_payment_slip/wwjm_payment_slip_ADD_UPDATE.php';
@@ -34,6 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     $amount = isset($_POST['val_01']) ? $_POST['val_01'] : null;
+    $is_admin_direct_approval = isset($_POST['is_admin_direct_approval']) && $_POST['is_admin_direct_approval'] === '1';
     $dis = isset($_POST['val_02']) ? $_POST['val_02'] : null;
     $person_name = isset($_POST['val_03']) ? $_POST['val_03'] : null;
     $address = isset($_POST['val_04']) ? $_POST['val_04'] : null;
@@ -282,7 +283,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     }
 
                     require_once __DIR__ . '/../../imports/notification/auto_notify.php';
-                    wwjm_notify_payment_for_slip($wwjm_payment_slip_id, $fetched_amount);
+                    bmjm_notify_payment_for_slip($wwjm_payment_slip_id, $fetched_amount);
                 }
 
 
@@ -333,49 +334,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $state['id'] = $payment_slilp->get_id();
                 $wwjm_payment_slip_id = $payment_slilp->get_id();
 
-                // ------ SUBSCRIPTION LOGIC ------
-                if (isset($_POST['pay_resion_subcption']) && $_POST['pay_resion_subcption'] == "1") {
-                    // --- INCOME EXPENSE INTEGRATION FOR SUBSCRIPTION ---
-                    $subscription_type_id = 0;
-                    include_once '../../Controller/income_expence_type/income_expence_type_LIST.php';
-                    include_once '../../Controller/income_expence_type/income_expence_type_ADD_UPDATE.php';
-                    
-                    $inc_type_list = new income_expence_type_LIST();
-                    $inc_type_list->get_all_data();
-                    $inc_type_list->filter_by_income_expence_type_name("Subscription");
-                    $inc_type_list->filter_by_is_income_type();
-                    $res_inc_type = $inc_type_list->get_result();
-                    
-                    if ($res_inc_type && $row_inc = $res_inc_type->fetch_assoc()) {
-                        $subscription_type_id = $row_inc['id'];
-                    } else {
-                        $new_inc_type = new income_expence_type_ADD_UPDATE($check_login_obj->get_user_id());
-                        $new_inc_type->get_data("Subscription");
-                        $new_inc_type->is_is_income_type();
-                        $new_inc_type->is_not_is_expece_type();
-                        $new_inc_type->process_new_record();
-                        $subscription_type_id = $new_inc_type->get_id();
-                    }
-                    
-                    include_once '../../Controller/income_expence_data/income_expence_data_ADD_UPDATE.php';
-                    $ie_data = new income_expence_data_ADD_UPDATE($check_login_obj->get_user_id());
-                    $ie_data->get_data(date('Y-m-d H:i:s'), $amount, "Member Auto Subscription (Slip #".$wwjm_payment_slip_id.")");
-                    $ie_data->is_is_type_income();
-                    $ie_data->is_not_is_type_expece();
-                    $ie_data->is_finish_state();
-                    $ie_data->process_new_record();
-                    $new_ie_data_id = $ie_data->get_id();
-                    
-                    include_once '../../Controller/income_expence_data_info_list/income_expence_data_info_list_ADD_UPDATE.php';
-                    $ie_info = new income_expence_data_info_list_ADD_UPDATE($check_login_obj->get_user_id());
-                    $ie_info->get_data("Member Subscription Payment", $amount, $new_ie_data_id, $subscription_type_id);
-                    $ie_info->is_is_type_of_income();
-                    $ie_info->is_not_is_type_of_expence();
-                    $ie_info->process_new_record();
-                    // --- END INCOME EXPENSE INTEGRATION ---
-                }
-                // ------ END SUBSCRIPTION LOGIC ------
-                
                 // Track project linkage securely within bridging table
                 $wwjm_prj_id = isset($_POST['wwjm_projects_collection_list_id']) ? $_POST['wwjm_projects_collection_list_id'] : null;
                 if ($wwjm_prj_id) {
@@ -414,7 +372,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 }
 
                 // ------ SUBSCRIPTION LOGIC ------
-                if (isset($_POST['pay_resion_subcption'])) {
+                if ($is_admin_direct_approval && isset($_POST['pay_resion_subcption'])) {
 
                     // --- INCOME EXPENSE INTEGRATION FOR SUBSCRIPTION ---
                     $subscription_type_id = 0;
@@ -457,7 +415,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 }
 
                 // ------ ZAKATH INCOME LEDGER LOGIC ------
-                if (isset($_POST['pay_resion_zakath'])) {
+                if ($is_admin_direct_approval && isset($_POST['pay_resion_zakath'])) {
                     // --- INCOME EXPENSE INTEGRATION FOR ZAKATH ---
                     $zakath_type_id = 0;
                     include_once '../../Controller/income_expence_type/income_expence_type_LIST.php';
@@ -499,7 +457,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 }
 
                 // ------ PROJECT INCOME LEDGER LOGIC ------
-                if (isset($_POST['pay_resion_projects'])) {
+                if ($is_admin_direct_approval && isset($_POST['pay_resion_projects'])) {
                     // Extract dynamic project name safely
                     $proj_name = isset($_POST['wwjm_projects_collection_list_name']) ? $_POST['wwjm_projects_collection_list_name'] : "Unknown Project";
                     

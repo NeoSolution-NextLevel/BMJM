@@ -34,11 +34,19 @@ if (!$cookie_check_obj->check_login_availability()) {
     if ($is_ajax_request) {
         bank_deposit_verification_response('error', 'Please sign in again to review this payment.');
     }
-    // Access Denied: User is not logged in as Admin
     $redirect_url = "../../Login.php?redirect=" . urlencode($_SERVER['REQUEST_URI']);
     header("Location: " . $redirect_url);
     echo '<script>window.location.href="' . $redirect_url . '";</script>';
     exit();
+}
+
+if ((int)$cookie_check_obj->get_access_level_id() !== 1) {
+  if ($is_ajax_request) {
+    http_response_code(403);
+    bank_deposit_verification_response('error', 'Administrator access is required to review bank deposits.');
+  }
+  http_response_code(403);
+  exit('Administrator access is required to review bank deposits.');
 }
 
 $company_obj = new Company_Info_Variable_List();

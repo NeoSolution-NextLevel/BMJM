@@ -112,7 +112,7 @@ function submitBankDeposit() {
         "&val_11=" + encodeURIComponent(member_list_id) +
         "&member_email=" + encodeURIComponent(member_email) +
         "&member_mobile_no=" + encodeURIComponent(member_mobile_no) +
-        "&bmjm_payment_sliip_id_bank_deposite=0";
+        "&wwjm_payment_sliip_id_bank_deposite=0";
 
     var pType = payingTypeEl && typeof normalizeMainDashboardPaymentReason === 'function'
         ? normalizeMainDashboardPaymentReason(payingTypeEl.value)

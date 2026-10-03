@@ -127,7 +127,7 @@ function submitCollectionNewPayment() {
         "&wwjm_projects_collection_list_name=" + encodeURIComponent($("#collection-payment-project-name").val() || "Collection Payment");
 
     if (method === "bank") {
-        sendingValue += "&bmjm_payment_sliip_id_bank_deposite=1";
+        sendingValue += "&wwjm_payment_sliip_id_bank_deposite=1";
     } else {
         sendingValue += "&is_cash=1";
     }
