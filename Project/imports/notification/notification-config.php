@@ -92,7 +92,7 @@ if (!function_exists('bmjm_current_member_id')) {
         }
 
         $member_data_obj = new notification_member_SINGLE_DATA();
-        return $member_data_obj->get_bmjm_member_list_id_from_main_user_login_id($mainUserLoginId);
+        return $member_data_obj->get_wwjm_member_list_id_from_main_user_login_id($mainUserLoginId);
     }
 }
 

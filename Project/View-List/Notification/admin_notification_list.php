@@ -3,9 +3,9 @@
 require_once __DIR__ . '/../../imports/notification/notification-config.php';
 require_once __DIR__ . '/../../Controller/notification/notifications_LIST.php';
 
-wwjm_require_main_user_login();
-if (!wwjm_is_admin()) {
-    wwjm_json(['status' => 'error', 'message' => 'Only admin can view notifications'], 403);
+bmjm_require_main_user_login();
+if (!bmjm_is_admin()) {
+    bmjm_json(['status' => 'error', 'message' => 'Only admin can view notifications'], 403);
 }
 
 $notification_list_obj = new notifications_LIST();
@@ -29,7 +29,7 @@ if ($page > $totalPages) {
 $startPoint = ($page - 1) * $perPage;
 $notification_list_obj->set_data_limits($startPoint, $perPage);
 
-wwjm_json([
+bmjm_json([
     'status' => 'success',
     'notifications' => $notification_list_obj->get_notifications_array(),
     'pagination' => [

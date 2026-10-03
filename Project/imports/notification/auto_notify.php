@@ -70,11 +70,11 @@ function bmjm_notify_payment_for_slip($paymentSlipId, $amount = '')
 
     $data_base_obj = new DataBase();
     $result = $data_base_obj->get_result(
-        "select bmjm_member_list_id from bmjm_member_payment_slilp where bmjm_payment_slip_id='" . addslashes($paymentSlipId) . "' limit 1"
+        "select wwjm_member_list_id from wwjm_member_payment_slilp where wwjm_payment_slip_id='" . addslashes($paymentSlipId) . "' limit 1"
     );
     if (!$result || !($row = $result->fetch_assoc())) {
         return false;
     }
 
-    return bmjm_notify_payment_received($row['bmjm_member_list_id'], $amount);
+    return bmjm_notify_payment_received($row['wwjm_member_list_id'], $amount);
 }

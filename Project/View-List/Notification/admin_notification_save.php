@@ -3,9 +3,9 @@
 require_once __DIR__ . '/../../imports/notification/notification-config.php';
 require_once __DIR__ . '/../../imports/notification/notification_dispatch.php';
 
-$senderId = wwjm_require_main_user_login();
-if (!wwjm_is_admin()) {
-    wwjm_json(['status' => 'error', 'message' => 'Only admin can send notifications'], 403);
+$senderId = bmjm_require_main_user_login();
+if (!bmjm_is_admin()) {
+    bmjm_json(['status' => 'error', 'message' => 'Only admin can send notifications'], 403);
 }
 
 $title = trim($_POST['title'] ?? '');
@@ -16,14 +16,14 @@ $subscriptionId = trim($_POST['subscription_id'] ?? '');
 $image_pth = trim($_POST['image_pth'] ?? ($_POST['image_path'] ?? ''));
 
 if ($title === '' || $body === '') {
-    wwjm_json(['status' => 'error', 'message' => 'Please enter a title and message.'], 400);
+    bmjm_json(['status' => 'error', 'message' => 'Please enter a title and message.'], 400);
 }
 
 if ($actionType === 'schedule') {
-    wwjm_json(['status' => 'error', 'message' => 'Schedule is not available with the current notification table.'], 400);
+    bmjm_json(['status' => 'error', 'message' => 'Schedule is not available with the current notification table.'], 400);
 }
 
-list($type, $normalizedSubscriptionId) = wwjm_normalize_audience($audience, $subscriptionId);
+list($type, $normalizedSubscriptionId) = bmjm_normalize_audience($audience, $subscriptionId);
 
 if ($image_pth === '' && isset($_FILES['notification_image']) && $_FILES['notification_image']['error'] !== UPLOAD_ERR_NO_FILE) {
     $file = $_FILES['notification_image'];
@@ -32,13 +32,13 @@ if ($image_pth === '' && isset($_FILES['notification_image']) && $_FILES['notifi
     $maxFileSize = 5242880;
 
     if (!in_array($fileExt, $allowed, true)) {
-        wwjm_json(['status' => 'error', 'message' => 'Invalid image file type.'], 400);
+        bmjm_json(['status' => 'error', 'message' => 'Invalid image file type.'], 400);
     }
     if ($file['error'] !== UPLOAD_ERR_OK) {
-        wwjm_json(['status' => 'error', 'message' => 'Image upload failed.'], 400);
+        bmjm_json(['status' => 'error', 'message' => 'Image upload failed.'], 400);
     }
     if ((int) $file['size'] > $maxFileSize) {
-        wwjm_json(['status' => 'error', 'message' => 'Image size must be 5MB or less.'], 400);
+        bmjm_json(['status' => 'error', 'message' => 'Image size must be 5MB or less.'], 400);
     }
 
     $uploadDir = __DIR__ . '/../../Data/Notifications/';
@@ -50,23 +50,23 @@ if ($image_pth === '' && isset($_FILES['notification_image']) && $_FILES['notifi
     $destination = $uploadDir . $fileName;
 
     if (!move_uploaded_file($file['tmp_name'], $destination)) {
-        wwjm_json(['status' => 'error', 'message' => 'Could not save uploaded image.'], 500);
+        bmjm_json(['status' => 'error', 'message' => 'Could not save uploaded image.'], 500);
     }
 
     $image_pth = 'Data/Notifications/' . $fileName;
 }
 
 try {
-    $result = wwjm_dispatch_admin_notification($type, $title, $body, $normalizedSubscriptionId, $senderId, $image_pth);
+    $result = bmjm_dispatch_admin_notification($type, $title, $body, $normalizedSubscriptionId, $senderId, $image_pth);
 } catch (Throwable $e) {
-    wwjm_json([
+    bmjm_json([
         'status' => 'error',
         'message' => 'Notification save failed: ' . $e->getMessage(),
     ], 200);
 }
 
 if (empty($result['ok'])) {
-    wwjm_json(['status' => 'error', 'message' => $result['error'] ?? 'Notification save failed'], 200);
+    bmjm_json(['status' => 'error', 'message' => $result['error'] ?? 'Notification save failed'], 200);
 }
 
 $inboxCount = (int) ($result['inbox_count'] ?? $result['recipients'] ?? 0);
@@ -80,7 +80,7 @@ if (!empty($result['push']['error'])) {
     $message .= ' ' . $result['push']['note'];
 }
 
-wwjm_json([
+bmjm_json([
     'status' => empty($result['push']['error']) ? 'success' : 'warning',
     'message' => $message,
     'notification_id' => $result['notification_id'],
