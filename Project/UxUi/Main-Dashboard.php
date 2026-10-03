@@ -162,12 +162,19 @@ include_once '../Controller/Main/Cook_Managment/Cook_Managing.php';
             include_once '../UxUI-Back/Main-Dashboard/Main_Dashboard_04_income_expence/JS/Main_Dashboard_04_A_JS.php';
             include_once '../UxUI-Back/Main-Dashboard/Main_Dashboard_04_income_expence/Main_Dashboard_04_B_inside_income_expence.php';
             include_once '../UxUI-Back/Main-Dashboard/Main_Dashboard_04_income_expence/JS/Main_Dashboard_04_B_JS.php';
+            include_once '../UxUI-Back/Main-Dashboard/Main_Dashboard_04_income_expence/Main_Dashboard_04_C_expense_list.php';
+            include_once '../UxUI-Back/Main-Dashboard/Main_Dashboard_04_income_expence/JS/Main_Dashboard_04_C_JS.php';
+            include_once '../UxUI-Back/Main-Dashboard/Main_Dashboard_04_income_expence/Main_Dashboard_04_D_inside_expense.php';
+            include_once '../UxUI-Back/Main-Dashboard/Main_Dashboard_04_income_expence/JS/Main_Dashboard_04_D_JS.php';
+            include_once '../UxUI-Back/Main-Dashboard/Main_Dashboard_04_income_expence/Main_Dashboard_04_E_add_income_expense.php';
+            include_once '../UxUI-Back/Main-Dashboard/Main_Dashboard_04_income_expence/JS/Main_Dashboard_04_E_JS.php';
 
            
             include_once '../UxUI-Back/Main-Dashboard/Main_Dashboard_05_settings/Main_Dashboard_05_01_setting_types.php';
             include_once '../UxUI-Back/Main-Dashboard/Main_Dashboard_05_settings/Main_Dashboard_05_03_A_bank_account_list.php';
             include_once '../UxUI-Back/Main-Dashboard/Main_Dashboard_05_settings/Main_Dashboard_05_03_B_add_new_bank_ac.php';
             include_once '../UxUI-Back/Main-Dashboard/Main_Dashboard_05_settings/Main_Dashboard_05_04_A_income_expence_type_list.php';
+            include_once '../UxUI-Back/Main-Dashboard/Main_Dashboard_05_settings/Main_Dashboard_05_04_B_add_income_expense_type.php';
 
             include_once '../UxUI-Back/Main-Dashboard/Main_Dashboard_06_notifications/Main_Dashboard_06_A_notifications.php';
             

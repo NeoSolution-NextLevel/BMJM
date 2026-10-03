@@ -29,10 +29,14 @@
         "Main_Dashboard_03_D",
         "Main_Dashboard_04_A",
         "Main_Dashboard_04_B",
+        "Main_Dashboard_04_C",
+        "Main_Dashboard_04_D",
+        "Main_Dashboard_04_E",
         "Main_Dashboard_05_01",
         "Main_Dashboard_05_03_A",
         "Main_Dashboard_05_03_B",
         "Main_Dashboard_05_04_A",
+        "Main_Dashboard_05_04_B",
         "Main_Dashboard_06_A",
         "Main_Dashboard_07_A"
     ];
@@ -79,10 +83,14 @@
             'Main_Dashboard_03_D': function() { Main_Dashboard_03_D_OPEN(state.recordId); },
             'Main_Dashboard_04_A': Main_Dashboard_04_A_OPEN,
             'Main_Dashboard_04_B': function() { Main_Dashboard_04_B_OPEN(state.recordId || 0); },
+            'Main_Dashboard_04_C': Main_Dashboard_04_C_OPEN,
+            'Main_Dashboard_04_D': function() { Main_Dashboard_04_D_OPEN(state.recordId || 0); },
+            'Main_Dashboard_04_E': function() { Main_Dashboard_04_E_OPEN('expense', state.recordId || 0); },
             'Main_Dashboard_05_01': main_dashboard_05_01_OPEN,
             'Main_Dashboard_05_03_A': main_dashboard_05_03_A_OPEN,
             'Main_Dashboard_05_03_B': main_dashboard_05_03_B_OPEN,
             'Main_Dashboard_05_04_A': main_dashboard_05_04_A_OPEN,
+            'Main_Dashboard_05_04_B': function() { main_dashboard_05_04_B_OPEN(state.recordId || 0); },
             'Main_Dashboard_06_A': Main_Dashboard_06_A_OPEN,
             'Main_Dashboard_07_A': Main_Dashboard_07_A_OPEN
         };
@@ -327,6 +335,39 @@
         }
     }
 
+    function Main_Dashboard_04_C_OPEN() {
+        main_dashboard_close_all();
+        mainDashboardSetDisplay("Main_Dashboard_04_C", "");
+        mainDashboardSetHeader("Main_Dashboard_04_C", "Income & Expense", "Expense Overview");
+        setSidebarActive('accounts');
+        if (typeof window.Main_Dashboard_04_C_RELOAD === 'function') {
+            window.Main_Dashboard_04_C_RELOAD();
+        }
+    }
+
+    function Main_Dashboard_04_D_OPEN(type_id = 0) {
+        main_dashboard_close_all();
+        mainDashboardSetDisplay("Main_Dashboard_04_D", "");
+        main_dashboard_remember_page("Main_Dashboard_04_D", type_id);
+        mainDashboardSetHeader("Main_Dashboard_04_D", "Expense Details", "Inside Group Expense Display");
+        setSidebarActive('accounts');
+        if (typeof window.load_expense_transactions_for_category === 'function' && type_id !== 0) {
+            window.load_expense_transactions_for_category(type_id);
+        }
+    }
+
+    function Main_Dashboard_04_E_OPEN(arg1 = 0, arg2 = 0) {
+        main_dashboard_close_all();
+        mainDashboardSetDisplay("Main_Dashboard_04_E", "");
+        var catId = (typeof arg1 === 'number') ? arg1 : (parseInt(arg2, 10) || parseInt(arg1, 10) || 0);
+        main_dashboard_remember_page("Main_Dashboard_04_E", catId);
+        mainDashboardSetHeader("Main_Dashboard_04_E", "Add Expense", "Record Expense / Bill / Salary Payment");
+        setSidebarActive('accounts');
+        if (typeof window.prepareAddTransaction === 'function') {
+            window.prepareAddTransaction(catId);
+        }
+    }
+
     function main_dashboard_05_01_OPEN() {
         main_dashboard_close_all();
         mainDashboardSetDisplay("Main_Dashboard_05_01", "");
@@ -359,6 +400,23 @@
         mainDashboardSetDisplay("Main_Dashboard_05_04_A", "");
         mainDashboardSetHeader("Main_Dashboard_05_04_A", "Income / Expense Types", "Settings");
         setSidebarActive('settings');
+        if (typeof window.fetchTypesFromDB === 'function') {
+            window.fetchTypesFromDB();
+        }
+    }
+
+    function main_dashboard_05_04_B_OPEN(type_id = 0, name = '', category = 'expense') {
+        main_dashboard_close_all();
+        mainDashboardSetDisplay("Main_Dashboard_05_04_B", "");
+        var is_edit = parseInt(type_id, 10) > 0;
+        main_dashboard_remember_page("Main_Dashboard_05_04_B", type_id);
+        mainDashboardSetHeader("Main_Dashboard_05_04_B", is_edit ? "Edit Category / Type" : "Add Category / Type", "Settings");
+        setSidebarActive('settings');
+        if (is_edit && typeof window.settingsIncomeExpenseTypeLoadEdit === 'function') {
+            window.settingsIncomeExpenseTypeLoadEdit(parseInt(type_id, 10), name, category);
+        } else if (typeof window.settingsIncomeExpenseTypePrepareNew === 'function') {
+            window.settingsIncomeExpenseTypePrepareNew();
+        }
     }
 
     function Main_Dashboard_06_A_OPEN() {

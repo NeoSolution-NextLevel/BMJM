@@ -304,9 +304,19 @@ include '../UxUI-Back/Includes/header.php';
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
                   Income Overview
               </div>
-              <a class="income-tracker-panel-close" onclick="main_dashboard_00_OPEN()" title="Close Dashboard">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-              </a>
+              <div style="display:flex;align-items:center;gap:12px;position:relative;z-index:2;">
+                  <button type="button" style="display:flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:10px;border:none;cursor:pointer;background:#7B2020;color:#FFF;font-size:13px;font-weight:700;font-family:inherit;transition:all .3s ease;" onclick="Main_Dashboard_04_C_OPEN()">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/><path d="M16 3v4M8 3v4"/></svg>
+                      Expense Overview
+                  </button>
+                  <button type="button" style="display:flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:10px;border:none;cursor:pointer;background:var(--projc-gold-500);color:var(--projc-green-950);font-size:13px;font-weight:700;font-family:inherit;transition:all .3s ease;" onclick="Main_Dashboard_04_E_OPEN('expense')">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
+                      Add Expense
+                  </button>
+                  <a class="income-tracker-panel-close" onclick="main_dashboard_00_OPEN()" title="Close Dashboard">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </a>
+              </div>
           </div>
 
           <div class="income-tracker-grand-total">

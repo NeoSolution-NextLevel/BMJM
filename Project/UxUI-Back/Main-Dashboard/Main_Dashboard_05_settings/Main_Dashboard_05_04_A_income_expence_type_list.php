@@ -6,12 +6,6 @@ include '../UxUI-Back/Includes/header.php';
 ?>
 
 <style>
-  /* ===================================================================
-     bmjm Admin — Design tokens (shared values, same as member-list.php)
-     Bambalapitiya Jumma Mosque · Settings · Income Expence Type
-     =================================================================== */
-
-
   :root{
     --settings-income-expense-type-green-950:#0B2E24;
     --settings-income-expense-type-green-800:#123832;
@@ -332,9 +326,6 @@ include '../UxUI-Back/Includes/header.php';
 </div>
 
 <script>
-  /* ---------------------------------------------------------------
-     settingsIncomeExpenseTypeClose – navigate back to settings hub
-  --------------------------------------------------------------- */
   function settingsIncomeExpenseTypeClose() {
     if (typeof main_dashboard_05_01_OPEN === 'function') {
       main_dashboard_05_01_OPEN();
@@ -343,10 +334,6 @@ include '../UxUI-Back/Includes/header.php';
     window.location.href = "<?php echo $pth; ?>UxUi/Main-Dashboard.php";
   }
 
-  /* ---------------------------------------------------------------
-     fetchTypesFromDB – POST type_filter to View-List endpoint
-     Response JSON: [{id, income_expence_type_name, is_income_type, is_expece_type}]
-  --------------------------------------------------------------- */
   let _sitTypeCache = [];   // holds last successful fetch
 
   function fetchTypesFromDB() {
@@ -381,10 +368,6 @@ include '../UxUI-Back/Includes/header.php';
     });
   }
 
-  /* ---------------------------------------------------------------
-     settings_income_expense_typeRender – render from cached data
-     with client-side search filter applied
-  --------------------------------------------------------------- */
   function settings_income_expense_typeRender() {
     const q    = document.getElementById('settings-income-expense-type-search').value.trim().toLowerCase();
     const list  = document.getElementById('settings-income-expense-type-list');
@@ -474,10 +457,6 @@ include '../UxUI-Back/Includes/header.php';
 
   window.fetchTypesFromDB = fetchTypesFromDB;
 
-  /* ---------------------------------------------------------------
-     Initialisation – fetch on load; re-fetch when filter changes,
-     re-render only (client-side) when search text changes
-  --------------------------------------------------------------- */
   document.addEventListener('DOMContentLoaded', function () {
     fetchTypesFromDB();
 
@@ -489,13 +468,6 @@ include '../UxUI-Back/Includes/header.php';
   });
 </script>
 
-<!-- Loads sidebar.php into # above. Remove this line
-     if you switch to a PHP include instead. -->
-
-
-<!-- ================= FOOTER (shared component) =================
-     PHP projects: delete this div and put include 'footer.php';
-     in its place instead. -->
 <div id="bmjm-footer-root"></div>
 <script src="footer-loader.js"></script>
 
