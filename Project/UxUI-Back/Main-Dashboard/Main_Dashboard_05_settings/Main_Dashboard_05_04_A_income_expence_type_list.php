@@ -313,10 +313,12 @@ include '../UxUI-Back/Includes/header.php';
             <option value="expense">Expenses</option>
           </select>
         </div>
-        <a class="settings-income-expense-type-btn settings-income-expense-type-btn-primary" href="settings-income-expense-type-new.php">
+        <button type="button"
+                class="settings-income-expense-type-btn settings-income-expense-type-btn-primary"
+                onclick="main_dashboard_05_04_B_OPEN ? main_dashboard_05_04_B_OPEN() : history.back()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
           Add New
-        </a>
+        </button>
       </div>
 
       <div class="settings-income-expense-type-list" id="settings-income-expense-type-list"></div>
@@ -330,46 +332,161 @@ include '../UxUI-Back/Includes/header.php';
 </div>
 
 <script>
+  /* ---------------------------------------------------------------
+     settingsIncomeExpenseTypeClose – navigate back to settings hub
+  --------------------------------------------------------------- */
   function settingsIncomeExpenseTypeClose() {
     if (typeof main_dashboard_05_01_OPEN === 'function') {
       main_dashboard_05_01_OPEN();
       return;
     }
-
     window.location.href = "<?php echo $pth; ?>UxUi/Main-Dashboard.php";
   }
 
-  const settings_income_expense_typeData = [
-    { name:"Monthly Subscription", type:"income" },
-    { name:"Zakath",               type:"income" },
-    { name:"Donation",             type:"income" },
-    { name:"Maintenance",          type:"expense" },
-    { name:"Utility Bills",        type:"expense" },
-    { name:"Staff Salaries",       type:"expense" },
-  ];
+  /* ---------------------------------------------------------------
+     fetchTypesFromDB – POST type_filter to View-List endpoint
+     Response JSON: [{id, income_expence_type_name, is_income_type, is_expece_type}]
+  --------------------------------------------------------------- */
+  let _sitTypeCache = [];   // holds last successful fetch
 
-  function settings_income_expense_typeRender(){
-    const q = document.getElementById('settings-income-expense-type-search').value.trim().toLowerCase();
-    const type = document.getElementById('settings-income-expense-type-type').value;
-    const rows = settings_income_expense_typeData.filter(r =>
-      (!q || r.name.toLowerCase().includes(q)) && (type === 'all' || r.type === type));
-    const list = document.getElementById('settings-income-expense-type-list');
+  function fetchTypesFromDB() {
+    const typeFilter = document.getElementById('settings-income-expense-type-type').value;
+    const list  = document.getElementById('settings-income-expense-type-list');
     const empty = document.getElementById('settings-income-expense-type-empty');
-    if(rows.length === 0){ list.innerHTML=''; empty.style.display='block'; return; }
-    empty.style.display='none';
-    const labels = { income:'Income', expense:'Expenses' };
-    list.innerHTML = rows.map(r => `<div class="settings-income-expense-type-row">
+
+    // Show a subtle loading state
+    list.innerHTML = '<div class="settings-income-expense-type-empty">Loading…</div>';
+    empty.style.display = 'none';
+
+    const formData = new FormData();
+    formData.append('type_filter', typeFilter);
+
+    fetch('<?php echo $pth; ?>View-List/Income_Expense/Income_Expense_type_list.php', {
+      method : 'POST',
+      body   : formData
+    })
+    .then(res => {
+      if (!res.ok) throw new Error('Network response was not ok (' + res.status + ')');
+      return res.json();
+    })
+    .then(data => {
+      _sitTypeCache = Array.isArray(data) ? data : [];
+      settings_income_expense_typeRender();
+    })
+    .catch(err => {
+      list.innerHTML = '';
+      empty.textContent = 'Failed to load types. Please try again.';
+      empty.style.display = 'block';
+      console.error('[Income/Expense Type] fetch error:', err);
+    });
+  }
+
+  /* ---------------------------------------------------------------
+     settings_income_expense_typeRender – render from cached data
+     with client-side search filter applied
+  --------------------------------------------------------------- */
+  function settings_income_expense_typeRender() {
+    const q    = document.getElementById('settings-income-expense-type-search').value.trim().toLowerCase();
+    const list  = document.getElementById('settings-income-expense-type-list');
+    const empty = document.getElementById('settings-income-expense-type-empty');
+
+    const rows = _sitTypeCache.filter(r => {
+      const name = (r.name || r.income_expence_type_name || '').toLowerCase();
+      return !q || name.includes(q);
+    });
+
+    if (rows.length === 0) {
+      list.innerHTML = '';
+      empty.textContent = 'No types match this search.';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+
+    list.innerHTML = rows.map(r => {
+      const typeName = r.name || r.income_expence_type_name || '';
+      let categoryLabel = '';
+      let categoryKey = r.type || '';
+      if (r.is_income_type == 1 && r.is_expece_type == 1) {
+        categoryLabel = 'Income &amp; Expense';
+        categoryKey = 'both';
+      } else if (r.is_income_type == 1) {
+        categoryLabel = 'Income';
+        categoryKey = 'income';
+      } else if (r.is_expece_type == 1) {
+        categoryLabel = 'Expense';
+        categoryKey = 'expense';
+      } else {
+        categoryLabel = 'Other';
+        categoryKey = 'expense';
+      }
+
+      const safeName = String(typeName).replace(/'/g, "\\'");
+      const id       = Number(r.id);
+
+      return `<div class="settings-income-expense-type-row">
         <div class="settings-income-expense-type-row-info">
-          <span class="settings-income-expense-type-row-name">${r.name}</span>
+          <span class="settings-income-expense-type-row-name">${typeName}</span>
         </div>
         <div class="settings-income-expense-type-row-actions">
-          <span class="settings-income-expense-type-tag">${labels[r.type]}</span>
-          <button class="settings-income-expense-type-row-btn" onclick="alert('Edit ' + '${r.name}')">Edit</button>
+          <span class="settings-income-expense-type-tag">${categoryLabel}</span>
+          <button class="settings-income-expense-type-row-btn"
+                  onclick="settings_income_expense_typeEdit(${id}, '${safeName}', '${categoryKey}')">Edit</button>
+          <button class="settings-income-expense-type-row-btn" style="border-color:var(--settings-income-expense-type-danger);color:var(--settings-income-expense-type-danger);"
+                  onclick="settings_income_expense_typeDelete(${id}, '${safeName}')">Remove</button>
         </div>
-      </div>`).join('');
+      </div>`;
+    }).join('');
   }
-  settings_income_expense_typeRender();
 
+  function settings_income_expense_typeEdit(id, name, category) {
+    if (typeof main_dashboard_05_04_B_OPEN === 'function') {
+      main_dashboard_05_04_B_OPEN(id, name, category);
+    }
+  }
+
+  function settings_income_expense_typeDelete(id, name) {
+    if (!confirm('Are you sure you want to remove "' + name + '"?')) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('type_id', id);
+
+    fetch('<?php echo $pth; ?>View-List/Income_Expense/Income_Expense_type_delete.php', {
+      method: 'POST',
+      body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+      const res = Array.isArray(data) ? data[0] : data;
+      if (res && res.error === '0') {
+        fetchTypesFromDB();
+      } else {
+        alert('Failed to remove: ' + (res ? res.message : 'Unknown error'));
+      }
+    })
+    .catch(err => {
+      alert('Connection error occurred.');
+      console.error(err);
+    });
+  }
+
+  window.fetchTypesFromDB = fetchTypesFromDB;
+
+  /* ---------------------------------------------------------------
+     Initialisation – fetch on load; re-fetch when filter changes,
+     re-render only (client-side) when search text changes
+  --------------------------------------------------------------- */
+  document.addEventListener('DOMContentLoaded', function () {
+    fetchTypesFromDB();
+
+    document.getElementById('settings-income-expense-type-type')
+      .addEventListener('change', fetchTypesFromDB);
+
+    document.getElementById('settings-income-expense-type-search')
+      .addEventListener('input', settings_income_expense_typeRender);
+  });
 </script>
 
 <!-- Loads sidebar.php into # above. Remove this line
