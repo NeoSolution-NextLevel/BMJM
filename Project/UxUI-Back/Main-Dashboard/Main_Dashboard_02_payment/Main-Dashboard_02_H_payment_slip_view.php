@@ -303,7 +303,7 @@ $payment_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
         <div class="payment-slip-receipt" id="payment-slip-receipt">
           <div class="payment-slip-receipt-header">
             <div class="payment-slip-brand">
-              <img src="../assets/images/logo_dashboard.png" class="payment-slip-logo" alt="Bambalapitiya Jumma Mosque logo">
+              <img src="../assets/images/common-images/logo.png" class="payment-slip-logo" alt="Bambalapitiya Jumma Mosque logo">
               <div class="payment-slip-org-copy"><p class="payment-slip-org-name">BAMBALAPITIYA JUMMA MOSQUE</p><p class="payment-slip-org-sub">Official payment receipt</p><p class="payment-slip-org-line">Bambalapitiya, Colombo, Sri Lanka</p><p class="payment-slip-org-line">info@bmjm.lk &nbsp;|&nbsp; www.bmjm.lk</p></div>
             </div>
             <div class="payment-slip-document"><p class="payment-slip-document-label">Receipt number</p><p class="payment-slip-document-number" id="payment-slip-number">#0000</p><p class="payment-slip-document-date" id="payment-slip-date">-</p></div>
