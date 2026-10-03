@@ -1,4 +1,4 @@
-<?php 
+﻿<?php 
     $pth = "../"; 
     $active_page = "financial-report";
     $page_title = "Financial Report · BMJM Admin";
@@ -305,7 +305,7 @@ include '../UxUI-Back/Includes/header.php';
     margin-bottom:18px;display:flex;align-items:center;gap:8px;
   }
   .rpt-chart-title svg{width:14px;height:14px;color:var(--rpt-gold-600);}
-  .rpt-bar-chart{display:flex;align-items:flex-end;gap:8px;height:160px;overflow-x:auto;padding-bottom:2px;}
+  .rpt-bar-chart{display:block;width:100%;overflow:visible;}
   .rpt-bar-group{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:52px;}
   .rpt-bar-pair{display:flex;align-items:flex-end;gap:3px;height:130px;}
   .rpt-bar{
@@ -340,53 +340,66 @@ include '../UxUI-Back/Includes/header.php';
     .rpt-toolbar{flex-direction:column;align-items:stretch;}
   }
 
-  /* ---- Print styles ---- */
-  @page{size:A4 portrait;margin:14mm 12mm 16mm;}
+  /* ---- Print styles (single-page A4) ---- */
+  @page{size:A4 portrait;margin:8mm 9mm 10mm;}
   @media print{
     html,body{
-      width:auto!important;height:auto!important;max-height:none!important;
+      width:210mm!important;height:auto!important;max-height:none!important;
       margin:0!important;padding:0!important;overflow:visible!important;
       background:#fff!important;
       -webkit-print-color-adjust:exact;print-color-adjust:exact;
     }
     body > div[id^="Main"]{
-      width:auto!important;height:auto!important;max-height:none!important;
+      width:100%!important;height:auto!important;max-height:none!important;
       overflow:visible!important;
     }
     body > div[id^="Main"] > div[class$="-app"],
     body > div[id^="Main"] > div[class*="-app "]{
-      display:block!important;width:auto!important;height:auto!important;
+      display:block!important;width:100%!important;height:auto!important;
       min-height:0!important;max-height:none!important;overflow:visible!important;
     }
     .rpt-topbar,.rpt-breadcrumb,.rpt-toolbar,.bmjm-sidebar,.rpt-panel-close{display:none!important;}
     .rpt-app{display:block!important;}
     body > div[id^="Main"] main.rpt-main{
-      display:block!important;width:auto!important;height:auto!important;
+      display:block!important;width:100%!important;height:auto!important;
       min-height:0!important;max-height:none!important;overflow:visible!important;
-      padding:0!important;animation:none!important;transform:none!important;
+      padding:0!important;gap:0!important;animation:none!important;transform:none!important;
     }
     .rpt-panel{
       width:100%!important;overflow:visible!important;flex:none!important;
-      border:1px solid #D8DED9;border-radius:8px;box-shadow:none;
+      border:1px solid #D8DED9;border-radius:5px;box-shadow:none;
+      page-break-inside:avoid;
     }
-    .rpt-document-header{display:flex!important;}
-    .rpt-document-footer{display:block!important;}
-    .rpt-panel-header{padding:16px 20px;background:#123832!important;}
-    .rpt-panel-title{font-size:18px;}
-    .rpt-kpi-row{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:16px 20px 0;}
-    .rpt-kpi{padding:13px 14px;border-radius:8px;break-inside:avoid;}
-    .rpt-kpi-amount{font-size:18px;}
-    .rpt-section{padding:18px 20px;}
-    .rpt-section-title,.rpt-chart-title{break-after:avoid;}
-    .rpt-table-wrap{overflow:visible;border-radius:6px;}
+    .rpt-document-header{display:flex!important;padding:7px 12px 6px;}
+    .rpt-document-logo{width:40px;height:30px;}
+    .rpt-document-brand strong,.rpt-document-meta strong{font-size:8.5px;}
+    .rpt-document-brand span,.rpt-document-meta span,.rpt-document-meta small{font-size:7px;}
+    .rpt-document-footer{display:block!important;padding:5px 12px;font-size:7px;}
+    .rpt-panel-header{padding:7px 12px!important;background:#123832!important;}
+    .rpt-panel-title{font-size:12px!important;}
+    .rpt-kpi-row{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;padding:7px 12px 0;}
+    .rpt-kpi{padding:5px 7px;border-radius:4px;}
+    .rpt-kpi-label{font-size:7px;}
+    .rpt-kpi-amount{font-size:12px;}
+    .rpt-kpi-period{font-size:7.5px;}
+    .rpt-section{padding:6px 12px;}
+    .rpt-section-title{font-size:8.5px;margin-bottom:4px;break-after:avoid;}
+    .rpt-chart-title{font-size:8.5px;margin-bottom:6px;break-after:avoid;}
+    .rpt-table-wrap{overflow:visible;border-radius:4px;}
     .rpt-table{width:100%;}
+    .rpt-table thead th{padding:4px 9px;font-size:8px;}
+    .rpt-table tbody td{padding:4px 9px;font-size:9px;border-bottom:1px solid #f0ede4;}
+    .rpt-table tfoot td{padding:4px 9px;font-size:9px;}
     .rpt-table thead{display:table-header-group;}
     .rpt-table tfoot{display:table-footer-group;}
     .rpt-table tr{break-inside:avoid;}
     .rpt-table tbody tr:hover td{background:transparent;}
-    .rpt-chart-area{padding:0 20px 18px;break-inside:avoid;}
-    .rpt-bar-chart{height:150px;overflow:visible;}
-    .rpt-divider{break-after:avoid;}
+    .rpt-chart-area{padding:0 12px 6px;break-inside:avoid;}
+    .rpt-bar-chart{height:auto!important;overflow:visible;display:block;}
+    .rpt-chart-legend{margin-top:5px;font-size:8.5px;}
+    .rpt-legend-dot{width:7px;height:7px;}
+    .rpt-divider{margin:1px 0;break-after:avoid;}
+    .rpt-badge{font-size:7.5px;padding:1px 5px;}
   }
 </style>
 
@@ -588,4 +601,4 @@ include '../UxUI-Back/Includes/header.php';
 </div>
 
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js" referrerpolicy="no-referrer"></script>
+<script src="<?php echo $pth; ?>assets/js/jspdf.umd.min.js"></script>

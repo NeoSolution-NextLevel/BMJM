@@ -1,4 +1,4 @@
-<script type="text/javascript">
+﻿<script type="text/javascript">
 
   var financialReportData = null;
 
@@ -13,7 +13,7 @@
   function financialReportDownloadPDF(button) {
     var jsPDFConstructor = window.jspdf && window.jspdf.jsPDF;
     if (typeof jsPDFConstructor !== 'function') {
-      window.alert('PDF export is unavailable. Check your internet connection and try again.');
+      window.alert('PDF library not loaded yet. Please wait a moment and try again.');
       return;
     }
     if (!financialReportData) {
@@ -21,18 +21,23 @@
       return;
     }
 
-    if (button) button.disabled = true;
+    if (button) {
+      button.disabled = true;
+      button.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Generating…';
+    }
 
     var logoElement = document.querySelector('#Main_Dashboard_07_A .rpt-document-logo');
     var createPDF = function() {
       try {
         var logoData = null;
         if (logoElement && logoElement.naturalWidth > 0) {
-          var logoCanvas = document.createElement('canvas');
-          logoCanvas.width = logoElement.naturalWidth;
-          logoCanvas.height = logoElement.naturalHeight;
-          logoCanvas.getContext('2d').drawImage(logoElement, 0, 0);
-          logoData = logoCanvas.toDataURL('image/png');
+          try {
+            var logoCanvas = document.createElement('canvas');
+            logoCanvas.width = logoElement.naturalWidth;
+            logoCanvas.height = logoElement.naturalHeight;
+            logoCanvas.getContext('2d').drawImage(logoElement, 0, 0);
+            logoData = logoCanvas.toDataURL('image/png');
+          } catch(e) { logoData = null; }
         }
 
         var pdf = new jsPDFConstructor({orientation: 'portrait', unit: 'mm', format: 'a4'});
@@ -234,6 +239,7 @@
           currentY += 9;
         }
 
+        /* ---- Bar chart ---- */
         var monthlyBreakdown = Array.isArray(financialReportData.monthly_breakdown) ? financialReportData.monthly_breakdown : [];
         if (monthlyBreakdown.length) {
           var chartHeight = 76;
@@ -242,10 +248,11 @@
           pdf.setTextColor(35, 66, 55);
           pdf.setFont('helvetica', 'bold');
           pdf.setFontSize(8);
-          pdf.text('INCOME VS EXPENSES', margin, currentY);
+          pdf.text('INCOME VS EXPENSES — ' + period, margin, currentY);
 
           var plotTop = currentY + 7;
-          var baseline = plotTop + 42;
+          var plotBarH = 42;
+          var baseline = plotTop + plotBarH;
           var plotLeft = margin + 4;
           var plotRight = pageWidth - margin - 4;
           var plotWidth = plotRight - plotLeft;
@@ -254,30 +261,43 @@
             maxValue = Math.max(maxValue, parseFloat(month.income) || 0, parseFloat(month.expense) || 0);
           });
 
+          /* grid lines */
           pdf.setDrawColor(225, 229, 225);
           pdf.setLineWidth(0.2);
-          for (var gridLine = 0; gridLine < 4; gridLine++) {
-            var gridY = plotTop + 4 + gridLine * 12;
+          for (var gl = 0; gl < 4; gl++) {
+            var gridY = plotTop + (gl / 3) * plotBarH;
             pdf.line(plotLeft, gridY, plotRight, gridY);
           }
 
           var slotWidth = plotWidth / monthlyBreakdown.length;
-          var barWidth = Math.min(4, Math.max(2, slotWidth * 0.22));
+          var barWidth = Math.min(5, Math.max(2, slotWidth * 0.25));
           monthlyBreakdown.forEach(function(month, index) {
             var centerX = plotLeft + slotWidth * (index + 0.5);
-            var incomeHeight = Math.max(0.5, ((parseFloat(month.income) || 0) / maxValue) * 34);
-            var expenseHeight = Math.max(0.5, ((parseFloat(month.expense) || 0) / maxValue) * 34);
+            var incH = Math.max(0.5, ((parseFloat(month.income) || 0) / maxValue) * plotBarH);
+            var expH = Math.max(0.5, ((parseFloat(month.expense) || 0) / maxValue) * plotBarH);
             pdf.setFillColor(27, 122, 74);
-            pdf.rect(centerX - barWidth - 0.6, baseline - incomeHeight, barWidth, incomeHeight, 'F');
+            pdf.rect(centerX - barWidth - 0.8, baseline - incH, barWidth, incH, 'F');
             pdf.setFillColor(176, 69, 58);
-            pdf.rect(centerX + 0.6, baseline - expenseHeight, barWidth, expenseHeight, 'F');
-            pdf.setDrawColor(90, 106, 98);
-            pdf.line(centerX - slotWidth / 2 + 1, baseline, centerX + slotWidth / 2 - 1, baseline);
+            pdf.rect(centerX + 0.8, baseline - expH, barWidth, expH, 'F');
+            pdf.setDrawColor(200, 200, 200);
+            pdf.setLineWidth(0.15);
+            pdf.line(centerX - slotWidth / 2 + 1, baseline + 0.5, centerX + slotWidth / 2 - 1, baseline + 0.5);
             pdf.setTextColor(90, 106, 98);
             pdf.setFont('helvetica', 'normal');
-            pdf.setFontSize(monthlyBreakdown.length > 8 ? 5 : 6);
-            pdf.text(String(month.label || ''), centerX, baseline + 4, {align: 'center', maxWidth: Math.max(8, slotWidth - 1)});
+            pdf.setFontSize(monthlyBreakdown.length > 8 ? 5 : 5.5);
+            pdf.text(String(month.label || ''), centerX, baseline + 5, {align: 'center', maxWidth: Math.max(8, slotWidth - 1)});
           });
+
+          /* Y-axis labels */
+          pdf.setTextColor(139, 151, 143);
+          pdf.setFont('helvetica', 'normal');
+          pdf.setFontSize(5.5);
+          for (var yl = 0; yl <= 3; yl++) {
+            var yVal = (maxValue * (3 - yl) / 3);
+            var yPos = plotTop + (yl / 3) * plotBarH;
+            var yLabel = yVal >= 1000 ? (Math.round(yVal / 1000) + 'K') : Math.round(yVal).toString();
+            pdf.text(yLabel, margin + 2, yPos + 1, {align: 'right'});
+          }
 
           var legendY = baseline + 12;
           pdf.setFillColor(27, 122, 74);
@@ -291,6 +311,7 @@
           currentY = legendY + 5;
         }
 
+        /* ---- Footer on all pages ---- */
         var pageCount = pdf.internal.getNumberOfPages();
         for (var pageNumber = 1; pageNumber <= pageCount; pageNumber++) {
           pdf.setPage(pageNumber);
@@ -308,9 +329,12 @@
         pdf.save('BMJM-Financial-Report-' + safePeriod + '.pdf');
       } catch (error) {
         console.error('Financial report PDF export failed:', error);
-        window.alert('The PDF could not be created. Please try again.');
+        window.alert('The PDF could not be created. Please try again. Error: ' + error.message);
       } finally {
-        if (button) button.disabled = false;
+        if (button) {
+          button.disabled = false;
+          button.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5M12 15V3"/></svg> Download PDF';
+        }
       }
     };
 
@@ -477,7 +501,7 @@
     tfoot.style.display = '';
   }
 
-  /* Monthly / Period bar chart */
+  /* Monthly / Period bar chart — SVG-based for crisp print rendering */
   function rptRenderBarChart(data) {
     var chartArea  = document.getElementById('rpt-chart-area');
     var barChart   = document.getElementById('rpt-bar-chart');
@@ -490,7 +514,7 @@
       return;
     }
 
-    // Update chart title based on report type
+    // Update chart title
     if (titleEl) {
       if (reportType === 'monthly') {
         titleEl.textContent = 'Income vs Expenses — ' + (data.report_period || '');
@@ -501,32 +525,94 @@
       }
     }
 
-    // Find max value for proportional bar heights
+    // Max value
     var maxVal = 0;
     breakdown.forEach(function(m) {
       maxVal = Math.max(maxVal, parseFloat(m.income) || 0, parseFloat(m.expense) || 0);
     });
     if (maxVal <= 0) maxVal = 1;
 
-    var MAX_BAR_H = 120;
+    // SVG dimensions
+    var svgW = 760;
+    var svgH = 160;
+    var padLeft = 52;
+    var padRight = 8;
+    var padTop = 10;
+    var padBottom = 38;
+    var plotW = svgW - padLeft - padRight;
+    var plotH = svgH - padTop - padBottom;
+    var n = breakdown.length;
+    var slotW = plotW / n;
+    var barW = Math.min(18, Math.max(6, slotW * 0.28));
+    var gap = 2;
 
-    var html = '';
-    breakdown.forEach(function(m) {
+    var svgParts = [];
+    svgParts.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + svgW + ' ' + svgH + '" style="width:100%;height:auto;display:block;overflow:visible;" preserveAspectRatio="xMidYMid meet">');
+
+    // Grid lines + Y labels
+    var gridSteps = 4;
+    for (var gi = 0; gi <= gridSteps; gi++) {
+      var gy = padTop + (plotH / gridSteps) * gi;
+      var gVal = maxVal * (1 - gi / gridSteps);
+      var gLabel = gVal >= 1000000 ? (Math.round(gVal/1000000*10)/10 + 'M')
+                 : gVal >= 1000    ? (Math.round(gVal/1000) + 'K')
+                 : Math.round(gVal).toString();
+      svgParts.push('<line x1="' + padLeft + '" y1="' + gy + '" x2="' + (svgW - padRight) + '" y2="' + gy + '" stroke="#E6E0D0" stroke-width="0.7"/>');
+      svgParts.push('<text x="' + (padLeft - 5) + '" y="' + (gy + 4) + '" font-family="Inter,Arial,sans-serif" font-size="9" fill="#8B978F" text-anchor="end">' + rptEscape(gLabel) + '</text>');
+    }
+
+    // Bars + labels
+    breakdown.forEach(function(m, i) {
       var incVal = parseFloat(m.income)  || 0;
       var expVal = parseFloat(m.expense) || 0;
-      var incH   = Math.max(2, Math.round((incVal / maxVal) * MAX_BAR_H));
-      var expH   = Math.max(2, Math.round((expVal / maxVal) * MAX_BAR_H));
+      var incH   = Math.max(1, (incVal / maxVal) * plotH);
+      var expH   = Math.max(1, (expVal / maxVal) * plotH);
+      var cx     = padLeft + slotW * (i + 0.5);
+      var baseline = padTop + plotH;
 
-      html += '<div class="rpt-bar-group">' +
-        '<div class="rpt-bar-pair">' +
-          '<div class="rpt-bar rpt-bar-income-bar"  style="height:' + incH + 'px;" title="Income: '  + rptFormatLKR(incVal) + '"></div>' +
-          '<div class="rpt-bar rpt-bar-expense-bar" style="height:' + expH + 'px;" title="Expense: ' + rptFormatLKR(expVal) + '"></div>' +
-        '</div>' +
-        '<div class="rpt-bar-label">' + rptEscape(m.label) + '</div>' +
-      '</div>';
+      // Income bar
+      var incX = cx - barW - gap / 2;
+      var incY = baseline - incH;
+      svgParts.push('<rect x="' + incX + '" y="' + incY + '" width="' + barW + '" height="' + incH + '" rx="2" fill="#1B7A4A">');
+      svgParts.push('<title>Income: ' + rptFormatLKR(incVal) + '</title></rect>');
+
+      // Expense bar
+      var expX = cx + gap / 2;
+      var expY = baseline - expH;
+      svgParts.push('<rect x="' + expX + '" y="' + expY + '" width="' + barW + '" height="' + expH + '" rx="2" fill="#B0453A">');
+      svgParts.push('<title>Expense: ' + rptFormatLKR(expVal) + '</title></rect>');
+
+      // X-axis label — wrap at space if long
+      var label = String(m.label || '');
+      var parts = label.split(' ');
+      var lx = cx;
+      var ly = baseline + 13;
+      if (parts.length >= 2) {
+        svgParts.push('<text x="' + lx + '" y="' + ly + '" font-family="Inter,Arial,sans-serif" font-size="' + (n > 8 ? 7 : 8) + '" fill="#8B978F" text-anchor="middle">' + rptEscape(parts[0]) + '</text>');
+        svgParts.push('<text x="' + lx + '" y="' + (ly + 10) + '" font-family="Inter,Arial,sans-serif" font-size="' + (n > 8 ? 7 : 8) + '" fill="#8B978F" text-anchor="middle">' + rptEscape(parts.slice(1).join(' ')) + '</text>');
+      } else {
+        svgParts.push('<text x="' + lx + '" y="' + ly + '" font-family="Inter,Arial,sans-serif" font-size="' + (n > 8 ? 7 : 8) + '" fill="#8B978F" text-anchor="middle">' + rptEscape(label) + '</text>');
+      }
+
+      // Separator line
+      svgParts.push('<line x1="' + (padLeft + slotW * i) + '" y1="' + baseline + '" x2="' + (padLeft + slotW * (i + 1)) + '" y2="' + baseline + '" stroke="#D0D5D2" stroke-width="0.5"/>');
     });
 
-    barChart.innerHTML = html;
+    // Baseline
+    svgParts.push('<line x1="' + padLeft + '" y1="' + (padTop + plotH) + '" x2="' + (svgW - padRight) + '" y2="' + (padTop + plotH) + '" stroke="#5A6A62" stroke-width="1"/>');
+
+    // Legend
+    var legY = svgH - 6;
+    svgParts.push('<circle cx="' + (padLeft + 4) + '" cy="' + (legY - 3) + '" r="5" fill="#1B7A4A"/>');
+    svgParts.push('<text x="' + (padLeft + 12) + '" y="' + legY + '" font-family="Inter,Arial,sans-serif" font-size="9" fill="#5A6A62" font-weight="600">Income</text>');
+    svgParts.push('<circle cx="' + (padLeft + 58) + '" cy="' + (legY - 3) + '" r="5" fill="#B0453A"/>');
+    svgParts.push('<text x="' + (padLeft + 66) + '" y="' + legY + '" font-family="Inter,Arial,sans-serif" font-size="9" fill="#5A6A62" font-weight="600">Expenses</text>');
+
+    svgParts.push('</svg>');
+
+    barChart.innerHTML = svgParts.join('');
+    barChart.style.height = 'auto';
+    barChart.style.overflow = 'visible';
     chartArea.style.display = '';
   }
 
