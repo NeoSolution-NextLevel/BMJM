@@ -86,7 +86,7 @@
 
         var roadEl = document.getElementById("edit_profile_road_name");
         if (roadEl) {
-            loadProfileRoads(json.bmjm_road_name_id);
+            loadProfileRoads(json.wwjm_road_name_id);
         }
 
         var isOwner = (json.owner == "1" || json.residenceType === "owner");

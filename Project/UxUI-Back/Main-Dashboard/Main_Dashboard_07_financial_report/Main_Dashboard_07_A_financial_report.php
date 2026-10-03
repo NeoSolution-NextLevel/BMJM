@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
     $pth = "../"; 
     $active_page = "financial-report";
     $page_title = "Financial Report · BMJM Admin";
@@ -38,7 +38,6 @@ include '../UxUI-Back/Includes/header.php';
     font-family:'Inter',-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
     color:var(--rpt-ink-900);
     -webkit-font-smoothing:antialiased;
-    padding-bottom:40px;
   }
 
   /* ---- Layout grid ---- */
@@ -46,8 +45,12 @@ include '../UxUI-Back/Includes/header.php';
     display:grid;
     grid-template-columns:248px 1fr;
     grid-template-rows:64px 1fr;
-    min-height:100vh;
-    grid-template-areas:"sidebar topbar" "sidebar main";
+    height:100%;
+    min-height:0;
+    grid-template-areas:
+      "sidebar topbar"
+      "sidebar main";
+    background:var(--rpt-cream-50);
   }
 
   /* ---- Topbar ---- */
@@ -55,9 +58,13 @@ include '../UxUI-Back/Includes/header.php';
     grid-area:topbar;
     background:rgba(255,255,255,0.85);
     backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
     border-bottom:1px solid rgba(230,224,208,0.6);
     display:flex;align-items:center;justify-content:space-between;
-    padding:0 30px;z-index:10;
+    padding:0 30px;
+    z-index:10;
+    height:64px;
+    box-sizing:border-box;
   }
   .rpt-topbar-heading h1{
     font-family:'Poppins',Inter,sans-serif;
@@ -78,12 +85,14 @@ include '../UxUI-Back/Includes/header.php';
   /* ---- Main ---- */
   .rpt-main{
     grid-area:main;
-    padding:26px 30px 50px;
-    display:flex;flex-direction:column;gap:22px;
-    animation:fadeSlideUp 0.55s var(--rpt-cubic) forwards;
+    padding:16px 30px 40px;
+    display:flex;flex-direction:column;gap:12px;
+    animation:fadeSlideUp 0.4s var(--rpt-cubic) forwards;
+    overflow-y:auto;
+    min-height:0;
   }
   @keyframes fadeSlideUp{
-    from{opacity:0;transform:translateY(18px);}
+    from{opacity:0;transform:translateY(12px);}
     to{opacity:1;transform:translateY(0);}
   }
 
@@ -91,6 +100,9 @@ include '../UxUI-Back/Includes/header.php';
   .rpt-breadcrumb{
     font-size:12px;color:var(--rpt-ink-400);
     display:flex;gap:6px;align-items:center;
+    margin:0;
+    padding:0;
+    line-height:1;
   }
   .rpt-breadcrumb a{color:var(--rpt-ink-400);text-decoration:none;}
   .rpt-breadcrumb a:hover{color:var(--rpt-green-700);}
@@ -133,7 +145,7 @@ include '../UxUI-Back/Includes/header.php';
   .rpt-panel-header{
     background:linear-gradient(135deg,var(--rpt-green-800),var(--rpt-green-950));
     color:var(--rpt-cream-50);
-    padding:24px 30px;
+    padding:18px 24px;
     display:flex;align-items:center;justify-content:space-between;
     position:relative;overflow:hidden;
   }
@@ -146,7 +158,7 @@ include '../UxUI-Back/Includes/header.php';
   .rpt-panel-title{
     display:flex;align-items:center;gap:12px;
     font-family:'Poppins',Inter,sans-serif;
-    font-size:22px;font-weight:700;
+    font-size:20px;font-weight:700;
     position:relative;z-index:2;
   }
   .rpt-panel-title svg{width:22px;height:22px;flex:0 0 22px;color:var(--rpt-gold-300);}
@@ -164,7 +176,7 @@ include '../UxUI-Back/Includes/header.php';
   /* ---- Filter toolbar ---- */
   .rpt-toolbar{
     display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;
-    padding:22px 30px;
+    padding:16px 24px;
     background:rgba(250,247,240,0.5);
     border-bottom:1px solid var(--rpt-border);
   }
@@ -411,17 +423,17 @@ include '../UxUI-Back/Includes/header.php';
   <!-- ================= TOPBAR ================= -->
   <header class="rpt-topbar">
     <div class="rpt-topbar-heading">
-      <h1>Dashboard</h1>
-      <p>Dashboard Control System</p>
+      <h1>Financial Report</h1>
+      <p>Income &amp; Expense Analysis</p>
     </div>
     <div class="rpt-topbar-actions">
-      <button class="rpt-icon-btn" title="Notifications" aria-label="Notifications">
+      <button type="button" class="rpt-icon-btn" title="Notifications" aria-label="Notifications">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 10a6 6 0 1 1 12 0c0 4 1.5 5.5 1.5 5.5H4.5S6 14 6 10Z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
       </button>
-      <button class="rpt-icon-btn" title="Messages" aria-label="Messages">
+      <button type="button" class="rpt-icon-btn" title="Messages" aria-label="Messages">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6 8.5 6.5L20.5 6"/></svg>
       </button>
-      <button class="rpt-icon-btn" title="Sign out" aria-label="Sign out">
+      <button type="button" class="rpt-icon-btn bmjm-user-logout-btn" title="Sign out" aria-label="Sign out">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3"/><path d="M15 8l4 4-4 4M19 12H9"/></svg>
       </button>
     </div>

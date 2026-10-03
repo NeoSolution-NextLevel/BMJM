@@ -43,7 +43,7 @@ class notification_template_payment_slip
   }
   public function email_subject()
   {
-    return "bmjm Payment Receipt";
+    return "BMJM Payment Receipt";
   }
 
 

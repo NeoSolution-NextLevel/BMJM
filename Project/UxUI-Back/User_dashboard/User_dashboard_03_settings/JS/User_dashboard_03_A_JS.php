@@ -135,7 +135,7 @@
             }
         }
 
-        load_settings_roads(data.bmjm_road_name_id || '');
+        load_settings_roads(data.wwjm_road_name_id || '');
 
         setSettingsText('setting_membership_no', data.membership_no || data.id || '-');
         setSettingsText('setting_monthly_payment_display', formatSettingsMoneyLK(monthlyPayment));
