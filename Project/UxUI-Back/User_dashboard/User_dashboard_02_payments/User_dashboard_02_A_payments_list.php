@@ -199,11 +199,14 @@ $page_title = "Payment History · Bmjm Member Portal";
 
   /* Fintech Status Badge */
   .status-badge {
-    display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 20px;
-    font-size: 12px; font-weight: 700; letter-spacing: 0.2px;
+    display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 5px 12px; border-radius: 20px;
+    font-size: 12px; font-weight: 700; line-height: 1.2; letter-spacing: 0.2px; white-space: nowrap;
   }
   .status-approved { background: #DCFCE7; color: #15803D; border: 1px solid #86EFAC; }
-  .status-pending { background: #FEF3C7; color: #D97706; border: 1px solid #FDE68A; }
+  #user_dashboard_02_A .status-pending { background: #FFF4D6; color: #704B00; border: 1px solid #E9C85B; }
+  #user_dashboard_02_A .status-pending::before {
+    content: ''; width: 7px; height: 7px; flex: 0 0 7px; border-radius: 50%; background: currentColor;
+  }
   .status-rejected { background: #FEE2E2; color: #B91C1C; border: 1px solid #FCA5A5; }
 
   /* Inline Cancellation Reason Callout */
@@ -242,6 +245,7 @@ $page_title = "Payment History · Bmjm Member Portal";
       width: 100%;
     }
     .date-picker { width: 100%; min-width: 0; }
+    #user_dashboard_02_A .status-pending { min-height: 36px; padding: 6px 10px; font-size: 12px; }
   }
 </style>
 
@@ -339,7 +343,7 @@ $page_title = "Payment History · Bmjm Member Portal";
           <input type="date" class="date-picker" id="tx-start-date" title="Start Date">
           <span style="color:var(--bmjm-slate-400); font-weight:600; font-size:12px;">TO</span>
           <input type="date" class="date-picker" id="tx-end-date" title="End Date">
-          <button class="btn-filter" id="btn-apply-filter">Filter Range</button>
+          <button type="button" class="btn-filter" id="btn-clear-range">Clear Range</button>
           <button class="btn-pay-action" onclick="user_dashboard_02_B_OPEN()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
             Pay Now

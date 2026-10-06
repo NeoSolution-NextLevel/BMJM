@@ -196,25 +196,29 @@ include '../UxUI-Back/Includes/header.php';
     background:var(--payment-cream-100);
     color:var(--payment-green-700);
   }
-  .payment-status-tag{display:inline-flex;align-items:center;padding:4px 9px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap;}
-  .payment-status-pending{background:#FFF4D6;color:#765400;}
-  .payment-status-approved{background:#E4F3E9;color:#17633A;}
-  .payment-status-rejected{background:#FBE8E8;color:#A52A2A;}
-  .payment-status-complete{background:#E8EEF4;color:#345064;}
+  .payment-status-tag{display:inline-flex;align-items:center;min-height:32px;padding:5px 12px;border:1px solid transparent;border-radius:999px;font-size:12px;font-weight:700;line-height:1.2;white-space:nowrap;}
+  .payment-status-pending{background:#FFF4D6;border-color:#F2D271;color:#765400;}
+  .payment-status-approved{background:#E4F3E9;border-color:#B9DEC6;color:#17633A;}
+  .payment-status-rejected{background:#FBE8E8;border-color:#EFC1C1;color:#A52A2A;}
+  .payment-status-complete{background:#E8EEF4;border-color:#CBD8E2;color:#345064;}
   .payment-date{color:var(--payment-ink-600);}
   .payment-amount{text-align:right;font-variant-numeric:tabular-nums;color:var(--payment-ink-900);font-weight:600;}
   .payment-action-cell{text-align:right;}
   .payment-view{
-    height:32px;padding:0 16px;
+    min-width:64px;height:36px;padding:0 16px;
     border-radius:var(--payment-radius-sm);
-    border:1px solid var(--payment-green-700);
-    background:var(--payment-white);
-    color:var(--payment-green-700);
-    font-size:12px;font-weight:700;
+    border:1px solid var(--payment-border);
+    background:var(--payment-cream-50);
+    color:var(--payment-green-800);
+    font-family:inherit;
+    font-size:12px;
+    font-weight:700;
+    line-height:1;
     cursor:pointer;
-    transition:background .15s ease,color .15s ease;
+    transition:background .15s ease,color .15s ease,border-color .15s ease,box-shadow .15s ease;
   }
-  .payment-view:hover{background:var(--payment-green-800);color:var(--payment-cream-50);}
+  .payment-view:hover{background:var(--payment-green-800);border-color:var(--payment-green-800);color:var(--payment-cream-50);}
+  .payment-view:focus-visible,.payment-page-btn:focus-visible{outline:3px solid var(--payment-gold-300);outline-offset:2px;}
 
   .payment-empty{padding:50px 30px;text-align:center;color:var(--payment-ink-400);font-size:13.5px;}
 
@@ -223,12 +227,6 @@ include '../UxUI-Back/Includes/header.php';
     padding:14px 30px 26px;
   }
 
-  @media (max-width:900px){
-    .payment-app{grid-template-columns:1fr;grid-template-areas:"topbar" "main";}
-    .payment-toolbar{align-items:stretch;}
-    .payment-field input,.payment-field select{width:100%;}
-    .payment-perpage{width:100%;}
-    .payment-btn-primary{justify-content:center;}
   .payment-page-btn {
     height: 32px;
     min-width: 32px;
@@ -254,6 +252,32 @@ include '../UxUI-Back/Includes/header.php';
   .payment-page-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+  }
+
+  @media (max-width:900px){
+    .payment-app{grid-template-columns:1fr;grid-template-areas:"topbar" "main";}
+    .payment-toolbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:end;}
+    .payment-toolbar-spacer{display:none;}
+    .payment-field input,.payment-field select{width:100%;min-width:0;}
+    .payment-perpage{width:100%;}
+    .payment-btn-primary{justify-content:center;}
+    .payment-table-wrap{overflow-x:auto;padding:0 18px 8px;-webkit-overflow-scrolling:touch;}
+    table.payment-table{min-width:760px;}
+  }
+
+  @media (max-width:600px){
+    .payment-main{padding:18px 12px 36px;}
+    .payment-panel-header{padding:18px 16px;}
+    .payment-panel-title{font-size:19px;}
+    .payment-toolbar{gap:12px;padding:16px;}
+    .payment-field label{font-size:12px;}
+    .payment-field input,.payment-field select,.payment-perpage{height:44px;font-size:13px;}
+    .payment-btn{height:44px;padding:0 12px;}
+    .payment-panel-footer{gap:12px;align-items:flex-start;flex-direction:column;padding:12px 16px 20px;}
+    #payment-pagination{max-width:100%;flex-wrap:wrap;}
+    .payment-page-btn{min-height:40px;min-width:40px;}
+    .payment-view{min-height:40px;}
+    .payment-status-tag{min-height:34px;font-size:12px;}
   }
 </style>
 

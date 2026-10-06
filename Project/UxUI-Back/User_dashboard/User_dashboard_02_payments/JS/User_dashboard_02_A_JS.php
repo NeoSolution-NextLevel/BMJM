@@ -245,7 +245,8 @@
     $(document).ready(function() {
         User_Dashboard_02_A_Fetch_Profile_And_Payments();
 
-        $('#btn-apply-filter').on('click', function(){
+        $('#btn-clear-range').on('click', function(){
+            $('#tx-start-date, #tx-end-date').val('');
             User_Dashboard_02_A_Fetch_Payments();
         });
         
