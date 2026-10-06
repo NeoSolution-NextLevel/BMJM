@@ -37,7 +37,9 @@ if (isset($_POST['id']) || isset($_POST['payment_id'])) {
             "bank_approve_state" => "0",
             "bank_approve_cancel" => "0",
             "bank_review_reason" => "",
-            "bank_submitted_date" => ""
+            "bank_submitted_date" => "",
+            "bank_amount" => "",
+            "bank_slip_no" => ""
         ];
 
         if ((string) $single_data->get_is_bank_deposit() === '1') {
@@ -49,6 +51,8 @@ if (isset($_POST['id']) || isset($_POST['payment_id'])) {
                 $payment_data['bank_approve_cancel'] = $bank_data->get_approve_cancel();
                 $payment_data['bank_review_reason'] = $bank_data->get_resion_to_approve();
                 $payment_data['bank_submitted_date'] = $bank_data->get_sdt();
+                $payment_data['bank_amount'] = $bank_data->get_amount();
+                $payment_data['bank_slip_no'] = $bank_data->get_slip_no();
             }
         }
 

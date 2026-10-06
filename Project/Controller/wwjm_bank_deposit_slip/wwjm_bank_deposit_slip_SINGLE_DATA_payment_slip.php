@@ -7,6 +7,7 @@ class wwjm_bank_deposit_slip_SINGLE_DATA_payment_slip
 
     private $ast = "1";
     private $image_pth;
+    private $slip_no;
     private $sdt;
 
     private $wwjm_payment_slip_id;
@@ -44,6 +45,7 @@ class wwjm_bank_deposit_slip_SINGLE_DATA_payment_slip
                 $this->id = $row['id'];
                 $this->ast = $row['ast'];
                 $this->image_pth = $row['image_pth'];
+                $this->slip_no = $row['slip_no'] ?? '';
                 $this->sdt = $row['sdt'];
                 $this->wwjm_payment_slip_id = $row['wwjm_payment_slip_id'];
                 $this->main_user_login_id = $row['main_user_login_id'];
@@ -81,6 +83,11 @@ class wwjm_bank_deposit_slip_SINGLE_DATA_payment_slip
     public function get_image_pth()
     {
         return $this->image_pth;
+    }
+
+    public function get_slip_no()
+    {
+        return $this->slip_no;
     }
 
     public function get_sdt()
