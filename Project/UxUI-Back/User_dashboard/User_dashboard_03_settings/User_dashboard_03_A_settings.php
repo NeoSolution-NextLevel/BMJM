@@ -73,8 +73,7 @@ $page_title = "Account Settings · bmjm Member";
 
   .settings-grid {
     display: grid;
-    grid-template-columns: 3fr 2fr;
-    gap: 24px;
+    grid-template-columns: minmax(0, 1fr);
   }
   
   .settings-panel {
@@ -97,8 +96,22 @@ $page_title = "Account Settings · bmjm Member";
   .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--dashboard3-ink-600); margin-bottom: 8px; }
   .form-group input, .form-group select {
     width: 100%; height: 46px; border: 1px solid var(--dashboard3-border); border-radius: var(--dashboard3-radius-sm);
-    padding: 0 16px; font-size: 14px; font-family: inherit; color: var(--dashboard3-ink-900);
+    box-sizing: border-box; padding: 0 16px; font-size: 14px; font-family: inherit; color: var(--dashboard3-ink-900);
     transition: all 0.2s ease; outline:none; background:var(--dashboard3-white);
+  }
+  .form-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 42px;
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--dashboard3-green-700) 50%),
+      linear-gradient(135deg, var(--dashboard3-green-700) 50%, transparent 50%);
+    background-position:
+      calc(100% - 18px) 50%,
+      calc(100% - 13px) 50%;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+    cursor: pointer;
   }
   .form-group input:focus, .form-group select:focus { border-color: var(--dashboard3-gold-500); box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.15); }
   .form-group input[readonly] { background: var(--dashboard3-cream-50); color: var(--dashboard3-ink-600); cursor:not-allowed; }
@@ -111,6 +124,34 @@ $page_title = "Account Settings · bmjm Member";
   }
   .profile-fields-grid .form-group { margin-bottom: 0; min-width: 0; }
   .profile-fields-grid .profile-field-full { grid-column: 1 / -1; }
+  .profile-address-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: 16px;
+    grid-column: 1 / -1;
+  }
+  .profile-address-row .form-group { margin-bottom: 0; min-width: 0; }
+  .profile-payment-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    grid-column: 1 / -1;
+  }
+  .profile-payment-row .form-group { margin-bottom: 0; min-width: 0; }
+  .profile-contact-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    grid-column: 1 / -1;
+  }
+  .profile-contact-row .form-group { margin-bottom: 0; min-width: 0; }
+  .profile-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .profile-actions #profile-settings-toast { grid-column: 1 / -1; }
   
   .btn-submit {
     height: 46px; width: 100%; background: linear-gradient(135deg, var(--dashboard3-gold-500), var(--dashboard3-gold-600));
@@ -119,6 +160,72 @@ $page_title = "Account Settings · bmjm Member";
     box-shadow: 0 4px 14px rgba(184, 146, 61, 0.3);
   }
   .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(184, 146, 61, 0.4); }
+
+  .btn-password-settings {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 46px;
+    min-width: 176px;
+    justify-content: center;
+    justify-self: stretch;
+    padding: 0 16px;
+    border: 1px solid var(--dashboard3-green-700);
+    border-radius: var(--dashboard3-radius-sm);
+    background: var(--dashboard3-white);
+    color: var(--dashboard3-green-800);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .btn-password-settings:hover { background: var(--dashboard3-cream-50); }
+  .btn-password-settings svg { width: 17px; height: 17px; }
+
+  .password-settings-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(11, 46, 36, 0.58);
+  }
+  .password-settings-modal.is-open { display: flex; }
+  .password-settings-dialog {
+    width: min(520px, 100%);
+    max-height: min(90vh, 720px);
+    overflow-y: auto;
+    background: var(--dashboard3-white);
+    border: 1px solid var(--dashboard3-border);
+    border-radius: var(--dashboard3-radius-lg);
+    box-shadow: 0 24px 64px rgba(11, 46, 36, 0.24);
+  }
+  .password-settings-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--dashboard3-cream-100);
+  }
+  .password-settings-header h2 {
+    margin: 0;
+    color: var(--dashboard3-green-950);
+    font: 700 17px 'Poppins', sans-serif;
+  }
+  .password-settings-close {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--dashboard3-border);
+    border-radius: var(--dashboard3-radius-sm);
+    background: var(--dashboard3-cream-50);
+    color: var(--dashboard3-green-800);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .password-settings-dialog .settings-form-body { padding: 22px; }
   
   .toggle-switch { position: relative; width: 48px; height: 28px; flex: 0 0 48px; }
   .toggle-track {
@@ -182,7 +289,8 @@ $page_title = "Account Settings · bmjm Member";
     display: flex;
     align-items: center;
     gap: 8px;
-    margin: -8px 0 20px;
+    min-height: 28px;
+    margin: 0;
     color: var(--dashboard3-ink-600);
     font-size: 12.5px;
     font-weight: 600;
@@ -197,12 +305,38 @@ $page_title = "Account Settings · bmjm Member";
   @media (max-width: 900px) {
     .dashboard3-app { grid-template-columns: 1fr; grid-template-areas: "topbar" "main"; }
     .settings-grid { grid-template-columns: 1fr; }
-    .dashboard3-main { padding: 16px 14px 28px; }
-    .settings-form-body { padding: 18px; }
+    .dashboard3-topbar { padding: 0 18px; }
+    .dashboard3-main { padding: 20px 18px 28px; }
+    .settings-form-body { padding: 20px; }
     .form-group input { font-size: 16px; height: 48px; }
-    .profile-fields-grid { grid-template-columns: 1fr; }
+    .profile-fields-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .profile-fields-grid .profile-field-full { grid-column: auto; }
-    .member-summary { grid-template-columns: 1fr; }
+    .profile-address-row { grid-column: 1 / -1; }
+    .member-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 600px) {
+    .dashboard3-topbar { min-height: 64px; padding: 0 12px; }
+    .dashboard3-main { padding: 14px 12px 24px; }
+    .settings-panel { border-radius: 12px; }
+    .settings-panel-header { padding: 15px 16px; }
+    .settings-form-body { padding: 16px; }
+    .profile-fields-grid { grid-template-columns: 1fr; gap: 16px; }
+    .profile-fields-grid .profile-field-full,
+    .profile-address-row,
+    .profile-contact-row,
+    .profile-payment-row { grid-column: auto; }
+    .profile-address-row,
+    .profile-contact-row,
+    .profile-payment-row { grid-template-columns: 1fr; gap: 16px; }
+    .member-summary { gap: 8px; margin-bottom: 18px; }
+    .member-summary-item { padding: 10px; }
+    .password-settings-dialog .settings-form-body { padding: 16px; }
+    .password-settings-header { padding: 14px 16px; }
+    .profile-actions { grid-template-columns: 1fr; }
+    .profile-actions #profile-settings-toast { grid-column: auto; }
+    .btn-password-settings { width: 100%; }
+    .password-settings-modal { padding: 10px; }
   }
 </style>
 
@@ -269,101 +403,111 @@ $page_title = "Account Settings · bmjm Member";
                         <div class="profile-fields-grid">
                             <div class="form-group">
                                 <label>Full Name</label>
-                                <input type="text" id="setting_name">
+                              <input type="text" id="setting_name" required>
                             </div>
                             <div class="form-group">
                                 <label>Registered Email</label>
-                                <input type="email" id="setting_email">
+                              <input type="email" id="setting_email" required>
                             </div>
                             <div class="form-group">
                                 <label>NIC (Read Only)</label>
                                 <input type="text" id="setting_nic" readonly>
                             </div>
-                            <div class="form-group profile-field-full">
-                                <label>Residence Address</label>
-                                <input type="text" id="setting_address_display">
-                            </div>
-                            <div class="form-group">
-                                <label>Mobile Number</label>
-                                <input type="text" id="setting_mobile" required>
-                            </div>
-                            <div class="form-group">
-                                <label>WhatsApp Number</label>
-                                <input type="text" id="setting_whatsapp">
-                            </div>
-                            <div class="form-group">
+                            <div class="profile-address-row">
+                              <div class="form-group">
                                 <label for="setting_road">Street / Road</label>
                                 <select id="setting_road" required>
-                                    <option value="">Select road</option>
+                                  <option value="">Select road</option>
                                 </select>
+                              </div>
+                              <div class="form-group">
+                                <label for="setting_address_display">Residence Address</label>
+                                <input type="text" id="setting_address_display" required>
+                              </div>
                             </div>
-                            <div class="form-group">
+                            <label class="checkbox-row profile-field-full">
+                                <input type="checkbox" id="setting_whatsapp_same" onchange="sync_settings_whatsapp()">
+                                WhatsApp number is same as mobile
+                            </label>
+                            <div class="profile-contact-row">
+                              <div class="form-group">
+                                <label for="setting_mobile">Mobile Number</label>
+                                <input type="tel" id="setting_mobile" inputmode="numeric" minlength="11" maxlength="11" pattern="[0-9]{11}" required>
+                              </div>
+                              <div class="form-group">
+                                <label for="setting_whatsapp">WhatsApp Number</label>
+                                <input type="tel" id="setting_whatsapp" inputmode="numeric" minlength="11" maxlength="11" pattern="[0-9]{11}">
+                              </div>
+                            </div>
+                            <div class="profile-payment-row">
+                              <div class="form-group">
                                 <label for="setting_monthly_payment">Monthly Subscription Amount</label>
                                 <input type="number" id="setting_monthly_payment" min="0" step="0.01" required>
-                            </div>
-                            <div class="form-group">
+                              </div>
+                              <div class="form-group">
                                 <label for="setting_zakath_type">Zakath Status</label>
                                 <select id="setting_zakath_type" required>
-                                    <option value="none">Not applicable</option>
-                                    <option value="payee">Zakath Payee</option>
-                                    <option value="receiver">Zakath Receiver</option>
+                                  <option value="none">Not applicable</option>
+                                  <option value="payee">Zakath Payee</option>
+                                  <option value="receiver">Zakath Receiver</option>
                                 </select>
+                              </div>
                             </div>
                         </div>
-                        <label class="checkbox-row">
-                            <input type="checkbox" id="setting_whatsapp_same" onchange="sync_settings_whatsapp()">
-                            WhatsApp number is same as mobile
-                        </label>
-                        <div id="profile-settings-toast" class="toast-alert" role="status" aria-live="polite"></div>
-                        <button type="submit" class="btn-submit">Update Profile</button>
+                          <div class="profile-actions">
+                            <div id="profile-settings-toast" class="toast-alert" role="status" aria-live="polite"></div>
+                            <button type="submit" class="btn-submit">Update Profile</button>
+                            <button type="button" class="btn-password-settings" onclick="open_password_settings()">
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                              Change Password
+                            </button>
+                          </div>
                     </form>
                 </div>
             </div>
-
-            <!-- Security Settings -->
-            <div class="settings-panel">
-                <div class="settings-panel-header">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                    <h2>Security & Password</h2>
-                </div>
-                <div class="settings-form-body">
-                    <form id="security-settings-form" onsubmit="update_password_details(event)">
-                        <div class="form-group">
-                            <label>Current Password</label>
-                            <input type="password" id="setting_old_password" required>
-                        </div>
-                        <div class="form-group">
-                            <label>New Password</label>
-                            <input type="password" id="setting_new_password" required minlength="6">
-                        </div>
-                        <div class="form-group">
-                            <label>Confirm New Password</label>
-                            <input type="password" id="setting_confirm_password" required minlength="6">
-                        </div>
-                        
-                        <div class="form-group" style="padding-top:10px; border-top:1px solid var(--dashboard3-cream-100); margin-top:24px;">
-                            <label style="display:flex; align-items:center; justify-content:space-between; cursor:pointer;">
-                                <span>
-                                    <strong style="color:var(--dashboard3-green-950); display:block; font-size:14px; margin-bottom:4px;">Two-Factor Authentication (OTP)</strong>
-                                    <span style="color:var(--dashboard3-ink-400); font-size:11.5px; font-weight:normal;">Require an SMS code when logging in for enhanced security.</span>
-                                </span>
-                                <!-- Custom Toggle Switch -->
-                                <div class="toggle-switch">
-                                    <input type="checkbox" id="setting_2fa_toggle" onchange="toggle_2fa_setting(this)" style="display:none;">
-                                    <div class="toggle-track"></div>
-                                </div>
-                            </label>
-                        </div>
-
-                        <button type="submit" class="btn-submit" style="margin-top: 10px;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 2v6h6"/></svg>
-                            Change Password
-                        </button>
-                    </form>
-                </div>
-            </div>
-            
         </div>
+
+                <div class="password-settings-modal" id="password-settings-modal" aria-hidden="true" onclick="close_password_settings()">
+                  <section class="password-settings-dialog" role="dialog" aria-modal="true" aria-labelledby="password-settings-title" onclick="event.stopPropagation()">
+                    <header class="password-settings-header">
+                      <h2 id="password-settings-title">Security Settings</h2>
+                      <button type="button" class="password-settings-close" aria-label="Close" onclick="close_password_settings()">&times;</button>
+                    </header>
+                    <div class="settings-form-body">
+                      <div id="password-settings-toast" class="toast-alert" role="status" aria-live="polite"></div>
+                      <form id="security-settings-form" onsubmit="update_password_details(event)">
+                        <div class="form-group">
+                          <label for="setting_old_password">Current Password</label>
+                          <input type="password" id="setting_old_password" required autocomplete="current-password">
+                        </div>
+                        <div class="form-group">
+                          <label for="setting_new_password">New Password</label>
+                          <input type="password" id="setting_new_password" required minlength="6" autocomplete="new-password">
+                        </div>
+                        <div class="form-group">
+                          <label for="setting_confirm_password">Confirm New Password</label>
+                          <input type="password" id="setting_confirm_password" required minlength="6" autocomplete="new-password">
+                        </div>
+                        <div class="form-group" style="padding-top:10px; border-top:1px solid var(--dashboard3-cream-100); margin-top:24px;">
+                          <label style="display:flex; align-items:center; justify-content:space-between; cursor:pointer;">
+                            <span>
+                              <strong style="color:var(--dashboard3-green-950); display:block; font-size:14px; margin-bottom:4px;">Two-Factor Authentication (OTP)</strong>
+                              <span style="color:var(--dashboard3-ink-600); font-size:11.5px; font-weight:normal;">Require an SMS code when logging in for enhanced security.</span>
+                            </span>
+                            <span class="toggle-switch">
+                              <input type="checkbox" id="setting_2fa_toggle" onchange="toggle_2fa_setting(this)" style="display:none;">
+                              <span class="toggle-track"></span>
+                            </span>
+                          </label>
+                        </div>
+                        <button type="submit" class="btn-submit" style="margin-top:10px;">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 2v6h6"/></svg>
+                          Change Password
+                        </button>
+                      </form>
+                    </div>
+                  </section>
+                </div>
     </main>
   </div>
 </div>

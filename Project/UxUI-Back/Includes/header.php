@@ -369,6 +369,7 @@ window.bmjmLoginUrl = <?php echo json_encode($bmjm_login_url); ?>;
     if (!button) return;
 
     event.preventDefault();
+    if (!window.confirm('Are you sure you want to log out?')) return;
 
     var logoutUrl = button.getAttribute('data-logout-url') || window.bmjmLogoutUrl || '../View-List/Main/Main_User_Logout.php';
     var loginUrl = button.getAttribute('data-login-url') || window.bmjmLoginUrl || '../Login.php';

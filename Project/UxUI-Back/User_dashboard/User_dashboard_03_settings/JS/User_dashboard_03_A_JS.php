@@ -22,6 +22,42 @@
         setTimeout(() => { toast.style.display = 'none'; }, 4000);
     }
 
+    function showPasswordToast(message, type) {
+        const toast = document.getElementById('password-settings-toast');
+        if (!toast) return;
+        toast.className = 'toast-alert ' + type;
+        toast.innerText = message;
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 4000);
+    }
+
+    let passwordSettingsReturnFocus = null;
+
+    function open_password_settings() {
+        const modal = document.getElementById('password-settings-modal');
+        if (!modal) return;
+        passwordSettingsReturnFocus = document.activeElement;
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        document.getElementById('setting_old_password').focus();
+    }
+
+    function close_password_settings() {
+        const modal = document.getElementById('password-settings-modal');
+        if (!modal || !modal.classList.contains('is-open')) return;
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        if (passwordSettingsReturnFocus && typeof passwordSettingsReturnFocus.focus === 'function') {
+            passwordSettingsReturnFocus.focus();
+        }
+    }
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') close_password_settings();
+    });
+
     function showProfileUpdateError(message) {
         showProfileToast(message, 'error');
         load_settings_member_profile(false);
@@ -38,7 +74,7 @@
     }
 
     function normalizeSettingsPhone(value) {
-        return String(value || '').replace(/[^\d+]/g, '').trim();
+        return String(value || '').replace(/\D/g, '').trim();
     }
 
     function normalizeSettingsEmail(value) {
@@ -214,38 +250,53 @@
         }
 
         if (!name) {
-            showProfileUpdateError("Please enter your full name.");
+            showProfileToast("Please enter your full name.", 'error');
             return false;
         }
 
         if (!email) {
-            showProfileUpdateError("Please enter your email address.");
+            showProfileToast("Please enter your email address.", 'error');
             return false;
         }
 
         const emailField = document.getElementById("setting_email");
         if (emailField && !emailField.checkValidity()) {
-            showProfileUpdateError("Please enter a valid email address.");
+            showProfileToast("Please enter a valid email address.", 'error');
             return false;
         }
 
         if (!address) {
-            showProfileUpdateError("Please enter your residence address.");
+            showProfileToast("Please enter your residence address.", 'error');
             return false;
         }
 
         if (!mobile) {
-            showProfileUpdateError("Please enter your mobile number.");
+            showProfileToast("Please enter your mobile number.", 'error');
+            return false;
+        }
+
+        if (!/^\d{11}$/.test(mobile)) {
+            showProfileToast("Mobile number must contain exactly 10 digits.", 'error');
+            return false;
+        }
+
+        if (whatsapp && !/^\d{11}$/.test(whatsapp)) {
+            showProfileToast("WhatsApp number must contain exactly 10 digits.", 'error');
             return false;
         }
 
         if (!roadId) {
-            showProfileUpdateError("Please select your street or road.");
+            showProfileToast("Please select your street or road.", 'error');
             return false;
         }
 
         if (monthlyPayment === '' || !Number.isFinite(Number(monthlyPayment)) || Number(monthlyPayment) < currentMonthlyPayment) {
-            showProfileUpdateError("Monthly subscription amount must be equal to or greater than " + formatSettingsMoneyLK(currentMonthlyPayment) + ".");
+            showProfileToast("Monthly subscription amount must be equal to or greater than " + formatSettingsMoneyLK(currentMonthlyPayment) + ".", 'error');
+            return false;
+        }
+
+        if (!['none', 'payee', 'receiver'].includes(zakathType)) {
+            showProfileToast("Please select a valid zakath status.", 'error');
             return false;
         }
 
@@ -307,14 +358,19 @@
         const oldP = document.getElementById("setting_old_password").value;
         const newP = document.getElementById("setting_new_password").value;
         const confP = document.getElementById("setting_confirm_password").value;
+
+        if (!oldP) {
+            showPasswordToast("Please enter your current password.", "error");
+            return;
+        }
         
         if (newP !== confP) {
-            showToast("New passwords do not match!", "error");
+            showPasswordToast("New passwords do not match!", "error");
             return;
         }
 
         if (newP.length < 6) {
-            showToast("New password must be at least 6 characters.", "error");
+            showPasswordToast("New password must be at least 6 characters.", "error");
             return;
         }
 
@@ -339,19 +395,22 @@
                 try {
                     const json = JSON.parse(response);
                     if (json && json[0] && json[0].error === "0") {
+                        document.getElementById("setting_old_password").value = '';
+                        document.getElementById("setting_new_password").value = '';
+                        document.getElementById("setting_confirm_password").value = '';
+                        close_password_settings();
                         showToast("Password changed securely!", "success");
-                        document.getElementById("security-settings-form").reset();
                     } else {
-                        showToast(json[0].error || "Failed to update password.", "error");
+                        showPasswordToast(json[0].error || "Failed to update password.", "error");
                     }
                 } catch(e) {
-                    showToast("Server configuration error.", "error");
+                    showPasswordToast("Server configuration error.", "error");
                 }
             },
             error: function() {
                 if (submitBtn) submitBtn.disabled = false;
                 if (typeof bmjmHideProcessing === 'function') bmjmHideProcessing();
-                showToast("Failed to update password.", "error");
+                showPasswordToast("Failed to update password.", "error");
             }
         });
     }
@@ -378,24 +437,24 @@
                     const json = JSON.parse(response);
                     if (json && json[0] && json[0].error === "0") {
                         if (newStatus === 1) {
-                            showToast("2FA successfully enabled! You will now receive an OTP via SMS when logging in.", "success");
+                            showPasswordToast("2FA successfully enabled! You will now receive an OTP via SMS when logging in.", "success");
                         } else {
-                            showToast("2FA disabled. Standard password login is now active.", "success");
+                            showPasswordToast("2FA disabled. Standard password login is now active.", "success");
                         }
                     } else {
                         checkbox.checked = !checkbox.checked; // Revert visually on fail
-                        showToast("Failed to update 2FA settings.", "error");
+                        showPasswordToast("Failed to update 2FA settings.", "error");
                     }
                 } catch(e) {
                     checkbox.checked = !checkbox.checked;
-                    showToast("System error occurred.", "error");
+                    showPasswordToast("System error occurred.", "error");
                 }
             },
             error: function() {
                 checkbox.disabled = false;
                 checkbox.checked = !checkbox.checked;
                 if (typeof bmjmHideProcessing === 'function') bmjmHideProcessing();
-                showToast("Failed to update 2FA settings.", "error");
+                showPasswordToast("Failed to update 2FA settings.", "error");
             }
         });
     }

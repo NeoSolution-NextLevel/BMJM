@@ -51,8 +51,11 @@ if (!$member->get_state() || (string) $member->get_ast() !== '1') {
     profile_update_response('error', 'Member profile not found.');
 }
 
+if ($name === '') {
+    profile_update_response('error', 'Please enter your full name.');
+}
 if ($email === '') {
-    $email = strtolower(trim($member->get_email()));
+    profile_update_response('error', 'Please enter your email address.');
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -61,8 +64,11 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 if ($address === '') {
     profile_update_response('error', 'Please enter your residence address.');
 }
-if ($mobile === '') {
-    profile_update_response('error', 'Please enter your mobile number.');
+if (!preg_match('/^[0-9]{10}$/D', $mobile)) {
+    profile_update_response('error', 'Mobile number must contain exactly 10 digits.');
+}
+if ($whatsapp !== '' && !preg_match('/^[0-9]{10}$/D', $whatsapp)) {
+    profile_update_response('error', 'WhatsApp number must contain exactly 10 digits.');
 }
 
 $login_id = intval($member->get_main_user_login_id());
