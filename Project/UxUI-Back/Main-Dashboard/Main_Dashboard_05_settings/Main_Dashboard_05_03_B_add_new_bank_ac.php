@@ -8,7 +8,7 @@ include '../UxUI-Back/Includes/header.php';
 <style>
   /* ===================================================================
      bmjm Admin - Design tokens
-     Bambalapitiya Jumma Mosque - Settings - Add New Bank Account
+     Bambalapitiya Jumma Masjid - Settings - Add New Bank Account
      =================================================================== */
 
 
@@ -278,7 +278,7 @@ include '../UxUI-Back/Includes/header.php';
           </div>
           <div class="settings-bank-account-new-field-block" id="settings-bank-account-new-field-holder">
             <label for="Settings_body_01_D_08_ac_name">Account Holder Name</label>
-            <input type="text" id="Settings_body_01_D_08_ac_name" placeholder="e.g. Bambalapitiya Jumma Mosque" required>
+            <input type="text" id="Settings_body_01_D_08_ac_name" placeholder="e.g. Bambalapitiya Jumma Masjid" required>
           </div>
           <div class="settings-bank-account-new-field-block" id="settings-bank-account-new-field-swift">
             <label for="Settings_body_01_D_08_swif_code">Swift Code</label>

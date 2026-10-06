@@ -13,7 +13,7 @@ $payment_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 <style>
   /* ===================================================================
      bmjm Admin — Design tokens
-     Bambalapitiya Jumma Mosque · Dashboard · Payment Slip View
+     Bambalapitiya Jumma Masjid · Dashboard · Payment Slip View
      =================================================================== */
   :root{
     --payment-slip-green-950:#0B2E24;
@@ -318,9 +318,9 @@ $payment_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
         <div class="payment-slip-receipt" id="payment-slip-receipt">
           <div class="payment-slip-receipt-header">
             <div class="payment-slip-brand">
-              <img src="../assets/images/common-images/logo.png" class="payment-slip-logo" alt="Bambalapitiya Jumma Mosque logo">
+              <img src="../assets/images/common-images/logo.png" class="payment-slip-logo" alt="Bambalapitiya Jumma Masjid logo">
               <div class="payment-slip-org-copy">
-                <p class="payment-slip-org-name">BAMBALAPITIYA JUMMA MOSQUE</p>
+                <p class="payment-slip-org-name">BAMBALAPITIYA JUMMA MASJID</p>
                 <p class="payment-slip-org-sub">Official payment receipt</p>
                 <p class="payment-slip-org-line">Bambalapitiya, Colombo, Sri Lanka</p>
                 <p class="payment-slip-org-line">info@bmjm.lk &nbsp;|&nbsp; www.bmjm.lk</p>
@@ -372,7 +372,7 @@ $payment_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
           </table>
 
           <p class="payment-slip-thanks">Thank You, Come Again</p>
-          <p class="payment-slip-foot">Bambalapitiya Jumma Mosque &nbsp;|&nbsp; www.bmjm.lk &nbsp;|&nbsp; 011 771 0877 &nbsp;|&nbsp; info@bmjm.lk</p>
+          <p class="payment-slip-foot">Bambalapitiya Jumma Masjid &nbsp;|&nbsp; www.bmjm.lk &nbsp;|&nbsp; 011 771 0877 &nbsp;|&nbsp; info@bmjm.lk</p>
           <p class="payment-slip-foot-credit">Design &amp; Maintain by Neo Solution &nbsp;|&nbsp; hello@neosolution.lk</p>
           </div>
         </div>
@@ -415,7 +415,7 @@ $payment_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
       </div>
     </section>
 
-    <p class="payment-slip-sitefoot">© 2026 Bambalapitiya Jumma Mosque | Neo Solution</p>
+    <p class="payment-slip-sitefoot">© 2026 Bambalapitiya Jumma Masjid | Neo Solution</p>
   </main>
 
 

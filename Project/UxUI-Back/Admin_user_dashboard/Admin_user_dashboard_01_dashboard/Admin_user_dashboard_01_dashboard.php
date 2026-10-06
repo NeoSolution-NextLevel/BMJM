@@ -10,7 +10,7 @@ include '../UxUI-Back/Includes/header.php';
 <style>
   /* ===================================================================
      bmjm Admin — Design tokens
-     Bambalapitiya Jumma Mosque · Dashboard · Member Profile (Dash-Board-02)
+     Bambalapitiya Jumma Masjid · Dashboard · Member Profile (Dash-Board-02)
      =================================================================== */
   :root{
     --dashboard2-green-950:#0B2E24;

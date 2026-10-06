@@ -17,7 +17,7 @@ $policy_sections = [
     [
         'title' => 'How To Request A Refund',
         'paragraphs' => [
-            'To request a refund, contact Bambalapitiya Jumma Mosque within 7 days of the payment date. Include the payer name, phone number, payment date, amount, payment purpose, and transaction reference or receipt.',
+            'To request a refund, contact Bambalapitiya Jumma Masjid within 7 days of the payment date. Include the payer name, phone number, payment date, amount, payment purpose, and transaction reference or receipt.',
         ],
     ],
     [

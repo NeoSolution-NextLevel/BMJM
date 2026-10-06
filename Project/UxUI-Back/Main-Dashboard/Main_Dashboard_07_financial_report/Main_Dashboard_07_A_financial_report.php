@@ -1,4 +1,4 @@
-<?php 
+﻿<?php 
     $pth = "../"; 
     $active_page = "financial-report";
     $page_title = "Financial Report · BMJM Admin";
@@ -449,9 +449,9 @@ include '../UxUI-Back/Includes/header.php';
     <section class="rpt-panel" aria-label="Financial Report Generator">
 
       <div class="rpt-document-header">
-        <img class="rpt-document-logo" src="../assets/images/common-images/logo.png" alt="Bambalapitiya Jumma Mosque">
+        <img class="rpt-document-logo" src="../assets/images/common-images/logo.png" alt="Bambalapitiya Jumma Masjid">
         <div class="rpt-document-brand">
-          <strong>BAMBALAPITIYA JUMMA MOSQUE</strong>
+          <strong>BAMBALAPITIYA JUMMA MASJID</strong>
           <span>Bambalapitiya, Colombo, Sri Lanka</span>
           <span>www.bmjm.lk | 011 771 0877 | info@bmjm.lk</span>
         </div>
@@ -603,7 +603,7 @@ include '../UxUI-Back/Includes/header.php';
       </div>
 
       <div class="rpt-document-footer">
-        BAMBALAPITIYA JUMMA MOSQUE | www.bmjm.lk | 011 771 0877 | info@bmjm.lk<br>
+        BAMBALAPITIYA JUMMA MASJID | www.bmjm.lk | 011 771 0877 | info@bmjm.lk<br>
         Financial Report | Prepared <?php echo date('F j, Y'); ?>
       </div>
 

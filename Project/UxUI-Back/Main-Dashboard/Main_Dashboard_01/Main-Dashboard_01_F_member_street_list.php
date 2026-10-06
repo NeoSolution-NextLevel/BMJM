@@ -8,7 +8,7 @@ include '../UxUI-Back/Includes/header.php';
 <style>
   /* ===================================================================
      bmjm Admin — Design tokens & Full Page Redesign
-     Bambalapitiya Jumma Mosque · Dashboard · Member Street List
+     Bambalapitiya Jumma Masjid · Dashboard · Member Street List
      =================================================================== */
   :root{
     --m-street-green-950:#0B2E24;

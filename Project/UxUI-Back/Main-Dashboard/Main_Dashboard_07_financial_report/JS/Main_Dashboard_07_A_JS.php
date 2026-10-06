@@ -63,7 +63,7 @@
           pdf.setTextColor(11, 46, 36);
           pdf.setFont('helvetica', 'bold');
           pdf.setFontSize(10);
-          pdf.text('BAMBALAPITIYA JUMMA MOSQUE', margin + 31, 17);
+          pdf.text('BAMBALAPITIYA JUMMA MASJID', margin + 31, 17);
           pdf.setFont('helvetica', 'normal');
           pdf.setFontSize(7);
           pdf.setTextColor(90, 106, 98);
@@ -321,7 +321,7 @@
           pdf.setFont('helvetica', 'normal');
           pdf.setFontSize(6.5);
           pdf.setTextColor(90, 106, 98);
-          pdf.text('BAMBALAPITIYA JUMMA MOSQUE | www.bmjm.lk | 011 771 0877 | info@bmjm.lk', margin, pageHeight - 8);
+          pdf.text('BAMBALAPITIYA JUMMA MASJID | www.bmjm.lk | 011 771 0877 | info@bmjm.lk', margin, pageHeight - 8);
           pdf.text('Page ' + pageNumber + ' of ' + pageCount, pageWidth - margin, pageHeight - 8, {align: 'right'});
         }
 

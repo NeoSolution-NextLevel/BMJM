@@ -12,7 +12,7 @@ include '../UxUI-Back/Includes/header.php';
 <style>
   /* ===================================================================
      bmjm Admin — Design tokens (shared values, same as member-list.php)
-     Bambalapitiya Jumma Mosque · Dashboard · Create New Member
+     Bambalapitiya Jumma Masjid · Dashboard · Create New Member
      =================================================================== */
   :root{
     --add-member-green-950:#0B2E24;

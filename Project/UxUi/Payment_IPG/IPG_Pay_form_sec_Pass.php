@@ -481,7 +481,7 @@ $formatted_amount = number_format((float)$amount, 2, '.', ',');
             
             <div class="payment-header">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                <div class="mosque-name">Bambalapitiya Jumma Mosque</div>
+                <div class="mosque-name">Bambalapitiya Jumma Masjid</div>
                 <div class="portal-title">Secure Payment Portal</div>
             </div>
 

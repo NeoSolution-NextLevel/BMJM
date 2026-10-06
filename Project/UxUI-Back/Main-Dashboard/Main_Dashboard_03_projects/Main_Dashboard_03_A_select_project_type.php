@@ -13,7 +13,7 @@ include '../UxUI-Back/Includes/header.php';
 <style>
   /* ===================================================================
      bmjm Admin — Design tokens
-     Bambalapitiya Jumma Mosque · Dashboard · Select Project Type (Redesign)
+     Bambalapitiya Jumma Masjid · Dashboard · Select Project Type (Redesign)
      =================================================================== */
   :root{
     --proj-green-950:#0B2E24;

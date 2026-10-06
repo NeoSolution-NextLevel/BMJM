@@ -21,7 +21,7 @@ $policy_sections = isset($policy_sections) && is_array($policy_sections) ? $poli
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="<?php echo bmjm_policy_escape($policy_intro); ?>">
     <link rel="icon" type="image/png" href="./assets/favicon.png">
-    <title><?php echo bmjm_policy_escape($policy_title); ?> | Bambalapitiya Jumma Mosque</title>
+    <title><?php echo bmjm_policy_escape($policy_title); ?> | Bambalapitiya Jumma Masjid</title>
     <style>
         * {
             box-sizing: border-box;

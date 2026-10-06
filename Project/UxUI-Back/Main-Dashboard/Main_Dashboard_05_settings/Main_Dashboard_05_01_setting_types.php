@@ -8,7 +8,7 @@ include '../UxUI-Back/Includes/header.php';
 <style>
   /* ===================================================================
      bmjm Admin — Settings Types (Bento Navigation Redesign)
-     Bambalapitiya Jumma Mosque · Dashboard · Settings
+     Bambalapitiya Jumma Masjid · Dashboard · Settings
      =================================================================== */
   :root{
     --settings-green-950:#0B2E24;

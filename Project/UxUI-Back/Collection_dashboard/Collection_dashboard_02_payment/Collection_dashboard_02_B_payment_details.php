@@ -184,8 +184,8 @@
                       <!-- ===== Printable receipt ===== -->
                         <div class="payment-slip-receipt" id="payment-02-slip-receipt">
                           <div class="payment-slip-receipt-header">
-                            <img src="../assets/images/common-images/logo.png" class="payment-slip-logo" alt="Bambalapitiya Jumma Mosque logo" onerror="this.style.display='none'">
-                            <p class="payment-slip-org-name">BAMBALAPITIYA JUMMA MOSQUE</p>
+                            <img src="../assets/images/common-images/logo.png" class="payment-slip-logo" alt="Bambalapitiya Jumma Masjid logo" onerror="this.style.display='none'">
+                            <p class="payment-slip-org-name">BAMBALAPITIYA JUMMA MASJID</p>
                             <p class="payment-slip-org-sub">Payment Receipt</p>
                             <p class="payment-slip-org-line">193/73, Asiri Uyana, Kerawalapitiya Road, Hendala, Wattala</p>
                             <p class="payment-slip-org-line">011 771 0877 &nbsp;|&nbsp; info@bmjm.lk</p>
@@ -234,7 +234,7 @@
                           </table>
                 
                           <p class="payment-slip-thanks">Thank You, Come Again</p>
-                          <p class="payment-slip-foot">Bambalapitiya Jumma Mosque &nbsp;|&nbsp; www.bmjm.lk &nbsp;|&nbsp; 011 771 0877 &nbsp;|&nbsp; info@bmjm.lk</p>
+                          <p class="payment-slip-foot">Bambalapitiya Jumma Masjid &nbsp;|&nbsp; www.bmjm.lk &nbsp;|&nbsp; 011 771 0877 &nbsp;|&nbsp; info@bmjm.lk</p>
                           <p class="payment-slip-foot-credit">System Powered by Neo Solution</p>
                         </div>
                 

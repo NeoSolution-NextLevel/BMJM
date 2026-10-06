@@ -1,7 +1,7 @@
 <script type="text/javascript">
   /* ===================================================================
      process_new_member_JS.php — Process New Member form submission
-     Bambalapitiya Jumma Mosque · Admin Dashboard
+     Bambalapitiya Jumma Masjid · Admin Dashboard
      =================================================================== */
 
   let isMemberSubmitting = false;

@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Bambalapitiya Jumma Mosque payment, subscription, terms, and refund policy pages.">
+    <meta name="description" content="Bambalapitiya Jumma Masjid payment, subscription, terms, and refund policy pages.">
     <link rel="icon" type="image/png" href="./assets/favicon.png">
     <title>Bmjm | Payment Information</title>
     <style>
@@ -272,7 +272,7 @@
         <div class="approval-shell">
             <section class="approval-intro">
                 <div>
-                    <div class="approval-kicker"><i class="fa-solid fa-shield-halved"></i>Bambalapitiya Jumma Mosque</div>
+                    <div class="approval-kicker"><i class="fa-solid fa-shield-halved"></i>Bambalapitiya Jumma Masjid</div>
                     <h1>Bmjm Payment Information</h1>
                     <p>Access the required subscription, membership, payment policy, terms, refund, and contact pages for online payment approval.</p>
                 </div>

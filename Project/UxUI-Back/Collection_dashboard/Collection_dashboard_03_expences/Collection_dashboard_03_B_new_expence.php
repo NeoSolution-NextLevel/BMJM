@@ -1,7 +1,7 @@
 <style>
   /* ===================================================================
      bmjm Admin — Form UI Redesign
-     Bambalapitiya Jumma Mosque · Expense Dashboard · Add New Expense
+     Bambalapitiya Jumma Masjid · Expense Dashboard · Add New Expense
      =================================================================== */
   :root{
     --colln-green-950:#0B2E24;

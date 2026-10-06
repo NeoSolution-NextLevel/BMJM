@@ -15,7 +15,7 @@ $needed_contact_person_count = max(0, $needed_contact_person_count);
 <style>
   /* ===================================================================
      bmjm Admin — Design tokens (shared values, same as member-list.php)
-     Bambalapitiya Jumma Mosque · Dashboard · Add New Member
+     Bambalapitiya Jumma Masjid · Dashboard · Add New Member
      =================================================================== */
   :root{
     --add-member-manual-green-950:#0B2E24;

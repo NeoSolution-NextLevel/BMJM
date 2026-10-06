@@ -8,7 +8,7 @@ include '../Includes/header.php';
 <style>
   /* ===================================================================
      bmjm Admin — Design tokens (shared values, same as member-list.php)
-     Bambalapitiya Jumma Mosque · Dashboard · Share By SMS
+     Bambalapitiya Jumma Masjid · Dashboard · Share By SMS
      =================================================================== */
   :root{
     --share-sms-green-950:#0B2E24;

@@ -8,7 +8,7 @@ include '../UxUI-Back/Includes/header.php';
 <style>
   /* ===================================================================
      bmjm Admin — Design tokens & Full Page Redesign
-     Bambalapitiya Jumma Mosque · Dashboard · Add New Road
+     Bambalapitiya Jumma Masjid · Dashboard · Add New Road
      =================================================================== */
   :root{
     --e-road-green-950:#0B2E24;

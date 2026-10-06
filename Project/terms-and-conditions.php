@@ -7,7 +7,7 @@ $policy_sections = [
         'title' => 'Use Of The Website',
         'paragraphs' => [
             'By using this website, you agree to provide accurate information and to use the website only for lawful membership, subscription, donation, and mosque-service purposes.',
-            'Bambalapitiya Jumma Mosque may update website features, payment options, account access rules, and these terms when required for operational, security, or compliance reasons.',
+            'Bambalapitiya Jumma Masjid may update website features, payment options, account access rules, and these terms when required for operational, security, or compliance reasons.',
         ],
     ],
     [
@@ -33,7 +33,7 @@ $policy_sections = [
     [
         'title' => 'Governing Law',
         'paragraphs' => [
-            'These terms are governed by the applicable laws of Sri Lanka. Any concern should first be raised with Bambalapitiya Jumma Mosque so it can be reviewed and resolved in good faith.',
+            'These terms are governed by the applicable laws of Sri Lanka. Any concern should first be raised with Bambalapitiya Jumma Masjid so it can be reviewed and resolved in good faith.',
         ],
     ],
 ];

@@ -158,9 +158,9 @@
     <div class="site-footer-inner">
         <section class="site-footer-col">
             <div class="site-footer-brand">
-                <img src="<?php echo $pth; ?>assets/images/common-images/logo.png" alt="Bambalapitiya Jumma Mosque">
+                <img src="<?php echo $pth; ?>assets/images/common-images/logo.png" alt="Bambalapitiya Jumma Masjid">
                 <div>
-                    <h2>Bambalapitiya Jumma Mosque</h2>
+                    <h2>Bambalapitiya Jumma Masjid</h2>
                     <p>Member subscriptions and payment information.</p>
                 </div>
             </div>
@@ -191,14 +191,14 @@
             <div class="site-footer-contact">
                 <p><i class="fa-solid fa-phone"></i><a href="tel:+947034457812">+94 70 344 578 12</a></p>
                 <p><i class="fa-solid fa-envelope"></i><a href="mailto:Bambalapitiyajummamasjid@gmail.com">Bambalapitiyajummamasjid@gmail.com</a></p>
-                <p><i class="fa-solid fa-location-dot"></i>Bambalapitiya Jumma Mosque, Colombo</p>
+                <p><i class="fa-solid fa-location-dot"></i>Bambalapitiya Jumma Masjid, Colombo</p>
             </div>
         </section>
     </div>
 
     <div class="site-footer-bottom">
         <div class="site-footer-bottom-inner">
-            <span>Copyright @ 2026 - BAMBALAPITIYA JUMMA MOSQUE</span>
+            <span>Copyright @ 2026 - BAMBALAPITIYA JUMMA MASJID</span>
             <span>Design & Maintain by <a href="https://www.neosolution.lk/" target="_blank" rel="noopener noreferrer">Neo Solution</a></span>
         </div>
     </div>

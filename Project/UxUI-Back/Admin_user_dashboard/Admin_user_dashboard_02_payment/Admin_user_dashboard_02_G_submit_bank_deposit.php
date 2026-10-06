@@ -8,7 +8,7 @@ include '../UxUI-Back/Includes/header.php';
 <style>
   /* ===================================================================
      bmjm Admin — Design tokens (shared values)
-     Bambalapitiya Jumma Mosque · Dashboard · Payment · Submit Bank Deposit
+     Bambalapitiya Jumma Masjid · Dashboard · Payment · Submit Bank Deposit
      =================================================================== */
   :root{
     --payment-deposit-green-950:#0B2E24;

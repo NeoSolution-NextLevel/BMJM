@@ -11,7 +11,7 @@ bmjm_feature_flags_js();
 <style>
   /* ===================================================================
      bmjm Admin — Design tokens (shared values, same as member-list.php)
-     Bambalapitiya Jumma Mosque · Dashboard · Create Payment
+     Bambalapitiya Jumma Masjid · Dashboard · Create Payment
      =================================================================== */
   :root{
     --payment-new-green-950:#0B2E24;

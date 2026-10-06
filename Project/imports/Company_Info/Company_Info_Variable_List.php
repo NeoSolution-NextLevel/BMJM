@@ -8,13 +8,13 @@ class Company_Info_Variable_List
     //-----------------------------------------------------------------------------------------------------------
     private $company_logo_icon = "https://www.bmjm.lk/assets/images/common-images/logo.png";
     private $company_logo_url = "https://www.bmjm.lk/assets/images/common-images/logo.png";
-    private $footer_txt = "BAMBALAPITIYA JUMMA MOSQUE | www.bmjm.lk | 0112263355 | info@bmjm.lk";
-    private $company_name = "BAMBALAPITIYA JUMMA MOSQUE";
+    private $footer_txt = "BAMBALAPITIYA JUMMA MASJID | www.bmjm.lk | 0112263355 | info@bmjm.lk";
+    private $company_name = "BAMBALAPITIYA JUMMA MASJID";
     private $company_web = "bmjm.lk";
     private $full_company_web = "http://localhost:3000/";
     private $default_sending_email = "info@bmjm.lk";
     private $system_problem_sending_email = "info@bmjm.lk";
-    private $company_short_name = "BMJ MOSQUE";
+    private $company_short_name = "BMJ MASJID";
     //-----------------------------------------------------------------------------------------------------------   
     private $company_whatup_number = "9477346601876";
     private $whatusp_url_to_revice_message = "";

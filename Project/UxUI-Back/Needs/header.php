@@ -296,9 +296,9 @@
 <div class="site-header-shell">
     <header class="site-header" aria-label="Main navigation">
         <a class="site-brand" href="<?php echo $pth; ?>index<?php echo $online_exnction; ?>">
-            <img src="<?php echo $pth; ?>assets/images/common-images/logo.png" alt="Bambalapitiya Jumma Mosque">
+            <img src="<?php echo $pth; ?>assets/images/common-images/logo.png" alt="Bambalapitiya Jumma Masjid">
             <span>
-                <span class="site-brand-title">Bambalapitiya Jumma Mosque</span>
+                <span class="site-brand-title">Bambalapitiya Jumma Masjid</span>
                 <!-- <span class="site-brand-subtitle">Payment gateway information</span> -->
             </span>
         </a>
@@ -346,7 +346,7 @@
     <div class="site-mobile-contact">
         <div><a href="tel:+947034457812">+94 70 344 578 12</a></div>
         <div><a href="mailto:Bambalapitiyajummamasjid@gmail.com">Bambalapitiyajummamasjid@gmail.com</a></div>
-        <div>Bambalapitiya Jumma Mosque, Colombo</div>
+        <div>Bambalapitiya Jumma Masjid, Colombo</div>
     </div>
 </aside>
 

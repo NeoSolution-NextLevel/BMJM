@@ -1,7 +1,7 @@
 <script>
   /* ===================================================================
      Main-Dashboard_01_F_JS.php — Member Street List JS logic
-     Bambalapitiya Jumma Mosque · Admin Dashboard (Dash-Board-01-F)
+     Bambalapitiya Jumma Masjid · Admin Dashboard (Dash-Board-01-F)
      =================================================================== */
 
   let memberStreetData = [

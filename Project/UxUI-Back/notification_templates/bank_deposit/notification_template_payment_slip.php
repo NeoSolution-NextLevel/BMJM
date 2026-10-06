@@ -28,7 +28,7 @@ class notification_template_payment_slip
 
     return "<div style='font-family:Arial,sans-serif;color:#1E2B26;line-height:1.6;background:#F7F5EF;padding:24px;'>
       <div style='max-width:640px;margin:0 auto;background:#FFFFFF;border:1px solid #E6E0D0;border-radius:8px;overflow:hidden;'>
-        <div style='background:#0B2E24;padding:26px 30px;text-align:center;'><h2 style='color:#FFFFFF;font-size:22px;margin:0 0 5px;'>Payment received</h2><p style='color:#E4C766;font-size:13px;margin:0;'>Bambalapitiya Jumma Mosque official receipt</p></div>
+        <div style='background:#0B2E24;padding:26px 30px;text-align:center;'><h2 style='color:#FFFFFF;font-size:22px;margin:0 0 5px;'>Payment received</h2><p style='color:#E4C766;font-size:13px;margin:0;'>Bambalapitiya Jumma Masjid official receipt</p></div>
         <div style='padding:30px;'><p>Dear <strong>{$safe_name}</strong>,</p><p>Thank you. Your payment has been recorded successfully.</p>
           <table style='width:100%;border-collapse:collapse;margin:24px 0;background:#FAF7F0;'>
             <tr><td style='padding:11px 14px;font-weight:bold;'>Receipt Number</td><td style='padding:11px 14px;'>{$safe_receipt}</td></tr>

@@ -377,7 +377,7 @@ $page_title = "Payment History · Bmjm Member Portal";
       </div>
     </div>
 
-    <p class="site-footer">© 2026 Wellawatte Jumma Mosque (BMJM) | Powered by Neo Solution</p>
+    <!-- <p class="site-footer">© 2026 Wellawatte Jumma Mosque (BMJM) | Powered by Neo Solution</p> -->
   </main>
 </div>
 

@@ -270,7 +270,7 @@ if ($display_address === '') $display_address = 'N/A';
   <!-- Header -->
   <div class="receipt-header">
     <div>
-      <h1 class="brand-title">Bambalapitiya Jumma Mosque</h1>
+      <h1 class="brand-title">Bambalapitiya Jumma Masjid</h1>
       <div class="brand-sub">Official Member Financial Statement & Payment Receipt</div>
     </div>
     <div class="receipt-badge-top">
@@ -410,7 +410,7 @@ if ($display_address === '') $display_address = 'N/A';
     <?php endif; ?>
 
     <div class="receipt-footer">
-      <div>This is a computer-generated statement issued by Bambalapitiya Jumma Mosque Member Portal.</div>
+      <div>This is a computer-generated statement issued by Bambalapitiya Jumma Masjid Member Portal.</div>
       <div style="margin-top:4px;">© 2026 bmjm | Neo Solution System</div>
     </div>
   </div>

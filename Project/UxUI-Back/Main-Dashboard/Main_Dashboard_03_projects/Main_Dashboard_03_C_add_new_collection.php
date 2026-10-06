@@ -13,7 +13,7 @@ include '../UxUI-Back/Includes/header.php';
 <style>
   /* ===================================================================
      bmjm Admin — Form UI Redesign
-     Bambalapitiya Jumma Mosque · Dashboard · Create New Collection
+     Bambalapitiya Jumma Masjid · Dashboard · Create New Collection
      =================================================================== */
   :root{
     --colln-green-950:#0B2E24;
