@@ -268,10 +268,18 @@
   }
   .user-account-edit-input:focus,.user-account-edit-select:focus{border-color:var(--user-account-edit-gold-500);}
   .user-account-edit-input:disabled{background:var(--user-account-edit-cream-100);color:var(--user-account-edit-ink-400);}
+  .user-account-edit-select{
+    appearance:none;
+    -webkit-appearance:none;
+    padding-right:40px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23123832' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+  }
   .user-account-edit-radio-row{display:flex;gap:20px;align-items:center;}
   .user-account-edit-check{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--user-account-edit-ink-900);cursor:pointer;}
   .user-account-edit-check input{width:15px;height:15px;accent-color:var(--user-account-edit-green-700);cursor:pointer;}
-  .user-account-edit-inline-check{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--user-account-edit-ink-600);white-space:nowrap;margin-top:8px;}
+  .user-account-edit-inline-check{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--user-account-edit-ink-600);white-space:nowrap;margin:0 0 13px;}
   .user-account-edit-inline-check input{width:14px;height:14px;accent-color:var(--user-account-edit-green-700);cursor:pointer;}
   .user-account-edit-row-with-check{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;}
   .user-account-edit-row-with-check .user-account-edit-field{flex:1;min-width:200px;margin-bottom:0;}
@@ -342,23 +350,25 @@
 
       <div class="user-account-edit-panel-header">
         <h1>Edit Profile</h1>
-        <a class="user-account-edit-panel-close"
-           href="<?= $user ? 'user-account-profile.php?id=' . (int) $user['id'] : 'settings-user-account.php' ?>"
+          <a class="user-account-edit-panel-close"
+            href="#"
+            onclick="if (typeof Admin_user_dashboard_03_A_OPEN === 'function') { Admin_user_dashboard_03_A_OPEN(); } else { window.history.back(); } return false;"
            title="Close" aria-label="Close">✕</a>
       </div>
 
         <form method="post" onsubmit="return submitProfileEditForm(event);">
           <input type="hidden" id="edit_profile_id" name="id" value="">
+          <input type="hidden" id="edit_profile_name" name="name_M" value="">
 
           <div class="user-account-edit-body">
 
-            <div class="user-account-edit-field">
+            <div class="user-account-edit-field is-full">
               <label for="edit_profile_email">Email</label>
               <input type="email" class="user-account-edit-input" id="edit_profile_email" name="email"
                      value="" placeholder="name@example.com">
             </div>
 
-            <div class="user-account-edit-field is-full">
+            <div class="user-account-edit-field">
               <label for="edit_profile_address">Residence Address</label>
               <input type="text" class="user-account-edit-input" id="edit_profile_address" name="residenceAddress"
                      value="" placeholder="Residence address">
@@ -404,7 +414,9 @@
               <div class="user-account-edit-field">
                 <label for="edit_profile_mobile" class="is-required">Mobile (Local Notification)</label>
                 <input type="tel" class="user-account-edit-input" id="edit_profile_mobile" name="mobile"
-                       value="" placeholder="07x xxx xxxx" required>
+                    value="" placeholder="0712345678" inputmode="numeric" pattern="[0-9]{10}"
+                    minlength="10" maxlength="10" title="Enter exactly 10 digits." required
+                    oninput="userAccountEditSyncWhatsapp()">
               </div>
               <label class="user-account-edit-inline-check">
                 <input type="checkbox" id="edit_profile_whatsapp_same" name="whatsappSame" value="1"
@@ -416,7 +428,8 @@
             <div class="user-account-edit-field is-full" style="margin-top:16px;">
               <label for="edit_profile_whatsapp">Whats App Number</label>
               <input type="tel" class="user-account-edit-input" id="edit_profile_whatsapp" name="whatsapp"
-                     value="" placeholder="07x xxx xxxx">
+                value="" placeholder="0712345678" inputmode="numeric" pattern="[0-9]{10}"
+                minlength="10" maxlength="10" title="Enter exactly 10 digits, or leave blank.">
             </div>
 
           </div>

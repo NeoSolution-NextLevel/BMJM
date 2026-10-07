@@ -75,6 +75,9 @@
         var idEl = document.getElementById("edit_profile_id");
         if (idEl) idEl.value = json.id || "";
 
+        var nameEl = document.getElementById("edit_profile_name");
+        if (nameEl) nameEl.value = json.name_M || "";
+
         var emailEl = document.getElementById("edit_profile_email");
         if (emailEl) {
             emailEl.value = json.email || "";
@@ -147,10 +150,20 @@
         }
     }
 
+    function userAccountEditSyncWhatsapp() {
+        var sameCheck = document.getElementById("edit_profile_whatsapp_same");
+        var mobileEl = document.getElementById("edit_profile_mobile");
+        var waEl = document.getElementById("edit_profile_whatsapp");
+        if (sameCheck && sameCheck.checked && mobileEl && waEl) {
+            waEl.value = mobileEl.value;
+        }
+    }
+
     function submitProfileEditForm(event) {
         if (event) event.preventDefault();
 
         var idEl = document.getElementById("edit_profile_id");
+        var nameEl = document.getElementById("edit_profile_name");
         var emailEl = document.getElementById("edit_profile_email");
         var addrEl = document.getElementById("edit_profile_address");
         var roadEl = document.getElementById("edit_profile_road_name");
@@ -158,9 +171,11 @@
         var mntEl = document.getElementById("edit_profile_monthly_amount");
         var mobileEl = document.getElementById("edit_profile_mobile");
         var waEl = document.getElementById("edit_profile_whatsapp");
+        var sameCheck = document.getElementById("edit_profile_whatsapp_same");
         var zakathEl = document.getElementById("edit_profile_zakath_type");
 
         var member_id = idEl ? idEl.value : getEditProfileMemberId();
+        var name = nameEl ? nameEl.value.trim() : "";
         var email = emailEl ? emailEl.value.trim() : "";
         if (!email && emailEl && emailEl.dataset.originalEmail) {
             email = emailEl.dataset.originalEmail;
@@ -170,10 +185,30 @@
         var residence_type = (radioOwner && radioOwner.checked) ? "owner" : "rented";
         var monlty_payment = mntEl ? mntEl.value : "";
         var phone_mobile = mobileEl ? mobileEl.value : "";
-        var notification_whatup = waEl ? waEl.value : "";
+        var notification_whatup = sameCheck && sameCheck.checked && mobileEl
+            ? mobileEl.value
+            : (waEl ? waEl.value : "");
         var zakath_type = zakathEl ? zakathEl.value : "none";
 
+        if (!/^\d{10}$/.test(phone_mobile)) {
+            if (mobileEl) {
+                mobileEl.setCustomValidity("Enter exactly 10 digits.");
+                mobileEl.reportValidity();
+                mobileEl.setCustomValidity("");
+            }
+            return false;
+        }
+        if (notification_whatup !== "" && !/^\d{10}$/.test(notification_whatup)) {
+            if (waEl) {
+                waEl.setCustomValidity("Enter exactly 10 digits, or leave blank.");
+                waEl.reportValidity();
+                waEl.setCustomValidity("");
+            }
+            return false;
+        }
+
         var sending_data = "id=" + encodeURIComponent(member_id) +
+                           "&name_M=" + encodeURIComponent(name) +
                            "&email=" + encodeURIComponent(email) +
                            "&residence_address_M=" + encodeURIComponent(residence_address_M) +
                            "&bmjm_road_name_id=" + encodeURIComponent(road_name_M) +
