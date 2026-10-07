@@ -245,21 +245,22 @@ include '../UxUI-Back/Includes/header.php';
   .payment-cash-btn:active{transform:translateY(1px);}
   
   .payment-cash-btn-cancel{
-    background:var(--payment-cash-ink-600);
-    color:var(--payment-cash-white);
+    background:#ffffff;
+    color:#374151;
+    border: 1px solid #d1d5db;
   }
   .payment-cash-btn-cancel:hover{
-    background:var(--payment-cash-ink-900);
+    background:#f3f4f6;
   }
   
   .payment-cash-btn-process{
-    background:var(--payment-cash-ink-600);
+    background:#085438;
     color:var(--payment-cash-white);
   }
   .payment-cash-btn-process:hover{
-    background:linear-gradient(135deg,var(--payment-cash-gold-500),var(--payment-cash-gold-600));
-    color:var(--payment-cash-green-950);
-    box-shadow:0 4px 12px rgba(184,146,61,0.35);
+    background:#06402b;
+    color:var(--payment-cash-white);
+    box-shadow:0 4px 12px rgba(8,84,56,0.35);
   }
 
   @media (max-width:900px){
@@ -283,8 +284,6 @@ include '../UxUI-Back/Includes/header.php';
   .payment-cash-due-amount{font-size:30px;}
   .payment-cash-input-group,.payment-cash-checkboxes,.payment-cash-actions{max-width:440px;}
   .payment-cash-input{border-color:var(--payment-cash-border);}
-  .payment-cash-btn-cancel{background:var(--payment-cash-white);color:var(--payment-cash-green-800);border:1px solid var(--payment-cash-border);}
-  .payment-cash-btn-process{background:var(--payment-cash-gold-500);color:var(--payment-cash-green-950);}
   .payment-cash-btn:disabled{opacity:.65;cursor:not-allowed;}
 
   @media (max-width:600px){
@@ -406,7 +405,7 @@ include '../UxUI-Back/Includes/header.php';
 
           <div class="payment-cash-actions">
             <button class="payment-cash-btn payment-cash-btn-cancel" onclick="main_dashboard_02_D_OPEN()">Cancel</button>
-            <button class="payment-cash-btn payment-cash-btn-process" onclick="processCashPayment()">Process payment</button>
+            <button class="payment-cash-btn payment-cash-btn-process" onclick="processCashPayment()">Process Payment</button>
           </div>
 
         </div>

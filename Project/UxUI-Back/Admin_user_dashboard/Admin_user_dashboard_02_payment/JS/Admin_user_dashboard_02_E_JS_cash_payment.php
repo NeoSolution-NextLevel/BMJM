@@ -70,7 +70,7 @@
       var btn = document.querySelector('#Admin_user_dashboard_02_E .payment-cash-btn-process');
       if (!btn) return;
       btn.disabled = !isReady;
-      btn.innerText = isReady ? "Process" : "Loading...";
+      btn.innerText = isReady ? "Process Payment" : "Loading...";
   }
 
   function Admin_user_dashboard_02_E_OPEN_AND_LOAD() {
@@ -112,7 +112,7 @@
     // Display loading state
     var btn = document.querySelector('.payment-cash-btn-process');
     var originalText = btn.innerText;
-    btn.innerText = "Processing...";
+    btn.innerText = "Processing Payment...";
     btn.disabled = true;
     
     $.ajax({

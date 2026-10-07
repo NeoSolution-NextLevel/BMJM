@@ -89,273 +89,372 @@
     flex: 1;
     display: flex;
     align-items: flex-start;
+    justify-content: center;
+    padding: 10px 0 30px;
   }
 
   .ipg-modal-panel {
     width: 100%;
-    background: var(--payment-type-cream-50);
-    border-radius: var(--payment-type-radius-lg);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    max-width: 820px;
+    background: #FAF7F0;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     overflow: hidden;
-    border: 1px solid var(--payment-type-border);
+    border: 1px solid #e7e2d4;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
   }
 
   .ipg-modal-header {
-    background: linear-gradient(135deg, var(--payment-type-green-800), var(--payment-type-green-950));
-    color: var(--payment-type-cream-50);
-    padding: 24px 32px;
+    background: #0B2E24;
+    color: #ffffff;
+    padding: 16px 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
 
   .ipg-modal-title {
-    display: flex; align-items: center; gap: 12px;
-    font-family: 'Poppins', Inter, sans-serif;
-    font-size: 20px;
-    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.01em;
   }
   .ipg-modal-title svg {
-    width: 20px; height: 20px; color: var(--payment-type-gold-300);
+    width: 22px;
+    height: 22px;
+    color: #d4a320;
   }
 
   .ipg-modal-close {
-    width: 32px; height: 32px; border-radius: 50%;
-    border: 1px solid rgba(250,247,240,0.25);
-    background: transparent; color: var(--payment-type-cream-50);
-    display: flex; align-items: center; justify-content: center;
-    text-decoration: none; cursor: pointer; transition: background .15s ease;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.45);
+    background: transparent;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all .15s ease;
+    padding: 0;
   }
   .ipg-modal-close:hover {
-    background: rgba(250,247,240,0.12);
+    background: rgba(255,255,255,0.15);
+    border-color: #ffffff;
   }
 
   .ipg-modal-body {
-    padding: 32px;
+    padding: 24px;
     color: var(--payment-type-ink-900);
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    gap: 24px;
   }
 
   .ipg-col-left {
     display: flex;
     flex-direction: column;
+    gap: 16px;
   }
 
   .ipg-col-right {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
   }
 
-  .ipg-amount-box {
-    background: var(--payment-type-white);
-    padding: 32px 24px;
-    border-radius: var(--payment-type-radius-sm);
-    text-align: center;
-    margin-bottom: 24px;
-    border: 1px solid var(--payment-type-border);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  /* Left Column Cards */
+  .ipg-card-white {
+    background: #ffffff;
+    border: 1px solid #e8e4d9;
+    border-radius: 12px;
+    padding: 18px 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
   }
 
-  .ipg-amount-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--payment-type-ink-600);
-    margin-bottom: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .ipg-amount-value {
-    width: 100%;
-    text-align: center;
-    border: none;
-    font-size: 42px;
-    font-weight: 800;
-    font-family: inherit;
-    color: var(--payment-type-green-950);
-    background: transparent;
-    outline: none;
-    transition: color 0.2s;
-  }
-  
-  .ipg-amount-value:focus {
-    color: var(--payment-type-gold-600);
-  }
-  .ipg-amount-value::-webkit-inner-spin-button, 
-  .ipg-amount-value::-webkit-outer-spin-button { 
-    -webkit-appearance: none; margin: 0; 
-  }
-  
-  .ipg-final-total-display {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--payment-type-ink-600);
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px dashed var(--payment-type-border);
-  }
-  .ipg-final-total-display strong {
-    color: var(--payment-type-green-950);
-    font-size: 16px;
-  }
-
-  .ipg-warning-note {
-    color: var(--payment-type-gold-600);
-    background: var(--payment-type-cream-100);
-    border: 1px solid var(--payment-type-border);
-    border-radius: var(--payment-type-radius-sm);
-    padding: 16px 20px;
-    font-size: 13px;
-    font-weight: 500;
-    margin-bottom: 24px;
-    line-height: 1.5;
-    display: flex; gap: 12px; align-items: center;
-  }
-
-  .ipg-bank-fee-group {
-    background: var(--payment-type-white);
-    border: 1px solid var(--payment-type-border);
-    border-radius: var(--payment-type-radius-sm);
-    padding: 24px;
-  }
-
-  .ipg-bank-fee-label {
-    font-size: 13.5px;
-    font-weight: 600;
-    color: var(--payment-type-ink-900);
-    margin-bottom: 12px;
-    display: block;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-  }
-
-  .ipg-bank-fee-input-wrap {
+  .ipg-card-header {
     display: flex;
     align-items: center;
+    gap: 6px;
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #1E2B26;
+  }
+  .ipg-info-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1.2px solid #94a3b8;
+    color: #64748b;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+    font-style: normal;
+    cursor: help;
+  }
+
+  /* Mint Big Amount Display */
+  .ipg-mint-box {
+    background: #edf7f1;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 12px 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .ipg-mint-currency {
+    font-size: 20px;
+    font-weight: 800;
+    color: #0B2E24;
+  }
+  .ipg-mint-input {
+    font-size: 36px;
+    font-weight: 800;
+    color: #0B2E24;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    text-align: left;
+    width: 180px;
+  }
+  .ipg-mint-input::-webkit-inner-spin-button,
+  .ipg-mint-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .ipg-total-with-fees-label {
+    text-align: center;
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    margin-top: 8px;
+  }
+  .ipg-total-with-fees-value {
+    text-align: center;
+    font-size: 17px;
+    font-weight: 800;
+    color: #0B2E24;
+    margin-top: 2px;
+  }
+
+  /* Warning Alert Box */
+  .ipg-alert-warning {
+    background: #fef6e7;
+    border: 1px solid #fde68a;
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
     gap: 12px;
   }
+  .ipg-alert-icon {
+    flex: 0 0 20px;
+    margin-top: 1px;
+    color: #d97706;
+  }
+  .ipg-alert-text {
+    font-size: 12px;
+    color: #92400e;
+    line-height: 1.45;
+    margin: 0;
+  }
 
-  .ipg-bank-fee-input {
-    width: 120px;
-    height: 46px;
-    border: 1px solid var(--payment-type-border);
-    border-radius: var(--payment-type-radius-sm);
-    padding: 0 16px;
-    font-size: 16px;
-    font-weight: 600;
-    background: var(--payment-type-cream-50);
-    color: var(--payment-type-ink-900);
+  /* Bank Fee Group */
+  .ipg-fee-input-wrap {
+    display: inline-flex;
+    align-items: center;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    width: 140px;
+    height: 42px;
+    margin-top: 10px;
+    overflow: hidden;
+    background: #ffffff;
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  .ipg-fee-input-wrap:focus-within {
+    border-color: #0B2E24;
+    box-shadow: 0 0 0 3px rgba(11, 46, 36, 0.12);
+  }
+  .ipg-fee-field {
+    border: none;
     outline: none;
-    transition: border-color 0.15s ease, box-shadow .15s ease;
-  }
-  .ipg-bank-fee-input:focus {
-    border-color: var(--payment-type-gold-500);
-    box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.15);
-  }
-
-  .ipg-bank-fee-symbol {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--payment-type-ink-600);
-  }
-
-  .ipg-type-heading {
-    text-align: left;
-    font-size: 14px;
+    width: 95px;
+    height: 100%;
+    padding: 0 12px;
+    font-size: 15px;
     font-weight: 600;
-    color: var(--payment-type-ink-900);
-    margin: 0 0 20px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-bottom: 2px solid var(--payment-type-border);
-    padding-bottom: 12px;
+    color: #1E2B26;
+    background: transparent;
+    font-family: inherit;
   }
-
-  .ipg-checkbox-group {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin-bottom: 32px;
-  }
-
-  .ipg-checkbox-label {
+  .ipg-fee-suffix {
+    width: 45px;
+    height: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--payment-type-ink-900);
-    cursor: pointer;
-    background: var(--payment-type-white);
-    padding: 16px 20px;
-    border: 1px solid var(--payment-type-border);
-    border-radius: var(--payment-type-radius-sm);
-    transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-  }
-  .ipg-checkbox-label:hover {
-    background: var(--payment-type-cream-100);
-    border-color: var(--payment-type-ink-400);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    justify-content: center;
+    background: #f8fafc;
+    border-left: 1px solid #e2e8f0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569;
   }
 
-  .ipg-checkbox-label input[type="checkbox"] {
+  /* Right Column: Delivery Method */
+  .ipg-delivery-heading {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1E2B26;
+    margin: 0 0 3px;
+  }
+  .ipg-delivery-subheading {
+    font-size: 12.5px;
+    color: #64748b;
+    margin: 0 0 16px;
+  }
+
+  .ipg-delivery-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .ipg-delivery-card {
+    background: #ffffff;
+    border: 1.5px solid #e8e4d9;
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+  .ipg-delivery-card:hover {
+    border-color: #0B2E24;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  }
+
+  .ipg-delivery-icon-box {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 32px;
+  }
+  .ipg-delivery-text {
+    flex: 1;
+    min-width: 0;
+  }
+  .ipg-delivery-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1E2B26;
+    margin: 0 0 2px;
+  }
+  .ipg-delivery-desc {
+    font-size: 12px;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.35;
+  }
+
+  .ipg-custom-checkbox {
     width: 20px;
     height: 20px;
+    border-radius: 4px;
+    accent-color: #0B2E24;
     cursor: pointer;
-    accent-color: var(--payment-type-green-700);
+    flex: 0 0 20px;
   }
 
+  /* Footer Actions */
   .ipg-modal-footer {
     display: flex;
-    gap: 16px;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
     margin-top: auto;
+    padding-top: 14px;
   }
-
-  .ipg-btn {
-    flex: 1;
-    height: 52px;
-    border: none;
-    border-radius: var(--payment-type-radius-sm);
-    font-size: 15px;
+  .ipg-btn-cancel-custom {
+    background: #ebe7dc;
+    border: 1px solid #d5cfbf;
+    border-radius: 8px;
+    color: #1E2B26;
+    height: 42px;
+    padding: 0 24px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    transition: transform .1s ease, box-shadow .15s ease, background .15s ease;
-    display: inline-flex; justify-content: center; align-items: center; gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .15s ease;
+  }
+  .ipg-btn-cancel-custom:hover {
+    background: #ded9cd;
   }
 
-  .ipg-btn:active {
+  .ipg-btn-process-custom {
+    background: #DCA524;
+    color: #1E2B26;
+    border: none;
+    border-radius: 8px;
+    height: 42px;
+    padding: 0 22px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 6px rgba(220,165,36,0.25);
+    transition: all .15s ease;
+  }
+  .ipg-btn-process-custom:hover {
+    background: #c8951d;
+    box-shadow: 0 4px 12px rgba(220,165,36,0.35);
+  }
+  .ipg-btn-cancel-custom:active, .ipg-btn-process-custom:active {
     transform: translateY(1px);
   }
 
-  .ipg-btn-cancel {
-    background: var(--payment-type-cream-100);
-    color: var(--payment-type-ink-900);
-    border: 1px solid var(--payment-type-border);
-  }
-
-  .ipg-btn-cancel:hover {
-    background: #E8E2D2;
-  }
-
-  .ipg-btn-process {
-    background: linear-gradient(135deg, var(--payment-type-gold-500), var(--payment-type-gold-600));
-    color: var(--payment-type-green-950);
-    box-shadow: 0 4px 12px rgba(184, 146, 61, 0.35);
-  }
-
-  .ipg-btn-process:hover {
-    background: linear-gradient(135deg, var(--payment-type-gold-300), var(--payment-type-gold-500));
-    box-shadow: 0 6px 16px rgba(184, 146, 61, 0.45);
-  }
-
-  @media (max-width:900px){
+  @media (max-width: 820px){
     .payment-type-app{grid-template-columns:1fr;grid-template-areas:"topbar" "main";}
-    .payment-type-main{padding:26px 18px 50px;}
-    .ipg-modal-body{grid-template-columns: 1fr;}
+    .payment-type-main{padding:20px 14px 40px;}
+    .ipg-modal-body {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding: 18px;
+    }
+    .ipg-modal-footer {
+      flex-direction: column-reverse;
+      width: 100%;
+    }
+    .ipg-btn-cancel-custom, .ipg-btn-process-custom {
+      width: 100%;
+    }
   }
 </style>
 
@@ -399,7 +498,7 @@
         
         <div class="ipg-modal-header">
           <div class="ipg-modal-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
             Send Payment IPG
           </div>
           <button class="ipg-modal-close" onclick="if(typeof Admin_user_dashboard_02_D_OPEN === 'function') { Admin_user_dashboard_02_D_OPEN(); } else { window.history.back(); }" title="Close" aria-label="Close">✕</button>
@@ -407,54 +506,98 @@
 
         <div class="ipg-modal-body">
           
+          <!-- LEFT COLUMN -->
           <div class="ipg-col-left">
-            <div class="ipg-amount-box">
-              <label class="ipg-amount-title" for="ipg-base-amount-input">Adjustable Base Amount (LKR)</label>
-              <input type="number" id="ipg-base-amount-input" class="ipg-amount-value" value="0.00" oninput="updateBaseAmount()">
-              <div class="ipg-final-total-display">
-                Total to Charge (with fees): <strong><span id="ipg-due-amount-display">0.00</span></strong>
+            <div class="ipg-card-white">
+              <div class="ipg-card-header">
+                Payment Amount (LKR)
+                <span class="ipg-info-circle" title="Base amount before processing fee">i</span>
+              </div>
+              <div class="ipg-mint-box">
+                <span class="ipg-mint-currency">LKR</span>
+                <input type="number" id="ipg-base-amount-input" class="ipg-mint-input" value="200.00" step="0.01" oninput="updateBaseAmount()">
+              </div>
+              <div class="ipg-total-with-fees-label">
+                Total to Charge (with fees)
+                <span class="ipg-info-circle" title="Final amount charged including fee percentage">i</span>
+              </div>
+              <div class="ipg-total-with-fees-value">
+                LKR <span id="ipg-due-amount-display">200.00</span>
               </div>
             </div>
 
-            <div class="ipg-warning-note">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-              If you add a bank fee, your total amount will increase by that percentage automatically prior to generating the link.
+            <div class="ipg-alert-warning">
+              <div class="ipg-alert-icon">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </div>
+              <p class="ipg-alert-text">
+                A bank fee will be added to the total amount based on the percentage entered below. Please ensure the correct percentage is set before generating the payment link.
+              </p>
             </div>
 
-            <div class="ipg-bank-fee-group">
-              <label class="ipg-bank-fee-label" for="ipg-bank-fee-input">Add Bank Fee Percentage</label>
-              <div class="ipg-bank-fee-input-wrap">
-                <input type="number" id="ipg-bank-fee-input" value="0.0" step="0.1" min="0" class="ipg-bank-fee-input" oninput="calculateIPGTotal()">
-                <span class="ipg-bank-fee-symbol">%</span>
+            <div class="ipg-card-white">
+              <div class="ipg-card-header">
+                Bank Fee Percentage
+                <span class="ipg-info-circle" title="Percentage added as bank processing charge">i</span>
+              </div>
+              <div class="ipg-fee-input-wrap">
+                <input type="number" id="ipg-bank-fee-input" value="0.0" step="0.1" min="0" class="ipg-fee-field" oninput="calculateIPGTotal()">
+                <span class="ipg-fee-suffix">%</span>
               </div>
             </div>
           </div>
 
+          <!-- RIGHT COLUMN -->
           <div class="ipg-col-right">
             <div>
-              <div class="ipg-type-heading">Delivery Method</div>
+              <div class="ipg-delivery-heading">Delivery Method</div>
+              <div class="ipg-delivery-subheading">Select how you would like to send the payment link to the member.</div>
 
-              <div class="ipg-checkbox-group">
-                <label class="ipg-checkbox-label">
-                  <span>Send By SMS</span>
-                  <input type="checkbox" id="ipg-send-sms">
-                </label>
+              <div class="ipg-delivery-options">
+                <!-- SMS Option -->
+                <div class="ipg-delivery-card" onclick="document.getElementById('ipg-send-sms').click()">
+                  <div class="ipg-delivery-icon-box">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="#2563eb"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+                  </div>
+                  <div class="ipg-delivery-text">
+                    <div class="ipg-delivery-title">Send payment link via SMS</div>
+                    <div class="ipg-delivery-desc">The payment link will be sent to the member's registered mobile number.</div>
+                  </div>
+                  <input type="checkbox" id="ipg-send-sms" class="ipg-custom-checkbox" onclick="event.stopPropagation()">
+                </div>
 
-                <label class="ipg-checkbox-label">
-                  <span>Send By Email</span>
-                  <input type="checkbox" id="ipg-send-email">
-                </label>
+                <!-- Email Option -->
+                <div class="ipg-delivery-card" onclick="document.getElementById('ipg-send-email').click()">
+                  <div class="ipg-delivery-icon-box">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="#2563eb"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                  </div>
+                  <div class="ipg-delivery-text">
+                    <div class="ipg-delivery-title">Send payment link via Email</div>
+                    <div class="ipg-delivery-desc">The payment link will be sent to the member's registered email address.</div>
+                  </div>
+                  <input type="checkbox" id="ipg-send-email" class="ipg-custom-checkbox" onclick="event.stopPropagation()">
+                </div>
 
-                <label class="ipg-checkbox-label">
-                  <span>Send By URL By Whatsapp</span>
-                  <input type="checkbox" id="ipg-send-whatsapp">
-                </label>
+                <!-- WhatsApp Option -->
+                <div class="ipg-delivery-card" onclick="document.getElementById('ipg-send-whatsapp').click()">
+                  <div class="ipg-delivery-icon-box">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="#22c55e"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.05 20.15C10.57 20.15 9.12 19.75 7.85 19L7.55 18.82L4.43 19.64L5.26 16.59L5.06 16.27C4.24 14.97 3.8 13.46 3.8 11.91C3.8 7.37 7.5 3.67 12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.59 20.15 12.05 20.15Z"/></svg>
+                  </div>
+                  <div class="ipg-delivery-text">
+                    <div class="ipg-delivery-title">Send payment link via WhatsApp</div>
+                    <div class="ipg-delivery-desc">The payment link will be sent via WhatsApp.</div>
+                  </div>
+                  <input type="checkbox" id="ipg-send-whatsapp" class="ipg-custom-checkbox" onclick="event.stopPropagation()">
+                </div>
               </div>
             </div>
 
             <div class="ipg-modal-footer">
-              <button type="button" class="ipg-btn ipg-btn-cancel" onclick="if(typeof Admin_user_dashboard_02_D_OPEN === 'function') { Admin_user_dashboard_02_D_OPEN(); } else { window.history.back(); }">Cancel</button>
-              <button type="button" class="ipg-btn ipg-btn-process" onclick="processSendIPG()">Process Payment Link</button>
+              <button type="button" class="ipg-btn-cancel-custom" onclick="if(typeof Admin_user_dashboard_02_D_OPEN === 'function') { Admin_user_dashboard_02_D_OPEN(); } else { window.history.back(); }">Cancel</button>
+              <button type="button" class="ipg-btn-process-custom" onclick="processSendIPG()">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                Generate Payment Link
+              </button>
             </div>
           </div>
 

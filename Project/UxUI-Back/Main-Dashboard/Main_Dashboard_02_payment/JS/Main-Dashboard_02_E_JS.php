@@ -250,7 +250,7 @@
     // Display loading state
     var btn = document.querySelector('.payment-cash-btn-process');
     var originalText = btn.innerText;
-    btn.innerText = "Processing...";
+    btn.innerText = "Processing Payment...";
     btn.disabled = true;
     
     $.ajax({
