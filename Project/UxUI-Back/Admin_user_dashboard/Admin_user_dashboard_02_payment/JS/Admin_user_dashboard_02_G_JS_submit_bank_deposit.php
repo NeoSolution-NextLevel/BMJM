@@ -4,21 +4,46 @@ function previewDepositImage(input) {
         var reader = new FileReader();
         reader.onload = function(e) {
             var previewImg = document.getElementById("deposit-image-preview-img");
-            var previewText = document.getElementById("deposit-image-preview-text");
-            var previewIcon = document.getElementById("deposit-image-preview-icon");
+            var placeholder = document.getElementById("deposit-placeholder-inner");
+            var removeBtn = document.getElementById("deposit-remove-preview-btn");
             var hiddenPath = document.getElementById("deposit-image-path-hidden");
+            var depositSlipTxt = document.getElementById("deposit_slip_image_pth_txt");
 
             if (previewImg) {
                 previewImg.src = e.target.result;
                 previewImg.style.display = "block";
             }
-            if (previewText) previewText.style.display = "none";
-            if (previewIcon) previewIcon.style.display = "none";
-            if (hiddenPath) hiddenPath.value = input.files[0].name;
+            if (placeholder) placeholder.style.display = "none";
+            if (removeBtn) removeBtn.style.display = "flex";
+            if (hiddenPath) hiddenPath.value = e.target.result;
+            if (depositSlipTxt) depositSlipTxt.value = e.target.result;
         };
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+function removeDepositImage(event) {
+    if (event) event.stopPropagation();
+    var previewImg = document.getElementById("deposit-image-preview-img");
+    var placeholder = document.getElementById("deposit-placeholder-inner");
+    var removeBtn = document.getElementById("deposit-remove-preview-btn");
+    var hiddenPath = document.getElementById("deposit-image-path-hidden");
+    var depositSlipTxt = document.getElementById("deposit_slip_image_pth_txt");
+    var fileInput = document.getElementById("deposit-file-upload");
+    var scanInput = document.getElementById("deposit-scan-upload");
+
+    if (previewImg) {
+        previewImg.src = "";
+        previewImg.style.display = "none";
+    }
+    if (placeholder) placeholder.style.display = "flex";
+    if (removeBtn) removeBtn.style.display = "none";
+    if (hiddenPath) hiddenPath.value = "";
+    if (depositSlipTxt) depositSlipTxt.value = "";
+    if (fileInput) fileInput.value = "";
+    if (scanInput) scanInput.value = "";
+}
+
 
 function submitBankDeposit() {
     var amountEl = document.getElementById("deposit-amount") || document.getElementById("DashBord_Payment_body_01_B_05_01_from_01_val_1");
@@ -109,6 +134,7 @@ function submitBankDeposit() {
                         alert("Bank deposit payment submitted successfully!");
                         if (amountEl) amountEl.value = "";
                         if (descEl) descEl.value = "";
+                        removeDepositImage();
                         if (typeof Admin_user_dashboard_02_A_OPEN === "function") {
                             Admin_user_dashboard_02_A_OPEN();
                         }

@@ -1,5 +1,48 @@
 <script type="text/javascript">
-// Removed native inline preview logic because the global image converter algorithm directly intercepts physical bytes, compiles server links dynamically, and attaches them natively into the new schema structures.
+function previewMainDepositImage(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var previewImg = document.getElementById("main-deposit-image-preview-img");
+            var placeholder = document.getElementById("main-deposit-placeholder-inner");
+            var removeBtn = document.getElementById("main-deposit-remove-preview-btn");
+            var depositSlipTxt = document.getElementById("deposit_slip_image_pth_txt");
+            var hiddenPath = document.getElementById("deposit-image-path-hidden");
+
+            if (previewImg) {
+                previewImg.src = e.target.result;
+                previewImg.style.display = "block";
+            }
+            if (placeholder) placeholder.style.display = "none";
+            if (removeBtn) removeBtn.style.display = "flex";
+            if (depositSlipTxt) depositSlipTxt.value = e.target.result;
+            if (hiddenPath) hiddenPath.value = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function removeMainDepositImage(event) {
+    if (event) event.stopPropagation();
+    var previewImg = document.getElementById("main-deposit-image-preview-img");
+    var placeholder = document.getElementById("main-deposit-placeholder-inner");
+    var removeBtn = document.getElementById("main-deposit-remove-preview-btn");
+    var depositSlipTxt = document.getElementById("deposit_slip_image_pth_txt");
+    var hiddenPath = document.getElementById("deposit-image-path-hidden");
+    var fileInput = document.getElementById("main-deposit-file-upload");
+    var scanInput = document.getElementById("main-deposit-scan-upload");
+
+    if (previewImg) {
+        previewImg.src = "";
+        previewImg.style.display = "none";
+    }
+    if (placeholder) placeholder.style.display = "flex";
+    if (removeBtn) removeBtn.style.display = "none";
+    if (depositSlipTxt) depositSlipTxt.value = "";
+    if (hiddenPath) hiddenPath.value = "";
+    if (fileInput) fileInput.value = "";
+    if (scanInput) scanInput.value = "";
+}
 
 function submitBankDeposit() {
     var amountEl = document.getElementById("deposit-amount") || document.getElementById("DashBord_Payment_body_01_B_05_01_from_01_val_1");
@@ -31,8 +74,7 @@ function submitBankDeposit() {
     // --- END BOUNDS PROTECTION ---
 
     var membershipNoEl = document.getElementById("DashBord_Payment_body_member_list_membership_no");
-    // Hook dynamically into the hidden path payload that the global image converted generated natively.
-    var imagePathEl = document.getElementById("deposit_slip_image_pth_txt");
+    var imagePathEl = document.getElementById("deposit_slip_image_pth_txt") || document.getElementById("deposit-image-path-hidden");
     var bankNameEl = document.getElementById("DashBord_Payment_body_01_B_05_bank_name");
     var branchEl = document.getElementById("DashBord_Payment_body_01_B_05_branch_name");
     var acNoEl = document.getElementById("DashBord_Payment_body_01_B_05_ac_no");
@@ -149,7 +191,7 @@ function submitBankDeposit() {
     postData += "&is_admin_direct_approval=1";
 
     var submitBtn = document.querySelector("#Main_dashboard_02_G .payment-deposit-btn-submit");
-    var originalLabel = submitBtn ? submitBtn.textContent : "Submit deposit";
+    var originalLabel = submitBtn ? submitBtn.textContent : "Submit";
     if (submitBtn) {
         submitBtn.textContent = "Submitting...";
         submitBtn.disabled = true;
@@ -170,6 +212,7 @@ function submitBankDeposit() {
                     alert("Bank deposit payment submitted successfully!");
                     if (amountEl) amountEl.value = "";
                     if (descEl) descEl.value = "";
+                    removeMainDepositImage();
                     if (typeof main_dashboard_02_A_OPEN === "function") {
                         main_dashboard_02_A_OPEN();
                     } else if (typeof DashBord_Payment_body_01_B_01_OPEN === "function") {

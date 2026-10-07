@@ -228,10 +228,10 @@ include '../UxUI-Back/Includes/header.php';
             Send Card Payment Link
           </button>
 
-          <button class="payment-type-option payment-type-option-back" onclick="Admin_user_dashboard_02_B_OPEN()">
+          <!-- <button class="payment-type-option payment-type-option-back" onclick="Admin_user_dashboard_02_B_OPEN()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
             Back
-          </button>
+          </button> -->
         </div>
 
       </section>

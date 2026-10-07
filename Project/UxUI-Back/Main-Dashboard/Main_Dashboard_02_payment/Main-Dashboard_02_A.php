@@ -119,7 +119,7 @@ include '../UxUI-Back/Includes/header.php';
 
   /* ---------- Toolbar ---------- */
   .payment-toolbar{
-    display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;
+    display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;
     padding:22px 30px 24px;
   }
   .payment-field{display:flex;flex-direction:column;gap:6px;}
@@ -377,19 +377,18 @@ include '../UxUI-Back/Includes/header.php';
           </select>
         </div>
         <button type="button" class="payment-btn payment-btn-filter" id="btn-clear-range">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.64-6.36L3 8"/><path d="M3 3v5h5M12 8v4l2.5 2.5"/></svg>
           Clear filters
         </button>
-        <div class="payment-toolbar-spacer"></div>
+        <a class="payment-btn payment-btn-primary" onclick="main_dashboard_02_B_OPEN()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
+          Add New
+        </a>
         <select class="payment-perpage" id="payment-perpage" onchange="paymentRender(1)" aria-label="Payments per page">
           <option value="10">Per Page 10</option>
           <option value="25">Per Page 25</option>
           <option value="50" selected>Per Page 50</option>
         </select>
-        <a class="payment-btn payment-btn-primary" onclick="main_dashboard_02_B_OPEN()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
-          Add New
-        </a>
+        <div class="payment-toolbar-spacer"></div>
       </div>
 
       <div class="payment-table-wrap">

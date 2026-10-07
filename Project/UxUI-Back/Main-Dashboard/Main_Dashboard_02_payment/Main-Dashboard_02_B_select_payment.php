@@ -297,12 +297,12 @@ bmjm_feature_flags_js();
         </a>
         <?php endif; ?>
 
-        <a class="payment-new-option payment-new-option-back" onclick="main_dashboard_02_A_OPEN()">
+        <!-- <a class="payment-new-option payment-new-option-back" onclick="main_dashboard_02_A_OPEN()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="m15 18-6-6 6-6"/>
           </svg>
           <span class="payment-new-option-title" style="font-size:14px;">Back</span>
-        </a>
+        </a> -->
 
       </div>
 

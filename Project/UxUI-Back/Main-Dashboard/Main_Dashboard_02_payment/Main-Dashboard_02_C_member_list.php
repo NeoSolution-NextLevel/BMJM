@@ -135,16 +135,29 @@ include '../UxUI-Back/Includes/header.php';
   .payment-subscription-search::placeholder{color:var(--payment-subscription-ink-400);}
   .payment-subscription-search:focus{border-color:var(--payment-subscription-gold-500);}
 
+  .payment-subscription-select-wrap,
+  .payment-subscription-perpage-wrap{
+    position:relative;display:inline-flex;flex:0 0 auto;
+  }
+  .payment-subscription-select-wrap::after,
+  .payment-subscription-perpage-wrap::after{
+    content:"";position:absolute;right:15px;top:50%;
+    width:7px;height:7px;
+    border-right:1.7px solid var(--payment-subscription-green-700);
+    border-bottom:1.7px solid var(--payment-subscription-green-700);
+    transform:translateY(-70%) rotate(45deg);
+    pointer-events:none;
+  }
   .payment-subscription-select{
     height:42px;min-width:150px;
     border:1px solid var(--payment-subscription-border);
     border-radius:var(--payment-subscription-radius-sm);
-    padding:0 14px;
+    padding:0 38px 0 14px;
     font-size:13.5px;
     font-family:inherit;
     color:var(--payment-subscription-ink-900);
     background:var(--payment-subscription-white);
-    outline:none;cursor:pointer;
+    outline:none;cursor:pointer;appearance:none;
     transition:border-color .15s ease;
   }
   .payment-subscription-select:focus{border-color:var(--payment-subscription-gold-500);}
@@ -163,18 +176,20 @@ include '../UxUI-Back/Includes/header.php';
   .payment-subscription-skip:hover{background:var(--payment-subscription-border);color:var(--payment-subscription-ink-900);}
 
   .payment-subscription-toolbar-row2{
-    display:flex;justify-content:flex-end;
+    display:flex;justify-content:flex-start;
     padding:14px 30px 4px;
   }
+  .payment-subscription-pagination{display:flex;gap:8px;flex-wrap:wrap;}
+  .payment-subscription-perpage-wrap{display:inline-flex;}
   .payment-subscription-perpage{
     height:36px;min-width:110px;
     border:1px solid var(--payment-subscription-border);
     border-radius:var(--payment-subscription-radius-sm);
-    padding:0 12px;
+    padding:0 34px 0 12px;
     font-size:12.5px;font-family:inherit;
     color:var(--payment-subscription-ink-900);
     background:var(--payment-subscription-white);
-    outline:none;cursor:pointer;
+    outline:none;cursor:pointer;appearance:none;
   }
 
   /* ---------- Member list ---------- */
@@ -216,6 +231,8 @@ include '../UxUI-Back/Includes/header.php';
   @media (max-width:900px){
     .payment-subscription-app{grid-template-columns:1fr;grid-template-areas:"topbar" "main";}
     .payment-subscription-toolbar{flex-direction:column;align-items:stretch;}
+    .payment-subscription-select-wrap,.payment-subscription-perpage-wrap{width:100%;}
+    .payment-subscription-select,.payment-subscription-perpage{width:100%;}
     .payment-subscription-skip{width:100%;justify-content:center;}
   }
 </style>
@@ -268,6 +285,7 @@ include '../UxUI-Back/Includes/header.php';
       <div class="payment-subscription-toolbar">
         <input type="text" class="payment-subscription-search" id="payment-subscription-search"
                placeholder="Search from member here" oninput="paymentSubscriptionRender()">
+        <span class="payment-subscription-select-wrap">
         <select class="payment-subscription-select" id="payment-subscription-type" onchange="paymentSubscriptionRender()">
             <option value="All">All</option>
             <option value="membership_no">Membership Number</option>
@@ -276,16 +294,19 @@ include '../UxUI-Back/Includes/header.php';
             <option value="Phone_no">Phone Number</option>
             <option value="old_membership_no">Old Membership Number</option>
         </select>
+        </span>
+        <span class="payment-subscription-perpage-wrap">
+          <select class="payment-subscription-perpage" id="payment-subscription-perpage" onchange="paymentSubscriptionRender()">
+            <option value="10">Per Page 10</option>
+            <option value="25">Per Page 25</option>
+            <option value="50" selected>Per Page 50</option>
+          </select>
+        </span>
         <a class="payment-subscription-skip" id="global-skip-member-btn" onclick="skipMemberSelection()">Skip</a>
       </div>
 
       <div class="payment-subscription-toolbar-row2">
-        <div id="payment-subscription-pagination" style="display:flex; gap:8px; flex-wrap:wrap; margin-right:auto;"></div>
-        <select class="payment-subscription-perpage" id="payment-subscription-perpage" onchange="paymentSubscriptionRender()">
-          <option value="10">Per Page 10</option>
-          <option value="25">Per Page 25</option>
-          <option value="50" selected>Per Page 50</option>
-        </select>
+        <div class="payment-subscription-pagination" id="payment-subscription-pagination"></div>
       </div>
 
       <div class="payment-subscription-list" id="payment-subscription-list"></div>
