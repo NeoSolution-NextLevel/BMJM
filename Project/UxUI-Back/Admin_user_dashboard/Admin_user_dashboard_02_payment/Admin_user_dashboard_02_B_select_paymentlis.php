@@ -207,7 +207,7 @@ bmjm_feature_flags_js();
         <?php if ($BMJM_FEATURE_COLLECTION): ?>
         <a class="payment-new-option" onclick="selectPaymentReason('Projects')">Projects</a>
         <?php endif; ?>
-        <a class="payment-new-option payment-new-option-back" onclick="Admin_user_dashboard_02_A_OPEN()">Back</a>
+        <!-- <a class="payment-new-option payment-new-option-back" onclick="Admin_user_dashboard_02_A_OPEN()">Back</a> -->
       </div>
 
 

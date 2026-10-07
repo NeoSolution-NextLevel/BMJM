@@ -167,7 +167,16 @@ include '../UxUI-Back/Includes/header.php';
     outline:none;
     transition:border-color .15s ease;
   }
-  .member-list-field select{min-width:180px;cursor:pointer;}
+  .member-list-field select{
+    min-width:180px;
+    padding-right:38px;
+    appearance:none;
+    -webkit-appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235A6A62' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 12px center;
+    cursor:pointer;
+  }
   .member-list-field input:focus,.member-list-field select:focus{
     border-color:var(--member-list-gold-500);
   }
@@ -188,6 +197,13 @@ include '../UxUI-Back/Includes/header.php';
     box-shadow:0 4px 12px rgba(184,146,61,0.35);
   }
   .member-list-btn-primary:hover{box-shadow:0 6px 16px rgba(184,146,61,0.45);}
+  .member-list-btn-filter{
+    background:var(--member-list-white);
+    border:1px solid var(--member-list-border);
+    color:var(--member-list-green-800);
+  }
+  .member-list-btn-filter:hover{background:var(--member-list-cream-100);border-color:var(--member-list-green-700);}
+  .member-list-btn-filter:focus-visible{outline:3px solid var(--member-list-gold-300);outline-offset:2px;}
 
   .member-list-btn-approve{
     height:32px;padding:0 16px;
@@ -369,6 +385,10 @@ include '../UxUI-Back/Includes/header.php';
             <option value="approved">Approved</option>
           </select>
         </div>
+        <button type="button" class="member-list-btn member-list-btn-filter" onclick="memberListClearFilters()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.64-6.36L3 8"/><path d="M3 3v5h5M12 8v4l2.5 2.5"/></svg>
+          Clear filters
+        </button>
         <div class="member-list-toolbar-spacer"></div>
         <a class="member-list-btn member-list-btn-primary" onclick="main_dashboard_01_F_OPEN()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>

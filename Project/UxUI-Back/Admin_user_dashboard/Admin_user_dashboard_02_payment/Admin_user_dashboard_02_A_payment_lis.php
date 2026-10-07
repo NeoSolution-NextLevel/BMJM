@@ -142,7 +142,15 @@ include '../UxUI-Back/Includes/header.php';
     transition:border-color .15s ease;
   }
   .payment-field input,.payment-field select{width:100%;min-width:0;}
-  .payment-field select{cursor:pointer;}
+  .payment-field select{
+    padding-right:36px;
+    appearance:none;
+    -webkit-appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235A6A62' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 12px center;
+    cursor:pointer;
+  }
   .payment-field input:focus,.payment-field select:focus{border-color:var(--payment-gold-500);}
   .payment-toolbar-spacer{display:none;}
 
@@ -184,7 +192,13 @@ include '../UxUI-Back/Includes/header.php';
     padding:0 12px;
     font-size:12.5px;font-family:inherit;
     color:var(--payment-ink-900);
-    background:var(--payment-white);
+    background-color:var(--payment-white);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235A6A62' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 12px center;
+    appearance:none;
+    -webkit-appearance:none;
+    padding-right:36px;
     outline:none;cursor:pointer;
   }
 

@@ -176,6 +176,7 @@ $payment_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
   .payment-slip-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--payment-slip-border);border:1px solid var(--payment-slip-border);border-radius:8px;overflow:hidden;margin-bottom:22px;}
   .payment-slip-meta-row{display:block;background:#fff;font-size:13px;padding:11px 13px;min-width:0;}
+  .payment-slip-meta-status{grid-column:1 / -1;}
   .payment-slip-meta-label{display:block;width:auto;font-size:10px;text-transform:uppercase;font-weight:700;color:var(--payment-slip-ink-400);margin-bottom:4px;}
   .payment-slip-meta-value{color:var(--payment-slip-ink-900);}
 
@@ -353,7 +354,7 @@ $payment_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
               <span class="payment-slip-meta-label">Method</span>
               <span class="payment-slip-meta-value" id="payment-slip-method-h">-</span>
             </div>
-            <div class="payment-slip-meta-row">
+            <div class="payment-slip-meta-row payment-slip-meta-status">
               <span class="payment-slip-meta-label">Status</span>
               <span class="payment-slip-meta-value" id="payment-slip-review-status-h">-</span>
             </div>

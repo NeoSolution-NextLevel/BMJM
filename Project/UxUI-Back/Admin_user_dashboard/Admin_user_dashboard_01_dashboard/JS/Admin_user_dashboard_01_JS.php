@@ -48,14 +48,15 @@
         var memNoVal = json.membership_no || (json.id ? String(json.id).padStart(5, '0') : '—');
         var addressVal = json.residence_address_M || json.road_name_M || '—';
 
-        var sidebarMember = document.getElementById('bmjm-sidebar-member');
-        var sidebarMemberName = document.getElementById('bmjm-sidebar-member-name');
-        var sidebarMemberNumber = document.getElementById('bmjm-sidebar-member-number');
-        if (sidebarMember && sidebarMemberName && sidebarMemberNumber) {
-            sidebarMemberName.textContent = json.name_M || 'Member';
-            sidebarMemberNumber.textContent = 'Member No: ' + memNoVal;
-            sidebarMember.hidden = false;
-        }
+        document.querySelectorAll('.bmjm-sidebar-member').forEach(function(sidebarMember) {
+            var sidebarMemberName = sidebarMember.querySelector('.bmjm-sidebar-member-name');
+            var sidebarMemberNumber = sidebarMember.querySelector('.bmjm-sidebar-member-number');
+            if (sidebarMemberName && sidebarMemberNumber) {
+                sidebarMemberName.textContent = json.name_M || 'Member';
+                sidebarMemberNumber.textContent = 'Member No: ' + memNoVal;
+                sidebarMember.hidden = false;
+            }
+        });
 
         // 1. Populate member details card
         var detailsContainer = document.getElementById('dashboard2-details');
@@ -97,8 +98,6 @@
             memNoEl.value = memNoVal;
         }
 
-        // 5. Trigger payment list loading for this member
-        body_01_01_A_01_Payment_list_Display();
     }
 
     // function body_01_01_A_01_Payment_list_Display() {

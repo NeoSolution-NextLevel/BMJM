@@ -33,6 +33,16 @@ $sidebar_admin_dashboard_url = 'Main-Dashboard.php?page=members';
     --bmjm-sidebar-radius-sm:6px;
   }
 
+  select:not([multiple]){
+    -webkit-appearance:none;
+    appearance:none;
+    padding-right:36px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23123832' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 12px center;
+    background-size:14px 14px;
+  }
+
   .bmjm-sidebar{
     grid-area:sidebar;
     background:linear-gradient(180deg,var(--bmjm-sidebar-green-950) 0%,#0E362A 100%);
@@ -187,13 +197,13 @@ $sidebar_admin_dashboard_url = 'Main-Dashboard.php?page=members';
     </div>
   </a>
 
-  <div class="bmjm-sidebar-member" id="bmjm-sidebar-member" hidden>
+  <div class="bmjm-sidebar-member" hidden>
     <div class="bmjm-sidebar-member-avatar" aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a4.2 4.2 0 1 0 0-8.4 4.2 4.2 0 0 0 0 8.4Zm0 2c-4.1 0-7.5 2.1-7.5 4.7V21h15v-2.3c0-2.6-3.4-4.7-7.5-4.7Z"/></svg>
     </div>
     <div class="bmjm-sidebar-member-info">
-      <strong class="bmjm-sidebar-member-name" id="bmjm-sidebar-member-name"></strong>
-      <span class="bmjm-sidebar-member-number" id="bmjm-sidebar-member-number"></span>
+      <strong class="bmjm-sidebar-member-name"></strong>
+      <span class="bmjm-sidebar-member-number"></span>
     </div>
   </div>
 
@@ -210,7 +220,7 @@ $sidebar_admin_dashboard_url = 'Main-Dashboard.php?page=members';
       <a href="javascript:void(0);"><svg class="bmjm-sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="1.8"/><path d="M3 10h18"/></svg>Profile</a>
     </li>
     <li class="bmjm-sidebar-nav-item" data-page="accounts">
-      <a href="<?php echo htmlspecialchars($sidebar_admin_dashboard_url, ENT_QUOTES, 'UTF-8'); ?>"><svg class="bmjm-sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>Go Back to Dashboard</a>
+      <a href="<?php echo htmlspecialchars($sidebar_admin_dashboard_url, ENT_QUOTES, 'UTF-8'); ?>"><svg class="bmjm-sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>Back to Member List</a>
     </li>
    
   </ul>

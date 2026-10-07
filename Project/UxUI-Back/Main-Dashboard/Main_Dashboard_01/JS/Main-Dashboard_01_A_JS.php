@@ -100,6 +100,13 @@
     memberListRenderPagination(totalPages);
   }
 
+  function memberListClearFilters(){
+    document.getElementById('member-list-search').value = '';
+    document.getElementById('member-list-type').value = 'all';
+    memberListPage = 1;
+    memberListRender();
+  }
+
   function memberListRenderPagination(totalPages){
     const nav = document.getElementById('member-list-pagination');
     let html = `<button class="member-list-page-btn" ${memberListPage===1?'disabled':''} onclick="memberListGoTo(${memberListPage-1})">‹</button>`;
