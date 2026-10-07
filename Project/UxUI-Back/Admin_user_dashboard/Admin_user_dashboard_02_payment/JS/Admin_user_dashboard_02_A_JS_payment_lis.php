@@ -219,8 +219,30 @@ function viewPaymentDetail(slipId) {
     openPaymentSlipView(slipId);
 }
 
+function clearPaymentFilters() {
+    var startDateObj = document.getElementById('payment-start-date');
+    var endDateObj = document.getElementById('payment-end-date');
+    var typeObj = document.getElementById('payment-type');
+    var statusObj = document.getElementById('payment-status');
+    var otherTypeObj = document.getElementById('payment-other-type');
+    var perPageObj = document.getElementById('payment-perpage');
+
+    if (startDateObj) startDateObj.value = '';
+    if (endDateObj) endDateObj.value = '';
+    if (typeObj) typeObj.value = 'all';
+    if (statusObj) statusObj.value = 'all';
+    if (otherTypeObj) otherTypeObj.value = 'all';
+    if (perPageObj) perPageObj.value = '50';
+
+    paymentRender(1);
+}
+
 function initPaymentList() {
     if (document.getElementById('Admin_user_dashboard_02_A')) {
+        var clearRangeButton = document.getElementById('btn-clear-range');
+        if (clearRangeButton) {
+            clearRangeButton.addEventListener('click', clearPaymentFilters);
+        }
         paymentRender(1);
     }
 }

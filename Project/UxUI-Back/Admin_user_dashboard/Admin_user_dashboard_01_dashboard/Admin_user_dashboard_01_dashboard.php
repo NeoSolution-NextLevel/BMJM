@@ -112,7 +112,7 @@ include '../UxUI-Back/Includes/header.php';
     display:grid;
     grid-template-columns:1.15fr 0.85fr;
     gap:22px;
-    align-items:start;
+    align-items:stretch;
     margin-bottom:22px;
   }
 
@@ -384,7 +384,7 @@ if (!empty($raw_id)) {
     </div>
 
     <!-- Payment list -->
-    <section class="dashboard2-panel" aria-label="Payment list">
+    <!-- <section class="dashboard2-panel" aria-label="Payment list">
       <div class="dashboard2-panel-header">
         <div class="dashboard2-panel-title">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3 9.5h18"/></svg>
@@ -405,7 +405,7 @@ if (!empty($raw_id)) {
           </thead>
           <tbody id="dashboard2-tbody">
             <!-- rows injected by dashboard2Render() -->
-          </tbody>
+          <!-- </tbody>
         </table>
         <div id="dashboard2-empty" class="dashboard2-empty" style="display:none;">No payments recorded yet.</div>
       </div>
@@ -413,7 +413,7 @@ if (!empty($raw_id)) {
       <div class="dashboard2-panel-footer">
         <button class="dashboard2-btn" id="dashboard2-loadmore" onclick="dashboard2LoadMore()">Load more</button>
       </div>
-    </section>
+    </section> -->
 
     
   </main>

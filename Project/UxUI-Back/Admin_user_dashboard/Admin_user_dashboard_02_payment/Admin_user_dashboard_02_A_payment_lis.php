@@ -119,10 +119,12 @@ include '../UxUI-Back/Includes/header.php';
 
   /* ---------- Toolbar ---------- */
   .payment-toolbar{
-    display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;
+    display:grid;
+    grid-template-columns:repeat(5,minmax(120px,1fr)) auto minmax(132px,auto) auto;
+    align-items:end;gap:12px;
     padding:22px 30px 24px;
   }
-  .payment-field{display:flex;flex-direction:column;gap:6px;}
+  .payment-field{display:flex;flex-direction:column;gap:6px;min-width:0;}
   .payment-field label{
     font-size:12.5px;font-weight:700;color:var(--payment-ink-900);
   }
@@ -139,10 +141,10 @@ include '../UxUI-Back/Includes/header.php';
     outline:none;
     transition:border-color .15s ease;
   }
-  .payment-field input{width:150px;}
-  .payment-field select{min-width:130px;cursor:pointer;}
+  .payment-field input,.payment-field select{width:100%;min-width:0;}
+  .payment-field select{cursor:pointer;}
   .payment-field input:focus,.payment-field select:focus{border-color:var(--payment-gold-500);}
-  .payment-toolbar-spacer{flex:1;}
+  .payment-toolbar-spacer{display:none;}
 
   .payment-btn{
     height:42px;padding:0 20px;
@@ -161,9 +163,22 @@ include '../UxUI-Back/Includes/header.php';
     box-shadow:0 4px 12px rgba(184,146,61,0.35);
   }
   .payment-btn-primary:hover{box-shadow:0 6px 16px rgba(184,146,61,0.45);}
+  .payment-btn-filter{
+    background:var(--payment-white);
+    border:1px solid var(--payment-border);
+    color:var(--payment-green-800);
+  }
+  .payment-btn-filter:hover{
+    background:var(--payment-cream-100);
+    border-color:var(--payment-green-700);
+  }
+  .payment-btn-filter:focus-visible{
+    outline:3px solid var(--payment-gold-300);
+    outline-offset:2px;
+  }
 
   .payment-perpage{
-    height:42px;min-width:132px;
+    height:42px;width:100%;min-width:132px;
     border:1px solid var(--payment-border);
     border-radius:var(--payment-radius-sm);
     padding:0 12px;
@@ -254,10 +269,14 @@ include '../UxUI-Back/Includes/header.php';
     cursor: not-allowed;
   }
 
+  @media (max-width:1400px){
+    .payment-toolbar{grid-template-columns:repeat(3,minmax(0,1fr));}
+    .payment-btn{justify-content:center;}
+  }
+
   @media (max-width:900px){
     .payment-app{grid-template-columns:1fr;grid-template-areas:"topbar" "main";}
     .payment-toolbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:end;}
-    .payment-toolbar-spacer{display:none;}
     .payment-field input,.payment-field select{width:100%;min-width:0;}
     .payment-perpage{width:100%;}
     .payment-btn-primary{justify-content:center;}
@@ -361,6 +380,10 @@ include '../UxUI-Back/Includes/header.php';
             <option value="bank">Bank Deposit</option>
           </select>
         </div>
+        <button type="button" class="payment-btn payment-btn-filter" id="btn-clear-range">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.64-6.36L3 8"/><path d="M3 3v5h5M12 8v4l2.5 2.5"/></svg>
+          Clear filters
+        </button>
         <div class="payment-toolbar-spacer"></div>
         <select class="payment-perpage" id="payment-perpage" onchange="paymentRender(1)" aria-label="Payments per page">
           <option value="10">Per Page 10</option>

@@ -49,16 +49,16 @@ $sidebar_admin_dashboard_url = 'Main-Dashboard.php?page=members';
 
   .bmjm-sidebar-brand{
     display:flex;
-    justify-content:flex-start;
+    justify-content:center;
     align-items:center;
-    padding:18px 0 26px 18px; /* left padding */
-    margin-bottom:22px;
+    padding:8px 0 20px;
+    margin-bottom:16px;
     border-bottom:1px solid rgba(201,162,39,.18);
     text-decoration:none;
-}
+  }
 
   .bmjm-sidebar-brand-mark{
-    width:110px;
+    width:140px;
     height:auto;
     flex:none;
   }
@@ -85,6 +85,55 @@ $sidebar_admin_dashboard_url = 'Main-Dashboard.php?page=members';
     text-transform:uppercase;
     color:rgba(250,247,240,0.55);
     margin-top:2px;
+  }
+
+  .bmjm-sidebar-member{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-width:0;
+    margin:0 0 20px;
+    padding:12px;
+    border:1px solid rgba(250,247,240,0.12);
+    border-radius:8px;
+    background:rgba(250,247,240,0.06);
+  }
+  .bmjm-sidebar-member[hidden]{display:none;}
+  .bmjm-sidebar-member-avatar{
+    width:42px;
+    height:42px;
+    flex:0 0 42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:var(--bmjm-sidebar-cream-50);
+    color:var(--bmjm-sidebar-green-950);
+  }
+  .bmjm-sidebar-member-avatar svg{width:23px;height:23px;}
+  .bmjm-sidebar-member-info{min-width:0;}
+  .bmjm-sidebar-member-name{
+    display:block;
+    overflow:hidden;
+    color:var(--bmjm-sidebar-cream-50);
+    font-size:13px;
+    font-weight:600;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .bmjm-sidebar-member-number{
+    display:block;
+    margin-top:3px;
+    color:rgba(250,247,240,0.65);
+    font-size:11px;
+  }
+  .bmjm-sidebar-section-title{
+    margin:0 0 8px;
+    padding:0 14px;
+    color:var(--bmjm-sidebar-gold-300);
+    font-family:'Poppins',Inter,sans-serif;
+    font-size:13px;
+    font-weight:600;
   }
 
   .bmjm-sidebar-nav{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px;flex:1;}
@@ -136,9 +185,19 @@ $sidebar_admin_dashboard_url = 'Main-Dashboard.php?page=members';
            onerror="this.replaceWith(document.getElementById('bmjm-sidebar-fallback-mark').content.cloneNode(true).firstElementChild)">
 
     </div>
-
   </a>
 
+  <div class="bmjm-sidebar-member" id="bmjm-sidebar-member" hidden>
+    <div class="bmjm-sidebar-member-avatar" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a4.2 4.2 0 1 0 0-8.4 4.2 4.2 0 0 0 0 8.4Zm0 2c-4.1 0-7.5 2.1-7.5 4.7V21h15v-2.3c0-2.6-3.4-4.7-7.5-4.7Z"/></svg>
+    </div>
+    <div class="bmjm-sidebar-member-info">
+      <strong class="bmjm-sidebar-member-name" id="bmjm-sidebar-member-name"></strong>
+      <span class="bmjm-sidebar-member-number" id="bmjm-sidebar-member-number"></span>
+    </div>
+  </div>
+
+  <h2 class="bmjm-sidebar-section-title">Member Profile</h2>
   <ul class="bmjm-sidebar-nav">
     
     <li class="bmjm-sidebar-nav-item" data-page="dashboard" onclick="if(typeof Admin_user_dashboard_01_OPEN === 'function'){ Admin_user_dashboard_01_OPEN(); }">
