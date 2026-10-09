@@ -275,12 +275,12 @@
             return false;
         }
 
-        if (!/^\d{11}$/.test(mobile)) {
+        if (!/^\d{10}$/.test(mobile)) {
             showProfileToast("Mobile number must contain exactly 10 digits.", 'error');
             return false;
         }
 
-        if (whatsapp && !/^\d{11}$/.test(whatsapp)) {
+        if (whatsapp && !/^\d{10}$/.test(whatsapp)) {
             showProfileToast("WhatsApp number must contain exactly 10 digits.", 'error');
             return false;
         }

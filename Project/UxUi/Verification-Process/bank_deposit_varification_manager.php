@@ -8,6 +8,8 @@ include_once __DIR__ . '/../../Controller/User-Login/Cook_Managment/Cook_Managin
 include_once __DIR__ . '/../../Controller/wwjm_bank_deposit_slip/wwjm_bank_deposit_slip_ADD_UPDATE.php';
 include_once __DIR__ . '/../../Controller/wwjm_member_list/wwjm_member_list_ADD_UPDATE.php';
 include_once __DIR__ . '/../../imports/notification/auto_notify.php';
+include_once __DIR__ . '/../../imports/sms/SMS_Sending.php';
+include_once __DIR__ . '/../../UxUI-Back/notification_templates/bank_deposit/notification_template_bank_deposit_cancel_aprrove_user.php';
 
 $is_ajax_request = isset($_POST['ajax']) && $_POST['ajax'] === '1';
 
@@ -229,6 +231,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_type']) && $de
             $deposit_slip_data['approve_state'] = '0';
             $deposit_slip_data['resion_to_approve'] = $cancel_reason;
             $action_msg = "REJECTED: Bank deposit slip #" . $deposit_id . " has been CANCELLED. Reason: " . htmlspecialchars($cancel_reason);
+
+          $member_mobile_no = trim((string)($payment_slip_data['member_mobile_no'] ?? ''));
+          if ($member_mobile_no !== '') {
+            $rejection_template = new notification_template_bank_deposit_cancel_aprrove_user($encrypted_id);
+            $sms_obj = new SMS_Sending($member_mobile_no, $rejection_template->form_by_sms());
+            $sms_obj->send_message();
+          }
         } else {
             $action_msg = "ERROR: Failed to update cancellation state.";
         }

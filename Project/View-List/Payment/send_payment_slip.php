@@ -41,6 +41,14 @@ if (!$payment->get_state() || (string) $payment->get_ast() !== '1') {
     payment_slip_send_response('error', 'Payment receipt was not found.');
 }
 
+$db = new DataBase();
+$bank_deposit_result = $db->get_result(
+    "SELECT approve_cancel FROM wwjm_bank_deposit_slip WHERE wwjm_payment_slip_id='" . addslashes($payment_id) . "' ORDER BY id DESC LIMIT 1"
+);
+if ($bank_deposit_result && ($bank_deposit = $bank_deposit_result->fetch_assoc()) && (string) $bank_deposit['approve_cancel'] === '1') {
+    payment_slip_send_response('error', 'A receipt cannot be sent for a rejected bank deposit.');
+}
+
 $security_keys = new Advance_Security_Key_List();
 $security = new Advance_Security();
 $encrypted_id = $security->get_data_encrypt($security_keys->get_bmjm_payment_slip_id(), $payment_id);

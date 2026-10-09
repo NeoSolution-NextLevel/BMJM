@@ -67,6 +67,46 @@ function getPaymentListFilters() {
     };
 }
 
+function loadPaymentTypeOptions(onComplete) {
+    var typeSelect = document.getElementById('payment-type');
+    if (!typeSelect) {
+        if (onComplete) onComplete();
+        return;
+    }
+
+    $.ajax({
+        url: "<?php echo $pth; ?>View-List/Income_Expense/Income_Expense_type_list.php",
+        type: 'POST',
+        data: { type_filter: 'income' },
+        cache: false,
+        dataType: 'json',
+        success: function(types) {
+            typeSelect.innerHTML = '';
+
+            var allOption = document.createElement('option');
+            allOption.value = 'all';
+            allOption.textContent = 'All';
+            typeSelect.appendChild(allOption);
+
+            if (Array.isArray(types)) {
+                types.forEach(function(type) {
+                    if (!type || !type.name) return;
+                    var option = document.createElement('option');
+                    option.value = type.name;
+                    option.textContent = type.name;
+                    typeSelect.appendChild(option);
+                });
+            }
+
+            if (onComplete) onComplete();
+        },
+        error: function(err) {
+            console.error('Error fetching income payment types:', err);
+            if (onComplete) onComplete();
+        }
+    });
+}
+
 function fetchPaymentListCount(filters) {
     $.ajax({
         url: "<?php echo $pth; ?>View-List/Payment/payment_list.php",
@@ -243,7 +283,9 @@ function initPaymentList() {
         if (clearFiltersButton) {
             clearFiltersButton.addEventListener('click', clearPaymentFilters);
         }
-        paymentRender(1);
+        loadPaymentTypeOptions(function() {
+            paymentRender(1);
+        });
     }
 }
 
