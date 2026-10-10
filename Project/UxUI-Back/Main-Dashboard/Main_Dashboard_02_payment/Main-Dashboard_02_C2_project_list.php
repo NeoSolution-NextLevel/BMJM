@@ -144,10 +144,16 @@ include '../UxUI-Back/Includes/header.php';
     height:36px;min-width:110px;
     border:1px solid var(--payment-project-border);
     border-radius:var(--payment-project-radius-sm);
-    padding:0 12px;
+    padding:0 34px 0 12px;
     font-size:12.5px;font-family:inherit;
     color:var(--payment-project-ink-900);
-    background:var(--payment-project-white);
+    background-color:var(--payment-project-white);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='%235A6A62' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 10px center;
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
     outline:none;cursor:pointer;
   }
 

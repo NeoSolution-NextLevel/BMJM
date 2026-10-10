@@ -79,36 +79,46 @@ include '../UxUI-Back/Includes/header.php';
   .settings-income-expense-type-panel-header{
     background:linear-gradient(135deg,var(--settings-income-expense-type-green-800),var(--settings-income-expense-type-green-950));
     color:var(--settings-income-expense-type-cream-50);
-    padding:24px 30px;
+    padding:18px 24px;
     display:flex;align-items:center;justify-content:space-between;
+    position:relative;overflow:hidden;
+  }
+  .settings-income-expense-type-panel-header::before{
+    content:'';position:absolute;right:40px;top:-80px;
+    width:220px;height:220px;border-radius:50%;
+    background:var(--settings-income-expense-type-gold-500);filter:blur(50px);opacity:0.15;
+    pointer-events:none;
   }
   .settings-income-expense-type-panel-title{
     display:flex;align-items:center;gap:12px;
     font-family:'Poppins',Inter,sans-serif;
-    font-size:24px;font-weight:600;
+    font-size:20px;font-weight:700;
+    position:relative;z-index:2;
   }
-  .settings-income-expense-type-panel-title svg{width:20px;height:20px;flex:0 0 20px;color:var(--settings-income-expense-type-gold-300);}
+  .settings-income-expense-type-panel-title svg{width:22px;height:22px;flex:0 0 22px;color:var(--settings-income-expense-type-gold-300);}
   .settings-income-expense-type-panel-close{
-    width:32px;height:32px;border-radius:50%;flex:0 0 32px;
+    width:34px;height:34px;border-radius:50%;flex:0 0 34px;
     border:1px solid rgba(250,247,240,0.25);
     background:transparent;color:var(--settings-income-expense-type-cream-50);
     display:flex;align-items:center;justify-content:center;
     padding:0;
     font:inherit;
     text-decoration:none;
-    cursor:pointer;transition:background .15s ease;
+    cursor:pointer;transition:all .25s ease;
+    position:relative;z-index:2;
   }
   .settings-income-expense-type-panel-close svg{width:18px;height:18px;}
-  .settings-income-expense-type-panel-close:hover{background:rgba(250,247,240,0.12);}
+  .settings-income-expense-type-panel-close:hover{background:rgba(250,247,240,0.15);transform:rotate(90deg);}
 
   .settings-income-expense-type-btn{
-    height:42px;padding:0 20px;
+    height:42px;padding:0 22px;
     border-radius:var(--settings-income-expense-type-radius-sm);
     border:none;cursor:pointer;
     font-size:13px;font-weight:700;letter-spacing:0.01em;
     display:inline-flex;align-items:center;gap:8px;
     white-space:nowrap;
     text-decoration:none;
+    align-self:flex-end;
     transition:background .15s ease, box-shadow .15s ease, transform .1s ease, color .15s ease;
   }
   .settings-income-expense-type-btn:active{transform:translateY(1px);}
@@ -128,7 +138,7 @@ include '../UxUI-Back/Includes/header.php';
     .settings-income-expense-type-app{grid-template-columns:1fr;grid-template-areas:"topbar" "main";}
   }
 
-  .settings-income-expense-type-main{grid-area:main;padding:26px 30px 50px;}
+  .settings-income-expense-type-main{grid-area:main;padding:16px 30px 40px;}
 
   .settings-income-expense-type-panel{
     background:var(--settings-income-expense-type-white);
@@ -139,41 +149,64 @@ include '../UxUI-Back/Includes/header.php';
   }
 
   .settings-income-expense-type-toolbar{
-    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
-    padding:22px 30px 4px;
+    display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;
+    padding:16px 24px;
+    background:rgba(250,247,240,0.5);
+    border-bottom:1px solid var(--settings-income-expense-type-border);
   }
+  .settings-income-expense-type-field{display:flex;flex-direction:column;gap:5px;}
+  .settings-income-expense-type-field-search{flex:1;min-width:220px;max-width:320px;}
+  .settings-income-expense-type-field label{
+    font-size:11.5px;font-weight:700;
+    color:var(--settings-income-expense-type-ink-900);
+    text-transform:uppercase;letter-spacing:0.04em;
+  }
+
   .settings-income-expense-type-search{
-    flex:1;min-width:200px;
+    width:100%;
     height:42px;
+    min-height:42px;
     border:1px solid var(--settings-income-expense-type-border);
     border-radius:var(--settings-income-expense-type-radius-sm);
-    padding:0 14px;
+    padding:0 14px 0 36px;
     font-size:13.5px;
     font-family:inherit;
     color:var(--settings-income-expense-type-ink-900);
-    background:var(--settings-income-expense-type-white);
+    background-color:var(--settings-income-expense-type-white);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='%238B978F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:left 12px center;
     outline:none;
-    transition:border-color .15s ease;
+    transition:border-color .15s ease, box-shadow .15s ease;
   }
   .settings-income-expense-type-search::placeholder{color:var(--settings-income-expense-type-ink-400);}
-  .settings-income-expense-type-search:focus{border-color:var(--settings-income-expense-type-gold-500);}
-
-  .settings-income-expense-type-field{display:flex;flex-direction:column;gap:6px;}
-  .settings-income-expense-type-field label{font-size:12px;font-weight:700;color:var(--settings-income-expense-type-ink-900);}
+  .settings-income-expense-type-search:focus{
+    border-color:var(--settings-income-expense-type-gold-500);
+    box-shadow:0 0 0 3px rgba(201,162,39,0.12);
+  }
 
   .settings-income-expense-type-select{
     height:42px;min-width:170px;
     border:1px solid var(--settings-income-expense-type-border);
     border-radius:var(--settings-income-expense-type-radius-sm);
-    padding:0 14px;
+    padding:0 38px 0 14px;
     font-size:13.5px;
     font-family:inherit;
     color:var(--settings-income-expense-type-ink-900);
-    background:var(--settings-income-expense-type-white);
+    background-color:var(--settings-income-expense-type-white);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235A6A62' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 12px center;
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
     outline:none;cursor:pointer;
-    transition:border-color .15s ease;
+    transition:border-color .15s ease, box-shadow .15s ease;
   }
-  .settings-income-expense-type-select:focus{border-color:var(--settings-income-expense-type-gold-500);}
+  .settings-income-expense-type-select:focus{
+    border-color:var(--settings-income-expense-type-gold-500);
+    box-shadow:0 0 0 3px rgba(201,162,39,0.12);
+  }
 
   .settings-income-expense-type-badge{
     height:42px;padding:0 20px;
@@ -194,16 +227,22 @@ include '../UxUI-Back/Includes/header.php';
     height:36px;min-width:110px;
     border:1px solid var(--settings-income-expense-type-border);
     border-radius:var(--settings-income-expense-type-radius-sm);
-    padding:0 12px;
+    padding:0 34px 0 12px;
     font-size:12.5px;font-family:inherit;
     color:var(--settings-income-expense-type-ink-900);
-    background:var(--settings-income-expense-type-white);
+    background-color:var(--settings-income-expense-type-white);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='%235A6A62' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 10px center;
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
     outline:none;cursor:pointer;
   }
 
   .settings-income-expense-type-list{
     display:flex;flex-direction:column;
-    padding:18px 30px 30px;
+    padding:20px 24px 26px;
     gap:10px;
   }
   .settings-income-expense-type-row{
@@ -212,36 +251,59 @@ include '../UxUI-Back/Includes/header.php';
     background:var(--settings-income-expense-type-cream-50);
     border:1px solid var(--settings-income-expense-type-border);
     border-radius:var(--settings-income-expense-type-radius-sm);
-    transition:border-color .15s ease, background .15s ease;
+    transition:border-color .15s ease, background .15s ease, box-shadow .15s ease;
   }
-  .settings-income-expense-type-row:hover{border-color:var(--settings-income-expense-type-gold-500);background:var(--settings-income-expense-type-white);}
+  .settings-income-expense-type-row:hover{
+    border-color:var(--settings-income-expense-type-gold-500);
+    background:var(--settings-income-expense-type-white);
+    box-shadow:var(--settings-income-expense-type-shadow-sm);
+  }
   .settings-income-expense-type-row-info{display:flex;flex-direction:column;gap:2px;}
   .settings-income-expense-type-row-name{font-size:14px;font-weight:700;color:var(--settings-income-expense-type-ink-900);}
   .settings-income-expense-type-row-sub{font-size:12px;color:var(--settings-income-expense-type-ink-600);}
   .settings-income-expense-type-row-actions{display:flex;align-items:center;gap:10px;}
   .settings-income-expense-type-tag{
     display:inline-block;
-    font-size:11px;font-weight:700;letter-spacing:0.02em;
-    padding:3px 10px;border-radius:999px;
+    font-size:11px;font-weight:700;letter-spacing:0.03em;
+    padding:4px 11px;border-radius:999px;
     background:var(--settings-income-expense-type-cream-100);
     color:var(--settings-income-expense-type-green-700);
   }
+  .settings-income-expense-type-tag.is-income{
+    background:rgba(27,122,74,0.12);
+    color:#1B7A4A;
+  }
+  .settings-income-expense-type-tag.is-expense{
+    background:rgba(176,69,58,0.12);
+    color:var(--settings-income-expense-type-danger);
+  }
   .settings-income-expense-type-row-btn{
-    height:34px;padding:0 18px;
+    height:34px;padding:0 16px;
     border-radius:var(--settings-income-expense-type-radius-sm);
     border:1px solid var(--settings-income-expense-type-green-700);
     background:var(--settings-income-expense-type-white);
     color:var(--settings-income-expense-type-green-700);
     font-size:12px;font-weight:700;letter-spacing:0.01em;
     cursor:pointer;
-    transition:background .15s ease,color .15s ease;
+    transition:background .15s ease,color .15s ease,border-color .15s ease;
   }
   .settings-income-expense-type-row-btn:hover{background:var(--settings-income-expense-type-green-800);color:var(--settings-income-expense-type-cream-50);}
+  .settings-income-expense-type-row-btn-danger{
+    border-color:rgba(176,69,58,0.45);
+    color:var(--settings-income-expense-type-danger);
+  }
+  .settings-income-expense-type-row-btn-danger:hover{
+    background:var(--settings-income-expense-type-danger);
+    border-color:var(--settings-income-expense-type-danger);
+    color:var(--settings-income-expense-type-white);
+  }
 
   .settings-income-expense-type-empty{padding:40px 18px;text-align:center;color:var(--settings-income-expense-type-ink-400);font-size:13.5px;}
 
   @media (max-width:900px){
     .settings-income-expense-type-toolbar{flex-direction:column;align-items:stretch;}
+    .settings-income-expense-type-field-search{max-width:none;}
+    .settings-income-expense-type-btn{align-self:stretch;justify-content:center;}
   }
 
 </style>
@@ -294,14 +356,14 @@ include '../UxUI-Back/Includes/header.php';
       </div>
 
       <div class="settings-income-expense-type-toolbar">
-        <div class="settings-income-expense-type-field">
+        <div class="settings-income-expense-type-field settings-income-expense-type-field-search">
           <label for="settings-income-expense-type-search">Search From Name</label>
-          <input type="text" class="settings-income-expense-type-search" id="settings-income-expense-type-search" style="height:42px;"
-                 placeholder="search name" oninput="settings_income_expense_typeRender()">
+          <input type="text" class="settings-income-expense-type-search" id="settings-income-expense-type-search"
+                 placeholder="Search name..." oninput="settings_income_expense_typeRender()">
         </div>
         <div class="settings-income-expense-type-field">
           <label for="settings-income-expense-type-type">Select Type</label>
-          <select class="settings-income-expense-type-select" id="settings-income-expense-type-type" onchange="settings_income_expense_typeRender()">
+          <select class="settings-income-expense-type-select" id="settings-income-expense-type-type" onchange="fetchTypesFromDB()">
             <option value="all">All</option>
             <option value="income">Income</option>
             <option value="expense">Expenses</option>
@@ -390,15 +452,18 @@ include '../UxUI-Back/Includes/header.php';
       const typeName = r.name || r.income_expence_type_name || '';
       let categoryLabel = '';
       let categoryKey = r.type || '';
+      let tagClass = '';
       if (r.is_income_type == 1 && r.is_expece_type == 1) {
         categoryLabel = 'Income &amp; Expense';
         categoryKey = 'both';
       } else if (r.is_income_type == 1) {
         categoryLabel = 'Income';
         categoryKey = 'income';
+        tagClass = 'is-income';
       } else if (r.is_expece_type == 1) {
         categoryLabel = 'Expense';
         categoryKey = 'expense';
+        tagClass = 'is-expense';
       } else {
         categoryLabel = 'Other';
         categoryKey = 'expense';
@@ -412,10 +477,10 @@ include '../UxUI-Back/Includes/header.php';
           <span class="settings-income-expense-type-row-name">${typeName}</span>
         </div>
         <div class="settings-income-expense-type-row-actions">
-          <span class="settings-income-expense-type-tag">${categoryLabel}</span>
+          <span class="settings-income-expense-type-tag ${tagClass}">${categoryLabel}</span>
           <button class="settings-income-expense-type-row-btn"
                   onclick="settings_income_expense_typeEdit(${id}, '${safeName}', '${categoryKey}')">Edit</button>
-          <button class="settings-income-expense-type-row-btn" style="border-color:var(--settings-income-expense-type-danger);color:var(--settings-income-expense-type-danger);"
+          <button class="settings-income-expense-type-row-btn settings-income-expense-type-row-btn-danger"
                   onclick="settings_income_expense_typeDelete(${id}, '${safeName}')">Remove</button>
         </div>
       </div>`;

@@ -116,8 +116,18 @@ include '../UxUI-Back/Includes/header.php';
     border-radius:var(--ietype-new-radius-sm);
     padding:0 16px;
     font-size:14px;font-family:inherit;
-    color:var(--ietype-new-ink-900);background:var(--ietype-new-white);
+    color:var(--ietype-new-ink-900);background-color:var(--ietype-new-white);
     outline:none;transition:border-color .15s ease,box-shadow .15s ease;
+  }
+  .ietype-new-select{
+    padding-right:40px;
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235A6A62' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+    cursor:pointer;
   }
   .ietype-new-input:focus, .ietype-new-select:focus{
     border-color:var(--ietype-new-gold-500);

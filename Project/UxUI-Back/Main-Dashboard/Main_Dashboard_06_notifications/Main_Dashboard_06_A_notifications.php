@@ -128,7 +128,7 @@ $page_title = "Notifications - bmjm Admin";
     width:100%;
     border:1px solid var(--notify-border);
     border-radius:var(--notify-radius-sm);
-    background:var(--notify-white);
+    background-color:var(--notify-white);
     color:var(--notify-ink-900);
     font:inherit;
     font-size:13.5px;
@@ -137,6 +137,16 @@ $page_title = "Notifications - bmjm Admin";
   }
   .notify-field input,
   .notify-field select{height:42px;padding:0 12px;}
+  .notify-field select{
+    padding-right:38px;
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235A6A62' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 12px center;
+    cursor:pointer;
+  }
   .notify-field textarea{min-height:110px;resize:vertical;padding:12px;}
   .notify-field input:focus,
   .notify-field select:focus,
@@ -242,12 +252,18 @@ $page_title = "Notifications - bmjm Admin";
     height:42px;
     border:1px solid var(--notify-border);
     border-radius:var(--notify-radius-sm);
-    background:var(--notify-white);
+    background-color:var(--notify-white);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235A6A62' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 12px center;
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
     color:var(--notify-ink-900);
     font:inherit;
     font-size:13.5px;
     outline:none;
-    padding:0 12px;
+    padding:0 38px 0 12px;
     cursor:pointer;
   }
   .notify-filter-field select:focus{
@@ -333,11 +349,18 @@ $page_title = "Notifications - bmjm Admin";
     height:42px;
     border:1px solid var(--notify-border);
     border-radius:var(--notify-radius-sm);
-    background:var(--notify-white);
-    padding:0 10px;
+    background-color:var(--notify-white);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235A6A62' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 12px center;
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    padding:0 38px 0 12px;
     font-size:13px;
     color:var(--notify-ink-900);
     min-width:130px;
+    outline:none;
     cursor:pointer;
   }
   .notify-upload{

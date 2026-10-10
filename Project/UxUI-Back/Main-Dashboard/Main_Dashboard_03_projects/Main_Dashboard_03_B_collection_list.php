@@ -202,17 +202,23 @@ include '../UxUI-Back/Includes/header.php';
     height:50px;min-width:180px;
     border:2px solid transparent;
     border-radius:var(--projc-radius-sm);
-    padding:0 20px;
+    padding:0 42px 0 20px;
     font-size:14px; font-weight: 600;
     font-family:inherit;
     color:var(--projc-ink-900);
-    background:rgba(255,255,255,0.8);
+    background-color:rgba(255,255,255,0.8);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235A6A62' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
     box-shadow:var(--projc-shadow-sm);
     outline:none;cursor:pointer;
     transition:all .2s var(--projc-cubic);
   }
   .project-collection-select:focus{
-    border-color:var(--projc-gold-300); background: var(--projc-white);
+    border-color:var(--projc-gold-300); background-color: var(--projc-white);
   }
 
   .project-collection-btn{

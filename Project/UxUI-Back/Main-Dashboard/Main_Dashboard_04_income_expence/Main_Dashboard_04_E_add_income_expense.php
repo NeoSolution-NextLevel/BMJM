@@ -122,8 +122,18 @@ include '../UxUI-Back/Includes/header.php';
     border-radius:var(--add-tx-radius-sm);
     padding:0 16px;
     font-size:14px;font-family:inherit;
-    color:var(--add-tx-ink-900);background:var(--add-tx-white);
+    color:var(--add-tx-ink-900);background-color:var(--add-tx-white);
     outline:none;transition:border-color .15s ease,box-shadow .15s ease;
+  }
+  .add-tx-select{
+    padding-right:40px;
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235A6A62' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+    cursor:pointer;
   }
   .add-tx-input:focus, .add-tx-select:focus, .add-tx-textarea:focus{
     border-color:var(--add-tx-gold-500);
