@@ -85,13 +85,21 @@
     var refVal = refEl ? refEl.value.trim() : "";
 
     if (!amountVal || isNaN(parseFloat(amountVal)) || parseFloat(amountVal) <= 0) {
-      alert("Please enter a valid paid amount.");
-      if (amountEl) amountEl.focus();
+      bmjmShowPopup({
+        type: 'warning',
+        title: 'Invalid Amount',
+        message: 'Please enter a valid paid amount.',
+        onClose: function() { if (amountEl) amountEl.focus(); }
+      });
       return;
     }
     if (!bankAccId) {
-      alert("Please select a deposit bank account.");
-      if (bankAccEl) bankAccEl.focus();
+      bmjmShowPopup({
+        type: 'warning',
+        title: 'Select Bank Account',
+        message: 'Please select a deposit bank account.',
+        onClose: function() { if (bankAccEl) bankAccEl.focus(); }
+      });
       return;
     }
 
@@ -127,24 +135,40 @@
               ud2dExecSubmit(amountVal, bankAccId, data[0].img_pth, notesVal, refVal);
             } else {
               if (typeof bmjmHideProcessing === 'function') bmjmHideProcessing();
-              alert("Image upload error: " + (data[0] ? data[0].error : "Failed to upload receipt"));
+              bmjmShowPopup({
+                type: 'error',
+                title: 'Upload Failed',
+                message: 'Image upload error: ' + (data[0] ? data[0].error : 'Failed to upload receipt')
+              });
             }
           } catch(e) {
             if (typeof bmjmHideProcessing === 'function') bmjmHideProcessing();
-            alert("Error parsing upload response");
+            bmjmShowPopup({
+              type: 'error',
+              title: 'Upload Error',
+              message: 'Error parsing upload response. Please try again.'
+            });
           }
         },
         error: function(xhr, status, error) {
           if (btn) btn.disabled = false;
           if (typeof bmjmHideProcessing === 'function') bmjmHideProcessing();
-          alert("Error uploading image file: " + error);
+          bmjmShowPopup({
+            type: 'error',
+            title: 'Upload Error',
+            message: 'Error uploading image file: ' + error
+          });
         }
       });
       return;
     }
 
     if (!imagePth) {
-      alert("Please upload your bank deposit receipt image.");
+      bmjmShowPopup({
+        type: 'warning',
+        title: 'Receipt Required',
+        message: 'Please upload your bank deposit receipt image.'
+      });
       return;
     }
 
@@ -198,27 +222,43 @@
             try {
                 var json = JSON.parse(res);
                 if (json[0] && json[0].error === "0") {
-                    alert("Bank receipt submitted successfully! It is recorded and pending admin verification.");
                     if (typeof user_dashboard_02_A_OPEN === 'function') {
                         user_dashboard_02_A_OPEN();
                     }
+                    bmjmShowPopup({
+                        type: 'success',
+                        title: 'Receipt Submitted',
+                        message: 'Bank receipt submitted successfully! It is recorded and pending admin verification.'
+                    });
                 } else {
-                    alert("Submission status: " + (json[0] ? json[0].error : "Submitted successfully!"));
                     if (typeof user_dashboard_02_A_OPEN === 'function') {
                         user_dashboard_02_A_OPEN();
                     }
+                    bmjmShowPopup({
+                        type: 'info',
+                        title: 'Submission Status',
+                        message: 'Submission status: ' + (json[0] ? json[0].error : 'Submitted successfully!')
+                    });
                 }
             } catch (e) {
-                alert("Bank receipt submitted successfully!");
                 if (typeof user_dashboard_02_A_OPEN === 'function') {
                     user_dashboard_02_A_OPEN();
                 }
+                bmjmShowPopup({
+                    type: 'success',
+                    title: 'Receipt Submitted',
+                    message: 'Bank receipt submitted successfully!'
+                });
             }
         },
         error: function(xhr, status, error) {
             if (btn) btn.disabled = false;
             if (typeof bmjmHideProcessing === 'function') bmjmHideProcessing();
-            alert("Error submitting bank receipt via ViewList: " + error);
+            bmjmShowPopup({
+                type: 'error',
+                title: 'Submission Error',
+                message: 'Error submitting bank receipt: ' + error
+            });
         }
     });
   }

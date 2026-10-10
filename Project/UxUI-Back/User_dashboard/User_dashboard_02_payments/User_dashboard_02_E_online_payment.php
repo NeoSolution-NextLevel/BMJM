@@ -365,9 +365,15 @@ $is_payhere_on = $Company_Info->get_is_payhere_active();
 
   function user_dashboard_proceed_to_ipg(event) {
     event.preventDefault();
-    var amt = parseFloat(document.getElementById('ud2e-amount-field').value);
+    var amtEl = document.getElementById('ud2e-amount-field');
+    var amt = parseFloat(amtEl ? amtEl.value : '');
     if (isNaN(amt) || amt <= 0) {
-      alert("Please enter a valid amount to proceed.");
+      bmjmShowPopup({
+        type: 'warning',
+        title: 'Invalid Amount',
+        message: 'Please enter a valid amount to proceed.',
+        onClose: function() { if (amtEl) amtEl.focus(); }
+      });
       return;
     }
 
@@ -418,7 +424,11 @@ $is_payhere_on = $Company_Info->get_is_payhere_active();
         btn.disabled = false;
         btn.style.opacity = '1';
         btn.style.pointerEvents = 'auto';
-        alert(res.message || "Failed to initialize payment gateway session. Please try again.");
+        bmjmShowPopup({
+          type: 'error',
+          title: 'Payment Gateway Error',
+          message: res.message || 'Failed to initialize payment gateway session. Please try again.'
+        });
       }
     })
     .catch(function(e) {
@@ -427,7 +437,11 @@ $is_payhere_on = $Company_Info->get_is_payhere_active();
       btn.disabled = false;
       btn.style.opacity = '1';
       btn.style.pointerEvents = 'auto';
-      alert("Network error communicating with payment gateway server.");
+      bmjmShowPopup({
+        type: 'error',
+        title: 'Connection Error',
+        message: 'Network error communicating with payment gateway server.'
+      });
     });
   }
 </script>

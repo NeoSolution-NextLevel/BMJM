@@ -32,6 +32,17 @@ include_once '../Controller/Main/Cook_Managment/Cook_Managing.php';
 
 
 <script type="text/javascript">
+        (function() {
+            var nativeAlert = window.alert ? window.alert.bind(window) : null;
+            window.alert = function(message) {
+                if (typeof window.bmjmShowPopup === "function") {
+                    window.bmjmShowPopup(message);
+                } else if (nativeAlert) {
+                    nativeAlert(message);
+                }
+            };
+        })();
+
         document.addEventListener("DOMContentLoaded", function() {
             user_dashboard_close_all();
             user_dashboard_restore_page();

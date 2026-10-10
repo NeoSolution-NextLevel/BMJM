@@ -436,7 +436,11 @@ function goToProjectPayForm(publicId) {
     if (publicId) {
         window.location.href = "../../../UxUi/Payment_IPG/Project_IPG_Pay_form.php?public_project_id=" + encodeURIComponent(publicId);
     } else {
-        alert("Invalid project reference.");
+        bmjmShowPopup({
+            type: 'error',
+            title: 'Invalid Project',
+            message: 'Invalid project reference.'
+        });
     }
 }
 

@@ -239,7 +239,11 @@ $page_title = "Choose Payment Option · Bmjm Member";
       } else if (typeof user_dashboard_02_F_OPEN === 'function') {
         user_dashboard_02_F_OPEN();
       } else {
-        alert("Bank Payment selected.");
+        bmjmShowPopup({
+          type: 'info',
+          title: 'Payment Method',
+          message: 'Bank Payment selected.'
+        });
       }
     } else if (method === 'online') {
       if (typeof user_dashboard_02_E_OPEN === 'function') {
@@ -247,7 +251,11 @@ $page_title = "Choose Payment Option · Bmjm Member";
       } else if (typeof user_dashboard_02_IPG_OPEN === 'function') {
         user_dashboard_02_IPG_OPEN();
       } else {
-        alert("Pay Online selected.");
+        bmjmShowPopup({
+          type: 'info',
+          title: 'Payment Method',
+          message: 'Pay Online selected.'
+        });
       }
     }
   }
