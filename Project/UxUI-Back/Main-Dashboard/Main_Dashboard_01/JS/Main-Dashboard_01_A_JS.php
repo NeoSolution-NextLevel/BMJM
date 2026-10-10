@@ -129,7 +129,7 @@
     const memberId = btn.getAttribute('data-raw-id');
     const round = parseInt(btn.getAttribute('data-round') || '1', 10);
     if (!memberId) {
-      alert('Missing member id. Please refresh the list.');
+      window.bmjmShowPopup({ type: 'warning', title: 'Member ID Missing', message: 'Missing member id. Please refresh the list.' });
       return;
     }
 
@@ -149,18 +149,18 @@
           } else {
             btn.disabled = false;
             btn.textContent = originalLabel;
-            alert((json && json[0] && json[0].error) ? json[0].error : "Could not approve member.");
+            window.bmjmShowPopup({ type: 'error', title: 'Approval Failed', message: (json && json[0] && json[0].error) ? json[0].error : 'Could not approve member.' });
           }
         } catch (e) {
           btn.disabled = false;
           btn.textContent = originalLabel;
-          alert("Could not approve member.");
+          window.bmjmShowPopup({ type: 'error', title: 'Approval Failed', message: 'Could not approve member.' });
         }
       },
       error: function() {
         btn.disabled = false;
         btn.textContent = originalLabel;
-        alert("Network error. Please try again.");
+        window.bmjmShowPopup({ type: 'error', title: 'Connection Error', message: 'Network error. Please try again.' });
       }
     });
   }

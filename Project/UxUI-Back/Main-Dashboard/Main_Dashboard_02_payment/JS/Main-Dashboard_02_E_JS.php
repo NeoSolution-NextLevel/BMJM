@@ -174,13 +174,13 @@
     }
 
     if (!currentCashPaymentMember) {
-        alert("Error: Member data not loaded.");
+        window.bmjmShowPopup({ type: 'error', title: 'Member Data Missing', message: 'Error: Member data not loaded.' });
         return;
     }
     
     var payingAmount = document.getElementById('cash-paying-amount').value;
     if (!payingAmount || isNaN(payingAmount) || payingAmount <= 0) {
-        alert("Please enter a valid paying amount.");
+        window.bmjmShowPopup({ type: 'warning', title: 'Invalid Amount', message: 'Please enter a valid paying amount.' });
         return;
     }
     
@@ -192,7 +192,7 @@
         if (overrideFlagCsh && overrideFlagCsh.value === "1") {
             var maxDueCsh = parseFloat(document.getElementById("DashBord_Payment_body_due_to_pay").value) || 0;
             if (parseFloat(payingAmount) > maxDueCsh) {
-                alert("Cannot exceed the project's remaining fixed budget of LKR " + maxDueCsh.toLocaleString() + " !");
+                window.bmjmShowPopup({ type: 'warning', title: 'Budget Limit Exceeded', message: "Cannot exceed the project's remaining fixed budget of LKR " + maxDueCsh.toLocaleString() + " !" });
                 return;
             }
         }
@@ -212,7 +212,7 @@
         ? getMainDashboardPaymentReasonFlag(paymentType)
         : '';
     if (!reasonField) {
-        alert('Please select Subscription, Zakath, Donation, or Projects before submitting.');
+        window.bmjmShowPopup({ type: 'warning', title: 'Selection Required', message: 'Please select Subscription, Zakath, Donation, or Projects before submitting.' });
         return;
     }
     var reasonFlag = '&' + reasonField + '=1';
@@ -265,7 +265,7 @@
             try {
                 var json = eval(data);
                 if (json && json[0] && json[0].error === "0") {
-                    alert("Payment submitted successfully! Receipt ID: " + json[0].id);
+                    window.bmjmShowPopup({ type: 'success', title: 'Payment Recorded', message: 'Payment submitted successfully! Receipt ID: ' + json[0].id });
                     document.getElementById('cash-paying-amount').value = "";
                     
                     // You could add logic here to trigger SMS/Email or open print view based on checkboxes
@@ -274,17 +274,17 @@
                         main_dashboard_02_C_OPEN();
                     }
                 } else {
-                    alert("Failed to submit payment: " + (json[0].error || "Unknown error"));
+                    window.bmjmShowPopup({ type: 'error', title: 'Payment Failed', message: 'Failed to submit payment: ' + (json[0].error || 'Unknown error') });
                 }
             } catch(e) {
                 console.error("Payment submission error:", e, data);
-                alert("An error occurred while submitting the payment.");
+                window.bmjmShowPopup({ type: 'error', title: 'Submission Error', message: 'An error occurred while submitting the payment.' });
             }
         },
         error: function() {
             btn.innerText = originalText;
             btn.disabled = false;
-            alert("Network error occurred. Please try again.");
+            window.bmjmShowPopup({ type: 'error', title: 'Connection Error', message: 'Network error occurred. Please try again.' });
         }
     });
   }

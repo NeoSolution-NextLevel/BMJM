@@ -64,11 +64,11 @@
     const qty = qtyRaw === '' ? null : parseInt(qtyRaw, 10);
     
     if(isNaN(price) || price <= 0){
-        alert("Please enter a valid ticket denomination.");
+        window.bmjmShowPopup({ type: 'warning', title: 'Invalid Ticket Price', message: 'Please enter a valid ticket denomination.' });
         return;
     }
     if(qty !== null && (isNaN(qty) || qty <= 0)){
-        alert("Quantity must be a valid number, or left entirely blank for unlimited capacity.");
+        window.bmjmShowPopup({ type: 'warning', title: 'Invalid Quantity', message: 'Quantity must be a valid number, or left entirely blank for unlimited capacity.' });
         return;
     }
     
@@ -163,11 +163,11 @@
              toast.style.display = 'flex';
              setTimeout(function(){ Main_Dashboard_03_B_OPEN(); }, 1000);
           } else {
-             alert("Error submitting new collection: " + res);
+             window.bmjmShowPopup({ type: 'error', title: 'Submission Error', message: 'Error submitting new collection: ' + res });
           }
        },
        error: function() {
-          alert("Fatal Network Error during submission. Please try again.");
+          window.bmjmShowPopup({ type: 'error', title: 'Connection Error', message: 'Fatal Network Error during submission. Please try again.' });
        }
     });
 

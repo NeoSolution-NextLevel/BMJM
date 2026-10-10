@@ -346,6 +346,7 @@ $bmjm_header_subtitle = isset($bmjm_header_subtitle) ? $bmjm_header_subtitle : '
     color: #5A6A62;
     margin: 0 0 22px;
     word-break: break-word;
+    white-space: pre-line;
   }
 
   .bmjm-logout-error {
@@ -402,13 +403,15 @@ $bmjm_header_subtitle = isset($bmjm_header_subtitle) ? $bmjm_header_subtitle : '
     cursor: not-allowed;
   }
 
-  .bmjm-logout-btn-cancel {
+  .bmjm-logout-btn-cancel,
+  .bmjm-popup-btn-cancel {
     background: #FAF7F0;
     border: 1px solid #E6E0D0;
     color: #1E2B26;
   }
 
-  .bmjm-logout-btn-cancel:hover:not(:disabled) {
+  .bmjm-logout-btn-cancel:hover:not(:disabled),
+  .bmjm-popup-btn-cancel:hover:not(:disabled) {
     background: #F2EDE0;
     border-color: #D5CEBC;
   }
@@ -496,7 +499,8 @@ $bmjm_header_subtitle = isset($bmjm_header_subtitle) ? $bmjm_header_subtitle : '
       transform: translateY(0);
     }
 
-    .bmjm-logout-actions {
+    .bmjm-logout-actions,
+    .bmjm-popup-actions {
       flex-direction: column-reverse;
       gap: 10px;
     }
@@ -548,6 +552,7 @@ $bmjm_header_subtitle = isset($bmjm_header_subtitle) ? $bmjm_header_subtitle : '
     <h2 class="bmjm-popup-title" id="bmjm-common-popup-title">Notice</h2>
     <p class="bmjm-popup-desc" id="bmjm-common-popup-desc"></p>
     <div class="bmjm-popup-actions">
+      <button type="button" class="bmjm-popup-btn bmjm-popup-btn-cancel" id="bmjm-common-popup-cancel" style="display: none;">Cancel</button>
       <button type="button" class="bmjm-popup-btn bmjm-popup-btn-primary" id="bmjm-common-popup-ok">OK</button>
     </div>
   </div>
@@ -753,6 +758,7 @@ window.bmjmLoginUrl = <?php echo json_encode($bmjm_login_url); ?>;
   window.bmjmCommonPopupReady = true;
 
   var popupOnCloseCallback = null;
+  var popupOnCancelCallback = null;
   var popupReturnFocusEl = null;
 
   var ICONS = {
@@ -771,10 +777,28 @@ window.bmjmLoginUrl = <?php echo json_encode($bmjm_login_url); ?>;
 
   function inferPopupType(msg) {
     var text = String(msg || '').toLowerCase();
-    if (/success|submitted|recorded|completed|verified/.test(text)) return 'success';
-    if (/please enter|please select|please upload|please fill|please choose|valid amount|valid paid/.test(text)) return 'warning';
-    if (/error|failed|invalid|unable|network/.test(text)) return 'error';
+    if (/success|submitted|recorded|completed|verified|copied|created|updated|saved|sent|activated|unblocked/.test(text) && !/failed|error|unable|invalid|not/.test(text)) return 'success';
+    if (/please enter|please select|please upload|please fill|please choose|valid amount|valid paid|missing|exceed|limit|cannot be greater|must be|at least|required/.test(text)) return 'warning';
+    if (/error|failed|invalid|unable|network|could not|blocked/.test(text)) return 'error';
     return 'info';
+  }
+
+  function inferPopupTitle(msg, resolvedType) {
+    var text = String(msg || '').toLowerCase();
+    if (/copied/.test(text)) return 'Copied to Clipboard';
+    if (/payment link.*sent|link.*sent/.test(text)) return 'Payment Link Sent';
+    if (/deposit.*submitted|payment.*recorded|cash payment.*recorded|successfully recorded/.test(text)) return 'Payment Recorded';
+    if (/member.*created|member.*added|registration.*success/.test(text)) return 'Member Created';
+    if (/profile.*updated|member.*updated/.test(text)) return 'Profile Updated';
+    if (/collection.*created|project.*created/.test(text)) return 'Collection Created';
+    if (/collection.*updated|project.*updated/.test(text)) return 'Collection Updated';
+    if (/expense.*added|income.*added|transaction.*saved|successfully added/.test(text)) return 'Saved Successfully';
+    if (/exceed|budget|limit/.test(text)) return 'Budget Limit Exceeded';
+    if (/please select|please choose/.test(text)) return 'Selection Required';
+    if (/please upload/.test(text)) return 'Upload Required';
+    if (/please enter|please fill|valid amount|valid paid/.test(text)) return 'Check Your Input';
+    if (/network|connection|server error/.test(text)) return 'Connection Error';
+    return DEFAULT_TITLES[resolvedType] || 'Notice';
   }
 
   window.bmjmShowPopup = function(optionsOrMessage, type, title, onClose) {
@@ -787,6 +811,7 @@ window.bmjmLoginUrl = <?php echo json_encode($bmjm_login_url); ?>;
     var titleEl = document.getElementById('bmjm-common-popup-title');
     var descEl = document.getElementById('bmjm-common-popup-desc');
     var okBtn = document.getElementById('bmjm-common-popup-ok');
+    var cancelBtn = document.getElementById('bmjm-common-popup-cancel');
 
     var opts = {};
     if (optionsOrMessage && typeof optionsOrMessage === 'object') {
@@ -802,19 +827,28 @@ window.bmjmLoginUrl = <?php echo json_encode($bmjm_login_url); ?>;
 
     var resolvedType = opts.type || inferPopupType(opts.message);
     if (!ICONS[resolvedType]) resolvedType = 'info';
-    var resolvedTitle = opts.title || DEFAULT_TITLES[resolvedType];
+    var resolvedTitle = opts.title || inferPopupTitle(opts.message, resolvedType);
     var resolvedBtnText = opts.buttonText || 'OK';
 
     if (!modal || !card) return;
 
     popupReturnFocusEl = document.activeElement;
     popupOnCloseCallback = typeof opts.onClose === 'function' ? opts.onClose : null;
+    popupOnCancelCallback = typeof opts.onCancel === 'function' ? opts.onCancel : null;
 
     card.setAttribute('data-popup-type', resolvedType);
     if (iconEl) iconEl.innerHTML = ICONS[resolvedType];
     if (titleEl) titleEl.textContent = resolvedTitle;
     if (descEl) descEl.textContent = opts.message || '';
     if (okBtn) okBtn.textContent = resolvedBtnText;
+    if (cancelBtn) {
+      if (opts.showCancel) {
+        cancelBtn.style.display = 'inline-flex';
+        cancelBtn.textContent = opts.cancelText || 'Cancel';
+      } else {
+        cancelBtn.style.display = 'none';
+      }
+    }
 
     modal.classList.add('bmjm-popup-open');
     modal.setAttribute('aria-hidden', 'false');
@@ -824,15 +858,35 @@ window.bmjmLoginUrl = <?php echo json_encode($bmjm_login_url); ?>;
     }, 50);
   };
 
-  window.bmjmClosePopup = function() {
+  window.bmjmShowConfirm = function(optionsOrMessage, onConfirm, onCancel) {
+    var opts = {};
+    if (optionsOrMessage && typeof optionsOrMessage === 'object') {
+      opts = Object.assign({}, optionsOrMessage);
+    } else {
+      opts = {
+        message: String(optionsOrMessage !== undefined ? optionsOrMessage : '')
+      };
+    }
+    opts.type = opts.type || 'warning';
+    opts.title = opts.title || 'Please Confirm';
+    opts.buttonText = opts.confirmText || opts.buttonText || 'Yes, Continue';
+    opts.cancelText = opts.cancelText || 'Cancel';
+    opts.showCancel = true;
+    opts.onClose = onConfirm || opts.onConfirm || null;
+    opts.onCancel = onCancel || opts.onCancel || null;
+    window.bmjmShowPopup(opts);
+  };
+
+  window.bmjmClosePopup = function(isCancel) {
     var modal = document.getElementById('bmjm-common-popup');
     if (!modal || !modal.classList.contains('bmjm-popup-open')) return;
     modal.classList.remove('bmjm-popup-open');
     modal.setAttribute('aria-hidden', 'true');
 
-    var cb = popupOnCloseCallback;
+    var cb = isCancel ? popupOnCancelCallback : popupOnCloseCallback;
     var focusEl = popupReturnFocusEl;
     popupOnCloseCallback = null;
+    popupOnCancelCallback = null;
     popupReturnFocusEl = null;
 
     if (typeof cb === 'function') {
@@ -840,6 +894,10 @@ window.bmjmLoginUrl = <?php echo json_encode($bmjm_login_url); ?>;
     } else if (focusEl && typeof focusEl.focus === 'function') {
       focusEl.focus();
     }
+  };
+
+  window.alert = function(message) {
+    window.bmjmShowPopup(message);
   };
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -852,9 +910,12 @@ window.bmjmLoginUrl = <?php echo json_encode($bmjm_login_url); ?>;
   document.addEventListener('click', function(event) {
     var modal = document.getElementById('bmjm-common-popup');
     if (!modal || !modal.classList.contains('bmjm-popup-open')) return;
-    if (event.target === modal || event.target.closest('#bmjm-common-popup-close, #bmjm-common-popup-ok')) {
+    if (event.target.closest('#bmjm-common-popup-ok')) {
       event.preventDefault();
-      window.bmjmClosePopup();
+      window.bmjmClosePopup(false);
+    } else if (event.target === modal || event.target.closest('#bmjm-common-popup-close, #bmjm-common-popup-cancel')) {
+      event.preventDefault();
+      window.bmjmClosePopup(true);
     }
   });
 
@@ -863,7 +924,7 @@ window.bmjmLoginUrl = <?php echo json_encode($bmjm_login_url); ?>;
       var modal = document.getElementById('bmjm-common-popup');
       if (modal && modal.classList.contains('bmjm-popup-open')) {
         event.preventDefault();
-        window.bmjmClosePopup();
+        window.bmjmClosePopup(true);
       }
     }
   });

@@ -53,8 +53,16 @@ function submitBankDeposit() {
     var descVal = descEl ? descEl.value.trim() : "";
 
     if (!amountVal || isNaN(parseFloat(amountVal)) || parseFloat(amountVal) <= 0) {
-        alert("Please enter a valid paid amount.");
-        if (amountEl) amountEl.focus();
+        if (typeof window.bmjmShowPopup === 'function') {
+            window.bmjmShowPopup({
+                type: 'warning',
+                title: 'Invalid Amount',
+                message: 'Please enter a valid paid amount.',
+                onClose: function() {
+                    if (amountEl) amountEl.focus();
+                }
+            });
+        }
         return;
     }
 
@@ -82,16 +90,36 @@ function submitBankDeposit() {
     var bank_account_details_id = bankAccIdEl ? bankAccIdEl.value : "";
     
     if (!bank_account_details_id) {
-        alert("Please select a deposit bank account first.");
-        if (typeof Admin_user_dashboard_02_F_OPEN === "function") {
+        if (typeof window.bmjmShowPopup === 'function') {
+            window.bmjmShowPopup({
+                type: 'warning',
+                title: 'Bank Account Required',
+                message: 'Please select a deposit bank account first.',
+                onClose: function() {
+                    if (typeof Admin_user_dashboard_02_F_OPEN === "function") {
+                        Admin_user_dashboard_02_F_OPEN();
+                    }
+                }
+            });
+        } else if (typeof Admin_user_dashboard_02_F_OPEN === "function") {
             Admin_user_dashboard_02_F_OPEN();
         }
         return;
     }
 
     if (!member_list_id) {
-        alert("Please select a member first.");
-        if (typeof Admin_user_dashboard_02_A_OPEN === "function") {
+        if (typeof window.bmjmShowPopup === 'function') {
+            window.bmjmShowPopup({
+                type: 'warning',
+                title: 'Member Required',
+                message: 'Please select a member first.',
+                onClose: function() {
+                    if (typeof Admin_user_dashboard_02_A_OPEN === "function") {
+                        Admin_user_dashboard_02_A_OPEN();
+                    }
+                }
+            });
+        } else if (typeof Admin_user_dashboard_02_A_OPEN === "function") {
             Admin_user_dashboard_02_A_OPEN();
         }
         return;
@@ -131,26 +159,58 @@ function submitBankDeposit() {
                 try {
                     var json = JSON.parse(res);
                     if (json[0] && json[0].error === "0") {
-                        alert("Bank deposit payment submitted successfully!");
                         if (amountEl) amountEl.value = "";
                         if (descEl) descEl.value = "";
                         removeDepositImage();
-                        if (typeof Admin_user_dashboard_02_A_OPEN === "function") {
+                        if (typeof window.bmjmShowPopup === 'function') {
+                            window.bmjmShowPopup({
+                                type: 'success',
+                                title: 'Deposit Submitted',
+                                message: 'Bank deposit payment submitted successfully!',
+                                onClose: function() {
+                                    if (typeof Admin_user_dashboard_02_A_OPEN === "function") {
+                                        Admin_user_dashboard_02_A_OPEN();
+                                    }
+                                }
+                            });
+                        } else if (typeof Admin_user_dashboard_02_A_OPEN === "function") {
                             Admin_user_dashboard_02_A_OPEN();
                         }
                     } else {
-                        alert("Failed to submit bank deposit: " + (json[0] ? json[0].error : "Unknown error"));
+                        if (typeof window.bmjmShowPopup === 'function') {
+                            window.bmjmShowPopup({
+                                type: 'error',
+                                title: 'Submission Failed',
+                                message: 'Failed to submit bank deposit: ' + (json[0] ? json[0].error : 'Unknown error')
+                            });
+                        }
                     }
                 } catch (e) {
                     console.error("Response parsing error:", e, res);
-                    alert("Bank deposit payment processed.");
-                    if (typeof Admin_user_dashboard_02_A_OPEN === "function") {
+                    if (typeof window.bmjmShowPopup === 'function') {
+                        window.bmjmShowPopup({
+                            type: 'success',
+                            title: 'Deposit Processed',
+                            message: 'Bank deposit payment processed.',
+                            onClose: function() {
+                                if (typeof Admin_user_dashboard_02_A_OPEN === "function") {
+                                    Admin_user_dashboard_02_A_OPEN();
+                                }
+                            }
+                        });
+                    } else if (typeof Admin_user_dashboard_02_A_OPEN === "function") {
                         Admin_user_dashboard_02_A_OPEN();
                     }
                 }
             },
             error: function(xhr, status, error) {
-                alert("AJAX error submitting deposit: " + error);
+                if (typeof window.bmjmShowPopup === 'function') {
+                    window.bmjmShowPopup({
+                        type: 'error',
+                        title: 'Connection Error',
+                        message: 'AJAX error submitting deposit: ' + error
+                    });
+                }
             }
         });
     }

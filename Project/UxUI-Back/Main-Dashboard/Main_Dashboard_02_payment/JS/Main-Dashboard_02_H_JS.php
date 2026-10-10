@@ -222,18 +222,30 @@ function reviewMainBankPayment(action) {
     var reason = reasonElem ? reasonElem.value.trim() : '';
     if (!bankSlipId || !paymentSlipId) return;
     if (action === 'reject' && !reason) { if (statusElem) statusElem.textContent = 'Enter a reason before rejecting.'; if (reasonElem) reasonElem.focus(); return; }
-    if (!window.confirm(action === 'approve' ? 'Approve this bank transfer payment?' : 'Reject this bank transfer payment?')) return;
-    $.ajax({
-        url: "<?php echo $pth; ?>UxUi/Verification-Process/bank_deposit_varification_manager.php?raw_id=" + encodeURIComponent(paymentSlipId), type: 'POST', dataType: 'json',
-        data: { ajax: '1', action_type: action === 'reject' ? 'cancel' : 'approve', cancel_reason: reason },
-        success: function(response) {
-            if (response && response.status === 'success') {
-                loadPaymentSlipDetail(window.currentMainPaymentSlipId);
-                if (statusElem) statusElem.textContent = response.message;
-                if (typeof paymentRender === 'function') paymentRender(currentPaymentPage || 1);
-            } else if (statusElem) statusElem.textContent = (response && response.message) || 'Unable to review payment.';
-        },
-        error: function() { if (statusElem) statusElem.textContent = 'Unable to review payment.'; }
-    });
+    var confirmation = action === 'approve' ? 'Approve this bank transfer payment?' : 'Reject this bank transfer payment?';
+    function executeMainReview() {
+        $.ajax({
+            url: "<?php echo $pth; ?>UxUi/Verification-Process/bank_deposit_varification_manager.php?raw_id=" + encodeURIComponent(paymentSlipId), type: 'POST', dataType: 'json',
+            data: { ajax: '1', action_type: action === 'reject' ? 'cancel' : 'approve', cancel_reason: reason },
+            success: function(response) {
+                if (response && response.status === 'success') {
+                    loadPaymentSlipDetail(window.currentMainPaymentSlipId);
+                    if (statusElem) statusElem.textContent = response.message;
+                    if (typeof paymentRender === 'function') paymentRender(currentPaymentPage || 1);
+                } else if (statusElem) statusElem.textContent = (response && response.message) || 'Unable to review payment.';
+            },
+            error: function() { if (statusElem) statusElem.textContent = 'Unable to review payment.'; }
+        });
+    }
+    if (typeof window.bmjmShowConfirm === 'function') {
+        window.bmjmShowConfirm({
+            type: action === 'approve' ? 'success' : 'error',
+            title: action === 'approve' ? 'Approve Bank Transfer?' : 'Reject Bank Transfer?',
+            message: confirmation,
+            confirmText: action === 'approve' ? 'Yes, Approve' : 'Yes, Reject'
+        }, executeMainReview);
+    } else if (window.confirm(confirmation)) {
+        executeMainReview();
+    }
 }
 </script>

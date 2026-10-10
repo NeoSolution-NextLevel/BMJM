@@ -19,7 +19,7 @@ function init_c3_tickets_render() {
                 }
             },
             error: function() {
-                alert("Failed to retrieve ticketing structure.");
+                window.bmjmShowPopup({ type: 'error', title: 'Load Error', message: 'Failed to retrieve ticketing structure.' });
                 if (typeof main_dashboard_02_D_OPEN === 'function') main_dashboard_02_D_OPEN();
             }
         });
@@ -90,7 +90,7 @@ function proceedToPaymentAfterTickets() {
     var totalAmt = parseFloat(document.getElementById("payment_ticket_total_amount").value) || 0;
     
     if (totalAmt <= 0) {
-        alert("Please specify ticket quantities, or click Back to abandon ticket selection.");
+        window.bmjmShowPopup({ type: 'warning', title: 'Tickets Required', message: 'Please specify ticket quantities, or click Back to abandon ticket selection.' });
         return;
     }
     

@@ -54,26 +54,42 @@
         var dis = $('#add-tx-dis').val().trim();
         
         if (!categoryId || categoryId <= 0) {
-            alert('Please select an expense category.');
-            $('#add-tx-category').focus();
+            window.bmjmShowPopup({
+                type: 'warning',
+                title: 'Category Required',
+                message: 'Please select an expense category.',
+                onClose: function() { $('#add-tx-category').focus(); }
+            });
             return;
         }
         
         if (!amount || isNaN(amount) || amount <= 0) {
-            alert('Please enter a valid amount greater than 0.');
-            $('#add-tx-amount').focus();
+            window.bmjmShowPopup({
+                type: 'warning',
+                title: 'Invalid Amount',
+                message: 'Please enter a valid amount greater than 0.',
+                onClose: function() { $('#add-tx-amount').focus(); }
+            });
             return;
         }
         
         if (!dateOfDoc) {
-            alert('Please select the date.');
-            $('#add-tx-date').focus();
+            window.bmjmShowPopup({
+                type: 'warning',
+                title: 'Date Required',
+                message: 'Please select the date.',
+                onClose: function() { $('#add-tx-date').focus(); }
+            });
             return;
         }
         
         if (!dis) {
-            alert('Please enter description, staff name, or voucher/bill reference.');
-            $('#add-tx-dis').focus();
+            window.bmjmShowPopup({
+                type: 'warning',
+                title: 'Description Required',
+                message: 'Please enter description, staff name, or voucher/bill reference.',
+                onClose: function() { $('#add-tx-dis').focus(); }
+            });
             return;
         }
         
@@ -98,7 +114,11 @@
                 saveBtn.prop('disabled', false).html(originalBtnText);
                 var res = Array.isArray(resp) ? resp[0] : resp;
                 if (res && res.error === '0') {
-                    alert('Expense record saved successfully!');
+                    window.bmjmShowPopup({
+                        type: 'success',
+                        title: 'Expense Saved',
+                        message: 'Expense record saved successfully!'
+                    });
                     
                     $('#add-tx-amount').val('');
                     $('#add-tx-dis').val('');
@@ -111,12 +131,20 @@
                         Main_Dashboard_04_C_OPEN();
                     }
                 } else {
-                    alert('Failed to save expense: ' + (res ? res.message : 'Unknown error'));
+                    window.bmjmShowPopup({
+                        type: 'error',
+                        title: 'Save Failed',
+                        message: 'Failed to save expense: ' + (res ? res.message : 'Unknown error')
+                    });
                 }
             },
             error: function(xhr, status, error) {
                 saveBtn.prop('disabled', false).html(originalBtnText);
-                alert('Connection error while saving expense.');
+                window.bmjmShowPopup({
+                    type: 'error',
+                    title: 'Connection Error',
+                    message: 'Connection error while saving expense.'
+                });
                 console.error(error);
             }
         });

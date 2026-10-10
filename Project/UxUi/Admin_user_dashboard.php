@@ -38,6 +38,17 @@ $bmjm_suppress_shared_header = true;
 
 
 <script type="text/javascript">
+        (function() {
+            var nativeAlert = window.alert;
+            window.alert = function(message) {
+                if (typeof window.bmjmShowPopup === 'function') {
+                    window.bmjmShowPopup(message);
+                } else if (typeof nativeAlert === 'function') {
+                    nativeAlert.call(window, message);
+                }
+            };
+        })();
+
         document.addEventListener("DOMContentLoaded", function() {
             Admin_user_dashboard_close_all();
             var requestedReceiptId = <?php echo json_encode(isset($_GET['id']) ? $_GET['id'] : (isset($_GET['receipt_id']) ? $_GET['receipt_id'] : '')); ?>;

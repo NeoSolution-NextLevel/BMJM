@@ -160,33 +160,44 @@
               if ($.trim(res) === "1") {
                   fetchCollectionData();
               } else {
-                  alert("Failed to toggle visibility: " + res);
+                  window.bmjmShowPopup({ type: 'error', title: 'Toggle Failed', message: 'Failed to toggle visibility: ' + res });
               }
           },
           error: function() {
-              alert("Network error toggling state.");
+              window.bmjmShowPopup({ type: 'error', title: 'Connection Error', message: 'Network error toggling state.' });
           }
       });
   }
 
   function projectCollectionDelete(id) {
-      if (!confirm("Are you sure you want to completely erase this Collection and all its configuration?")) return;
-
-      $.ajax({
-          url: "<?php echo $pth; ?>View-List/Projects/wwjm_projects_collection_list/wwjm_projects_collection_list_DELETE.php",
-          type: "POST",
-          data: { id: id },
-          success: function(res) {
-              if ($.trim(res) === "1") {
-                  fetchCollectionData();
-              } else {
-                  alert("Failed to delete record: " + res);
+      function executeDelete() {
+          $.ajax({
+              url: "<?php echo $pth; ?>View-List/Projects/wwjm_projects_collection_list/wwjm_projects_collection_list_DELETE.php",
+              type: "POST",
+              data: { id: id },
+              success: function(res) {
+                  if ($.trim(res) === "1") {
+                      fetchCollectionData();
+                  } else {
+                      window.bmjmShowPopup({ type: 'error', title: 'Delete Failed', message: 'Failed to delete record: ' + res });
+                  }
+              },
+              error: function() {
+                  window.bmjmShowPopup({ type: 'error', title: 'Connection Error', message: 'Network error dispatching deletion command.' });
               }
-          },
-          error: function() {
-              alert("Network error dispatching deletion command.");
-          }
-      });
+          });
+      }
+
+      if (typeof window.bmjmShowConfirm === 'function') {
+          window.bmjmShowConfirm({
+              type: 'error',
+              title: 'Delete Collection?',
+              message: 'Are you sure you want to completely erase this Collection and all its configuration?',
+              confirmText: 'Yes, Delete'
+          }, executeDelete);
+      } else if (confirm("Are you sure you want to completely erase this Collection and all its configuration?")) {
+          executeDelete();
+      }
   }
 
   function projectCollectionCopyLink(publicId) {
@@ -195,10 +206,10 @@
       
       if (navigator.clipboard) {
           navigator.clipboard.writeText(url).then(function() {
-              alert("Public Checkout Link copied successfully!\n" + url);
+              window.bmjmShowPopup({ type: 'success', title: 'Link Copied', message: 'Public Checkout Link copied successfully!\n' + url });
           });
       } else {
-          alert("Please copy this URL manually:\n" + url);
+          window.bmjmShowPopup({ type: 'info', title: 'Public Checkout Link', message: 'Please copy this URL manually:\n' + url });
       }
   }
 

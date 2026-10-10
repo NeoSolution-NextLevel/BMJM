@@ -103,7 +103,7 @@
     var val_20 = window.selected_member_road_id || getVal('add_member_manual_road_id') || ''; // Road ID (numeric FK to bmjm_road_name)
 
     if (!val_20) {
-      alert('Please select a street / road before submitting.');
+      window.bmjmShowPopup({ type: 'warning', title: 'Street / Road Required', message: 'Please select a street / road before submitting.' });
       isMemberSubmitting = false;
       if (submitBtn) submitBtn.disabled = false;
       return false;
@@ -207,11 +207,11 @@
             }, 1000);
           } else {
             const errorMsg = (json && json[0] && json[0].error) ? json[0].error : "An error occurred while saving the member.";
-            alert("Error: " + errorMsg);
+            window.bmjmShowPopup({ type: 'error', title: 'Error Saving Member', message: 'Error: ' + errorMsg });
           }
         } catch(e) {
           console.error("JSON parse error:", e, response);
-          alert("Member created successfully.");
+          window.bmjmShowPopup({ type: 'success', title: 'Member Created', message: 'Member created successfully.' });
           if (typeof main_dashboard_01_A_OPEN === 'function') {
             main_dashboard_01_A_OPEN();
           }
@@ -222,7 +222,7 @@
         isMemberSubmitting = false;
         if (submitBtn) submitBtn.disabled = false;
         console.error("AJAX Error:", errorThrown);
-        alert("Network error. Please try again.");
+        window.bmjmShowPopup({ type: 'error', title: 'Connection Error', message: 'Network error. Please try again.' });
       }
     });
 

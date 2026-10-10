@@ -494,30 +494,39 @@ include '../UxUI-Back/Includes/header.php';
   }
 
   function settings_income_expense_typeDelete(id, name) {
-    if (!confirm('Are you sure you want to remove "' + name + '"?')) {
-      return;
+    function executeRemoveType() {
+      const formData = new FormData();
+      formData.append('type_id', id);
+
+      fetch('<?php echo $pth; ?>View-List/Income_Expense/Income_Expense_type_delete.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        const res = Array.isArray(data) ? data[0] : data;
+        if (res && res.error === '0') {
+          fetchTypesFromDB();
+        } else {
+          window.bmjmShowPopup({ type: 'error', title: 'Remove Failed', message: 'Failed to remove: ' + (res ? res.message : 'Unknown error') });
+        }
+      })
+      .catch(err => {
+        window.bmjmShowPopup({ type: 'error', title: 'Connection Error', message: 'Connection error occurred.' });
+        console.error(err);
+      });
     }
 
-    const formData = new FormData();
-    formData.append('type_id', id);
-
-    fetch('<?php echo $pth; ?>View-List/Income_Expense/Income_Expense_type_delete.php', {
-      method: 'POST',
-      body: formData
-    })
-    .then(res => res.json())
-    .then(data => {
-      const res = Array.isArray(data) ? data[0] : data;
-      if (res && res.error === '0') {
-        fetchTypesFromDB();
-      } else {
-        alert('Failed to remove: ' + (res ? res.message : 'Unknown error'));
-      }
-    })
-    .catch(err => {
-      alert('Connection error occurred.');
-      console.error(err);
-    });
+    if (typeof window.bmjmShowConfirm === 'function') {
+      window.bmjmShowConfirm({
+        type: 'error',
+        title: 'Remove Category / Type?',
+        message: 'Are you sure you want to remove "' + name + '"?',
+        confirmText: 'Yes, Remove'
+      }, executeRemoveType);
+    } else if (confirm('Are you sure you want to remove "' + name + '"?')) {
+      executeRemoveType();
+    }
   }
 
   window.fetchTypesFromDB = fetchTypesFromDB;

@@ -80,7 +80,13 @@
 
     function processSendIPG() {
         if (!currentIPGMemberAdmin || !currentIPGMemberAdmin.id) {
-            alert("Member data is still loading. Please wait a moment and try again.");
+            if (typeof window.bmjmShowPopup === 'function') {
+                window.bmjmShowPopup({
+                    type: 'warning',
+                    title: 'Loading Member Data',
+                    message: 'Member data is still loading. Please wait a moment and try again.'
+                });
+            }
             return;
         }
 
@@ -106,22 +112,46 @@
         var hasWhatsApp = whats_app && whats_app.checked;
 
         if (!hasSms && !hasEmail && !hasWhatsApp) {
-            alert("Please select at least one delivery option (Send By SMS, Send By Email, or Send By URL By Whatsapp).");
+            if (typeof window.bmjmShowPopup === 'function') {
+                window.bmjmShowPopup({
+                    type: 'warning',
+                    title: 'Select Delivery Option',
+                    message: 'Please select at least one delivery option (Send By SMS, Send By Email, or Send By URL By Whatsapp).'
+                });
+            }
             return;
         }
 
         if (hasSms && !cus_sms) {
-            alert("This member does not have a mobile/SMS number saved. Please update the member phone number or choose another delivery method.");
+            if (typeof window.bmjmShowPopup === 'function') {
+                window.bmjmShowPopup({
+                    type: 'warning',
+                    title: 'Mobile Number Missing',
+                    message: 'This member does not have a mobile/SMS number saved. Please update the member phone number or choose another delivery method.'
+                });
+            }
             return;
         }
 
         if (hasEmail && !cus_email) {
-            alert("This member does not have an email address saved. Please update the member email or choose another delivery method.");
+            if (typeof window.bmjmShowPopup === 'function') {
+                window.bmjmShowPopup({
+                    type: 'warning',
+                    title: 'Email Address Missing',
+                    message: 'This member does not have an email address saved. Please update the member email or choose another delivery method.'
+                });
+            }
             return;
         }
 
         if (hasWhatsApp && !cus_whatsapp) {
-            alert("This member does not have a WhatsApp/mobile number saved. Please update the member phone number or choose another delivery method.");
+            if (typeof window.bmjmShowPopup === 'function') {
+                window.bmjmShowPopup({
+                    type: 'warning',
+                    title: 'WhatsApp Number Missing',
+                    message: 'This member does not have a WhatsApp/mobile number saved. Please update the member phone number or choose another delivery method.'
+                });
+            }
             return;
         }
 
@@ -159,12 +189,12 @@
                     data = typeof response === "string" ? JSON.parse(response) : response;
                 } catch (e) {
                     console.error("Invalid JSON response", e);
-                    alert("System response error. Please try again.");
+                    window.bmjmShowPopup({ type: 'error', title: 'Response Error', message: 'System response error. Please try again.' });
                     return;
                 }
 
                 if (Array.isArray(data) && data.length > 0 && data[0].error && data[0].error !== "0") {
-                    alert("Error processing IPG link: " + data[0].error);
+                    window.bmjmShowPopup({ type: 'error', title: 'IPG Link Error', message: 'Error processing IPG link: ' + data[0].error });
                     return;
                 }
 
@@ -180,7 +210,7 @@
                     var sentChannels = [];
                     if (hasSms) sentChannels.push("SMS");
                     if (hasEmail) sentChannels.push("Email");
-                    alert("Payment IPG link sent successfully via " + sentChannels.join(" & ") + "!");
+                    window.bmjmShowPopup({ type: 'success', title: 'Payment Link Sent', message: 'Payment IPG link sent successfully via ' + sentChannels.join(' & ') + '!' });
                 }
 
                 if (typeof Admin_user_dashboard_02_A_OPEN === "function") {
@@ -191,7 +221,7 @@
             },
             error: function(xhr, status, error) {
                 console.error("Failed to process payment IPG:", error);
-                alert("Network error processing payment link.");
+                window.bmjmShowPopup({ type: 'error', title: 'Connection Error', message: 'Network error processing payment link.' });
             }
         });
     }

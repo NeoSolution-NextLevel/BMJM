@@ -1,4 +1,4 @@
-﻿<script type="text/javascript">
+<script type="text/javascript">
 
   var financialReportData = null;
 
@@ -13,11 +13,11 @@
   function financialReportDownloadPDF(button) {
     var jsPDFConstructor = window.jspdf && window.jspdf.jsPDF;
     if (typeof jsPDFConstructor !== 'function') {
-      window.alert('PDF library not loaded yet. Please wait a moment and try again.');
+      window.bmjmShowPopup({ type: 'warning', title: 'PDF Library Loading', message: 'PDF library not loaded yet. Please wait a moment and try again.' });
       return;
     }
     if (!financialReportData) {
-      window.alert('Generate a report before downloading the PDF.');
+      window.bmjmShowPopup({ type: 'warning', title: 'No Report Generated', message: 'Generate a report before downloading the PDF.' });
       return;
     }
 
@@ -329,7 +329,7 @@
         pdf.save('BMJM-Financial-Report-' + safePeriod + '.pdf');
       } catch (error) {
         console.error('Financial report PDF export failed:', error);
-        window.alert('The PDF could not be created. Please try again. Error: ' + error.message);
+        window.bmjmShowPopup({ type: 'error', title: 'PDF Export Failed', message: 'The PDF could not be created. Please try again. Error: ' + error.message });
       } finally {
         if (button) {
           button.disabled = false;

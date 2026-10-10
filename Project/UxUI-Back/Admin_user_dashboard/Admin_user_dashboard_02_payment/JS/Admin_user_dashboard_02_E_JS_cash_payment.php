@@ -83,13 +83,25 @@
     console.log("Processing cash payment...");
     
     if (!currentCashPaymentMemberAdmin) {
-        alert("Error: Member data not loaded.");
+        if (typeof window.bmjmShowPopup === 'function') {
+            window.bmjmShowPopup({
+                type: 'error',
+                title: 'Member Data Missing',
+                message: 'Member data is not loaded yet. Please wait or reload the page.'
+            });
+        }
         return;
     }
     
     var payingAmount = document.getElementById('cash-paying-amount').value;
     if (!payingAmount || isNaN(payingAmount) || payingAmount <= 0) {
-        alert("Please enter a valid paying amount.");
+        if (typeof window.bmjmShowPopup === 'function') {
+            window.bmjmShowPopup({
+                type: 'warning',
+                title: 'Invalid Amount',
+                message: 'Please enter a valid paying amount.'
+            });
+        }
         return;
     }
     
@@ -127,25 +139,51 @@
             try {
                 var json = eval(data);
                 if (json && json[0] && json[0].error === "0") {
-                    alert("Payment submitted successfully! Receipt ID: " + json[0].id);
                     document.getElementById('cash-paying-amount').value = "";
-                    
-                    if (typeof Admin_user_dashboard_02_A_OPEN === "function") {
-                        // Return to payment list on success
+                    if (typeof window.bmjmShowPopup === 'function') {
+                        window.bmjmShowPopup({
+                            type: 'success',
+                            title: 'Payment Recorded',
+                            message: 'Payment submitted successfully! Receipt ID: ' + json[0].id,
+                            onClose: function() {
+                                if (typeof Admin_user_dashboard_02_A_OPEN === "function") {
+                                    Admin_user_dashboard_02_A_OPEN();
+                                }
+                            }
+                        });
+                    } else if (typeof Admin_user_dashboard_02_A_OPEN === "function") {
                         Admin_user_dashboard_02_A_OPEN();
                     }
                 } else {
-                    alert("Failed to submit payment: " + (json[0].error || "Unknown error"));
+                    if (typeof window.bmjmShowPopup === 'function') {
+                        window.bmjmShowPopup({
+                            type: 'error',
+                            title: 'Payment Failed',
+                            message: 'Failed to submit payment: ' + (json[0].error || 'Unknown error')
+                        });
+                    }
                 }
             } catch(e) {
                 console.error("Payment submission error:", e, data);
-                alert("An error occurred while submitting the payment.");
+                if (typeof window.bmjmShowPopup === 'function') {
+                    window.bmjmShowPopup({
+                        type: 'error',
+                        title: 'Submission Error',
+                        message: 'An error occurred while submitting the payment.'
+                    });
+                }
             }
         },
         error: function() {
             btn.innerText = originalText;
             btn.disabled = false;
-            alert("Network error occurred. Please try again.");
+            if (typeof window.bmjmShowPopup === 'function') {
+                window.bmjmShowPopup({
+                    type: 'error',
+                    title: 'Connection Error',
+                    message: 'Network error occurred. Please try again.'
+                });
+            }
         }
     });
   }

@@ -81,7 +81,7 @@
               }
 
           } else {
-              alert("Error fetching collection details from the API.");
+              window.bmjmShowPopup({ type: 'error', title: 'Load Error', message: 'Error fetching collection details from the API.' });
           }
       }).catch(e => {
           console.error("Fetch Exception:", e);
@@ -168,8 +168,8 @@
     const qtyRaw = qtyInput.value.trim();
     const qty = qtyRaw === '' ? null : parseInt(qtyRaw, 10);
     
-    if(isNaN(price) || price <= 0){ alert("Please enter a valid ticket denomination."); return; }
-    if(qty !== null && (isNaN(qty) || qty <= 0)){ alert("Quantity must be a valid number, or left entirely blank for unlimited capacity."); return; }
+    if(isNaN(price) || price <= 0){ window.bmjmShowPopup({ type: 'warning', title: 'Invalid Ticket Price', message: 'Please enter a valid ticket denomination.' }); return; }
+    if(qty !== null && (isNaN(qty) || qty <= 0)){ window.bmjmShowPopup({ type: 'warning', title: 'Invalid Quantity', message: 'Quantity must be a valid number, or left entirely blank for unlimited capacity.' }); return; }
     
     collectionManageTickets.push({ price: price, quantity: qty });
     priceInput.value = ''; qtyInput.value = '';
@@ -266,11 +266,11 @@
                  }
              }, 1000);
           } else {
-             alert("Error maintaining collection edits: " + res);
+             window.bmjmShowPopup({ type: 'error', title: 'Update Error', message: 'Error maintaining collection edits: ' + res });
           }
        },
        error: function() {
-          alert("Fatal Network Error resolving adjustments.");
+          window.bmjmShowPopup({ type: 'error', title: 'Connection Error', message: 'Fatal Network Error resolving adjustments.' });
        }
     });
   });

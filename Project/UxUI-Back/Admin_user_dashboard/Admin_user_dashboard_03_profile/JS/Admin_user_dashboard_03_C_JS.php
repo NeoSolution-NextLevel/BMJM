@@ -58,9 +58,21 @@
         .then(function(res) { return res.json(); })
         .then(function(responseData) {
             if (responseData && responseData.status === "success") {
-                alert("Member has been successfully blocked.");
+                if (typeof window.bmjmShowPopup === 'function') {
+                    window.bmjmShowPopup({
+                        type: 'success',
+                        title: 'Member Blocked',
+                        message: 'Member has been successfully blocked.'
+                    });
+                }
             } else {
-                alert("Failed to block member: " + (responseData.message || "Unknown error"));
+                if (typeof window.bmjmShowPopup === 'function') {
+                    window.bmjmShowPopup({
+                        type: 'error',
+                        title: 'Action Failed',
+                        message: 'Failed to block member: ' + (responseData.message || 'Unknown error')
+                    });
+                }
             }
         })
         .catch(function(err) { console.error("Error blocking member:", err); });

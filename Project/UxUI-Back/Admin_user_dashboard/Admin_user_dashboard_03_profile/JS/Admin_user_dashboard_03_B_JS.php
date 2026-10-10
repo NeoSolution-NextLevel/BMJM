@@ -236,18 +236,39 @@
                 if (typeof fetchMemberProfileData === "function") {
                     fetchMemberProfileData();
                 }
-                if (typeof Admin_user_dashboard_03_A_OPEN === "function") {
+                if (typeof window.bmjmShowPopup === 'function') {
+                    window.bmjmShowPopup({
+                        type: 'success',
+                        title: 'Profile Updated',
+                        message: 'Profile updated successfully!',
+                        onClose: function() {
+                            if (typeof Admin_user_dashboard_03_A_OPEN === "function") {
+                                Admin_user_dashboard_03_A_OPEN();
+                            }
+                        }
+                    });
+                } else if (typeof Admin_user_dashboard_03_A_OPEN === "function") {
                     Admin_user_dashboard_03_A_OPEN();
-                } else {
-                    alert("Profile updated successfully!");
                 }
             } else {
-                alert("Error updating profile: " + (json_res.message || "Unknown error"));
+                if (typeof window.bmjmShowPopup === 'function') {
+                    window.bmjmShowPopup({
+                        type: 'error',
+                        title: 'Update Failed',
+                        message: 'Error updating profile: ' + (json_res.message || 'Unknown error')
+                    });
+                }
             }
         })
         .catch(function(err) {
             console.error("Profile update failed:", err);
-            alert("Failed to submit profile update.");
+            if (typeof window.bmjmShowPopup === 'function') {
+                window.bmjmShowPopup({
+                    type: 'error',
+                    title: 'Submission Failed',
+                    message: 'Failed to submit profile update.'
+                });
+            }
         });
 
         return false;

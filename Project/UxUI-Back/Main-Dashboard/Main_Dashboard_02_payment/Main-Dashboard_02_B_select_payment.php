@@ -333,7 +333,7 @@ function getMainDashboardPaymentReasonFlag(reason) {
 function selectPaymentReason(reason) {
     var paymentReason = normalizeMainDashboardPaymentReason(reason);
     if (!paymentReason) {
-        alert('Please select a valid payment category.');
+        window.bmjmShowPopup({ type: 'warning', title: 'Invalid Category', message: 'Please select a valid payment category.' });
         return;
     }
 

@@ -276,7 +276,7 @@ function createPaymentSubscriptionRow(json) {
                              var endDate = new Date(resp.fix_end_date); 
                              endDate.setHours(0,0,0,0);
                              if (today > endDate) {
-                                 alert("This project collection expired on " + resp.fix_end_date + ". Further payments cannot be processed.");
+                                 window.bmjmShowPopup({ type: 'warning', title: 'Collection Expired', message: 'This project collection expired on ' + resp.fix_end_date + '. Further payments cannot be processed.' });
                                  return;
                              }
                          }
@@ -292,7 +292,7 @@ function createPaymentSubscriptionRow(json) {
                              var fixedAmount = parseFloat(resp.fix_amount) || 0;
                              var collected = parseFloat(resp.collected_amount) || 0;
                              if (collected >= fixedAmount) {
-                                 alert("This project has reached its maximum budget target (LKR " + fixedAmount.toLocaleString() + "). No further donations are required. Thank you!");
+                                 window.bmjmShowPopup({ type: 'info', title: 'Budget Target Reached', message: 'This project has reached its maximum budget target (LKR ' + fixedAmount.toLocaleString() + '). No further donations are required. Thank you!' });
                                  return;
                              }
                              var delta = fixedAmount - collected;
@@ -342,7 +342,7 @@ function skipMemberSelection() {
     // SECURITY PATCH: Forcefully Block Anonymous Subscriptions!
     var paymentTypeEl = document.getElementById("DashBord_Payment_body_paying_type_default");
     if (paymentTypeEl && (paymentTypeEl.value === "Subscription" || paymentTypeEl.value === "subcription")) {
-        alert("Subscriptions strictly compel an active Member Profile! You cannot checkout anonymously for Subscriptions.");
+        window.bmjmShowPopup({ type: 'warning', title: 'Member Profile Required', message: 'Subscriptions strictly compel an active Member Profile! You cannot checkout anonymously for Subscriptions.' });
         return;
     }
 
@@ -391,7 +391,7 @@ function skipMemberSelection() {
                          var endDate = new Date(resp.fix_end_date); 
                          endDate.setHours(0,0,0,0);
                          if (today > endDate) {
-                             alert("This project collection expired on " + resp.fix_end_date + ". Further payments cannot be processed.");
+                             window.bmjmShowPopup({ type: 'warning', title: 'Collection Expired', message: 'This project collection expired on ' + resp.fix_end_date + '. Further payments cannot be processed.' });
                              return;
                          }
                      }
@@ -407,7 +407,7 @@ function skipMemberSelection() {
                          var fixedAmount = parseFloat(resp.fix_amount) || 0;
                          var collected = parseFloat(resp.collected_amount) || 0;
                          if (collected >= fixedAmount) {
-                             alert("This project has reached its maximum budget target (LKR " + fixedAmount.toLocaleString() + "). No further donations are required. Thank you!");
+                             window.bmjmShowPopup({ type: 'info', title: 'Budget Target Reached', message: 'This project has reached its maximum budget target (LKR ' + fixedAmount.toLocaleString() + '). No further donations are required. Thank you!' });
                              return;
                          }
                          var delta = fixedAmount - collected;

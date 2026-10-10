@@ -251,8 +251,12 @@ include '../UxUI-Back/Includes/header.php';
     const category = document.getElementById('ietype-category').value;
 
     if (!name) {
-      alert('Please enter a type name.');
-      document.getElementById('ietype-name').focus();
+      window.bmjmShowPopup({
+        type: 'warning',
+        title: 'Type Name Required',
+        message: 'Please enter a type name.',
+        onClose: function() { document.getElementById('ietype-name').focus(); }
+      });
       return;
     }
 
@@ -273,7 +277,11 @@ include '../UxUI-Back/Includes/header.php';
       saveBtn.disabled = false;
       const res = Array.isArray(data) ? data[0] : data;
       if (res && res.error === '0') {
-        alert(res.message || 'Saved successfully!');
+        window.bmjmShowPopup({
+          type: 'success',
+          title: 'Saved Successfully',
+          message: res.message || 'Saved successfully!'
+        });
         if (typeof fetchTypesFromDB === 'function') {
           fetchTypesFromDB();
         }
@@ -281,12 +289,20 @@ include '../UxUI-Back/Includes/header.php';
           main_dashboard_05_04_A_OPEN();
         }
       } else {
-        alert('Error: ' + (res ? res.message : 'Unknown error'));
+        window.bmjmShowPopup({
+          type: 'error',
+          title: 'Save Failed',
+          message: 'Error: ' + (res ? res.message : 'Unknown error')
+        });
       }
     })
     .catch(err => {
       saveBtn.disabled = false;
-      alert('Connection error occurred.');
+      window.bmjmShowPopup({
+        type: 'error',
+        title: 'Connection Error',
+        message: 'Connection error occurred.'
+      });
       console.error(err);
     });
   }

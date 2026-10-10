@@ -80,7 +80,7 @@
             if (overrideFlagIpg && overrideFlagIpg.value === "1") {
                 var maxDueIpg = parseFloat(document.getElementById("DashBord_Payment_body_due_to_pay").value) || 0;
                 if (ipgBaseAmount > maxDueIpg) {
-                    alert("Cannot exceed the project's remaining fixed budget of LKR " + maxDueIpg.toLocaleString() + " !");
+                    window.bmjmShowPopup({ type: 'warning', title: 'Budget Limit Exceeded', message: "Cannot exceed the project's remaining fixed budget of LKR " + maxDueIpg.toLocaleString() + " !" });
                     ipgBaseAmount = maxDueIpg;
                     if (baseInput) baseInput.value = maxDueIpg;
                 }
@@ -126,7 +126,7 @@
         var hasWhatsApp = whats_app && whats_app.checked;
 
         if (!hasSms && !hasEmail && !hasWhatsApp) {
-            alert("Please select at least one delivery option (Send By SMS, Send By Email, or Send By URL By Whatsapp).");
+            window.bmjmShowPopup({ type: 'warning', title: 'Select Delivery Option', message: 'Please select at least one delivery option (Send By SMS, Send By Email, or Send By URL By Whatsapp).' });
             return;
         }
 
@@ -173,12 +173,12 @@
                     data = typeof response === "string" ? JSON.parse(response) : response;
                 } catch (e) {
                     console.error("Invalid JSON response", e);
-                    alert("System response error. Please try again.");
+                    window.bmjmShowPopup({ type: 'error', title: 'Response Error', message: 'System response error. Please try again.' });
                     return;
                 }
 
                 if (Array.isArray(data) && data.length > 0 && data[0].error && data[0].error !== "0") {
-                    alert("Error processing IPG link: " + data[0].error);
+                    window.bmjmShowPopup({ type: 'error', title: 'IPG Link Error', message: 'Error processing IPG link: ' + data[0].error });
                     return;
                 }
 
@@ -194,7 +194,7 @@
                     var sentChannels = [];
                     if (hasSms) sentChannels.push("SMS");
                     if (hasEmail) sentChannels.push("Email");
-                    alert("Payment IPG link sent successfully via " + sentChannels.join(" & ") + "!");
+                    window.bmjmShowPopup({ type: 'success', title: 'Payment Link Sent', message: 'Payment IPG link sent successfully via ' + sentChannels.join(' & ') + '!' });
                 }
 
                 // Navigate back sequentially or close if possible
@@ -206,7 +206,7 @@
             },
             error: function(xhr, status, error) {
                 console.error("Failed to process payment IPG:", error);
-                alert("Network error processing payment link.");
+                window.bmjmShowPopup({ type: 'error', title: 'Connection Error', message: 'Network error processing payment link.' });
             }
         });
     }
