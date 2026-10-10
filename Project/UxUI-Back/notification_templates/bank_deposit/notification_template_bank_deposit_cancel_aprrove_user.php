@@ -1,12 +1,16 @@
 <?php
 class notification_template_bank_deposit_cancel_aprrove_user
 {
-  private $form_url = "https://www.wbmjm.lk/UxUi/Verification-Process/bank_deposit_varification_manager.php";
+  private $form_url = "https://www.bmjm.lk/UxUi/User_dashboard_02_F_view_receipt.php";
   public function __construct($encrypt_wwjm_payment_slip_id)
   {
     $company_obj = new Company_Info_Variable_List();
 
-    $this->form_url = $company_obj->get_app_URL() . "/UxUi/Verification-Process/bank_deposit_varification_receipt_user.php?id=" . $encrypt_wwjm_payment_slip_id;
+    $app_url = trim((string) $company_obj->get_app_URL());
+    if (!preg_match('~^https?://~i', $app_url)) {
+      $app_url = 'https://www.bmjm.lk';
+    }
+    $this->form_url = rtrim($app_url, '/') . "/UxUi/User_dashboard_02_F_view_receipt.php?id=" . rawurlencode($encrypt_wwjm_payment_slip_id);
   }
 
 
@@ -92,7 +96,7 @@ class notification_template_bank_deposit_cancel_aprrove_user
   public function form_by_sms()
   {
 
-    $sms = 'Your payment has been declined. Please try again More details . (' . $this->form_url . ')';
+    $sms = 'BMJM: Bank deposit declined. Details: ' . $this->form_url;
 
     return $sms;
   }

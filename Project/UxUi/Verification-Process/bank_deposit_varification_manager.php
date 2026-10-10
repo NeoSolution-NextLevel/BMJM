@@ -234,7 +234,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_type']) && $de
 
           $member_mobile_no = trim((string)($payment_slip_data['member_mobile_no'] ?? ''));
           if ($member_mobile_no !== '') {
-            $rejection_template = new notification_template_bank_deposit_cancel_aprrove_user($encrypted_id);
+            $receipt_key_list = new Advance_Security_Key_List();
+            $receipt_security = new Advance_Security();
+            $receipt_id = $receipt_security->get_data_encrypt(
+                $receipt_key_list->get_bmjm_payment_slip_id(),
+                $payment_slip_id
+            );
+            $rejection_template = new notification_template_bank_deposit_cancel_aprrove_user($receipt_id);
             $sms_obj = new SMS_Sending($member_mobile_no, $rejection_template->form_by_sms());
             $sms_obj->send_message();
           }
