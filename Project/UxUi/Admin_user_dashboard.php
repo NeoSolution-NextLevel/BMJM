@@ -40,7 +40,21 @@ $bmjm_suppress_shared_header = true;
 <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {
             Admin_user_dashboard_close_all();
-            Admin_user_dashboard_restore_page();
+            var requestedReceiptId = <?php echo json_encode(isset($_GET['id']) ? $_GET['id'] : (isset($_GET['receipt_id']) ? $_GET['receipt_id'] : '')); ?>;
+            var requestedPage = <?php echo json_encode(isset($_GET['page']) ? $_GET['page'] : ''); ?>;
+            if (requestedPage === "payment-slip" || requestedPage === "payment_slip" || requestedReceiptId) {
+                if (requestedReceiptId && typeof openPaymentSlipView === "function") {
+                    openPaymentSlipView(requestedReceiptId);
+                } else if (typeof Admin_user_dashboard_02_A_OPEN === "function") {
+                    Admin_user_dashboard_02_A_OPEN();
+                } else if (typeof Admin_user_dashboard_restore_page === "function") {
+                    Admin_user_dashboard_restore_page();
+                }
+            } else if (typeof Admin_user_dashboard_restore_page === "function") {
+                Admin_user_dashboard_restore_page();
+            } else {
+                Admin_user_dashboard_01_OPEN();
+            }
         });
     </script>
 

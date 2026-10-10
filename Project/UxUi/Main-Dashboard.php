@@ -59,11 +59,20 @@ include_once '../Controller/Main/Cook_Managment/Cook_Managing.php';
         document.addEventListener("DOMContentLoaded", function() {
             main_dashboard_close_all();
             var requestedPage = <?php echo json_encode(isset($_GET['page']) ? $_GET['page'] : ''); ?>;
+            var requestedReceiptId = <?php echo json_encode(isset($_GET['id']) ? $_GET['id'] : (isset($_GET['receipt_id']) ? $_GET['receipt_id'] : '')); ?>;
             if (requestedPage === "members" && typeof main_dashboard_01_A_OPEN === "function") {
                 main_dashboard_01_A_OPEN();
                 var dashboardUrl = new URL(window.location.href);
                 dashboardUrl.searchParams.delete("page");
                 window.history.replaceState({}, document.title, dashboardUrl.pathname + dashboardUrl.search + dashboardUrl.hash);
+            } else if (requestedPage === "payment-slip" || requestedPage === "payment_slip" || (requestedReceiptId && requestedPage !== "members")) {
+                if (requestedReceiptId && typeof openPaymentSlipView === "function") {
+                    openPaymentSlipView(requestedReceiptId);
+                } else if (typeof main_dashboard_02_A_OPEN === "function") {
+                    main_dashboard_02_A_OPEN();
+                } else if (typeof main_dashboard_restore_page === "function") {
+                    main_dashboard_restore_page();
+                }
             } else if (typeof main_dashboard_restore_page === "function") {
                 main_dashboard_restore_page();
             } else {

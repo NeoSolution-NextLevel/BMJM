@@ -75,7 +75,13 @@
             'Main_dashboard_02_E': main_dashboard_02_E_OPEN,
             'Main_dashboard_02_F': main_dashboard_02_F_OPEN,
             'Main_dashboard_02_G': main_dashboard_02_G_OPEN,
-            'Main_dashboard_02_H': main_dashboard_02_H_OPEN,
+            'Main_dashboard_02_H': function() {
+                if (state.recordId) {
+                    main_dashboard_02_H_OPEN(state.recordId);
+                } else {
+                    main_dashboard_02_A_OPEN();
+                }
+            },
             'Main_dashboard_02_I': main_dashboard_02_I_OPEN,
             'Main_Dashboard_03_A': Main_Dashboard_03_A_OPEN,
             'Main_Dashboard_03_B': Main_Dashboard_03_B_OPEN,
@@ -270,11 +276,28 @@
         }
     }
 
-    function main_dashboard_02_H_OPEN() {
+    function main_dashboard_02_H_OPEN(paymentId) {
+        var activeId = paymentId || window.currentMainPaymentSlipId || null;
         main_dashboard_close_all();
         mainDashboardSetDisplay("Main_dashboard_02_H", "");
+        main_dashboard_remember_page("Main_dashboard_02_H", activeId);
         mainDashboardSetHeader("Main_dashboard_02_H", "Payment Slip View", "Payment Receipt");
         setSidebarActive('payment');
+
+        if (activeId) {
+            window.currentMainPaymentSlipId = activeId;
+            if (typeof loadPaymentSlipDetail === 'function') {
+                loadPaymentSlipDetail(activeId);
+            }
+        } else {
+            window.currentMainPaymentSlipId = null;
+            if (typeof showMainPaymentSlipEmptyState === 'function') {
+                showMainPaymentSlipEmptyState(
+                    'No Receipt Selected',
+                    'No payment receipt ID was provided. Please choose a payment from the list to view its receipt.'
+                );
+            }
+        }
     }
 
     function main_dashboard_02_I_OPEN() {

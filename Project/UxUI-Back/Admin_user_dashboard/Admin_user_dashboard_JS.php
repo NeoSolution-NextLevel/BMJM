@@ -3,20 +3,39 @@
         return 'bmjm_admin_current_page:' + window.location.pathname + window.location.search;
     }
 
-    function Admin_user_dashboard_remember_page(pageId) {
+    function Admin_user_dashboard_remember_page(pageId, recordId) {
         try {
-            window.sessionStorage.setItem(Admin_user_dashboard_storage_key(), pageId);
+            window.sessionStorage.setItem(
+                Admin_user_dashboard_storage_key(),
+                JSON.stringify({ pageId: pageId, recordId: recordId === undefined ? null : recordId })
+            );
         } catch (error) {
             // The dashboard still works when browser storage is unavailable.
         }
     }
 
     function Admin_user_dashboard_restore_page() {
-        var pageId = '';
+        var rawState = '';
         try {
-            pageId = window.sessionStorage.getItem(Admin_user_dashboard_storage_key()) || '';
+            rawState = window.sessionStorage.getItem(Admin_user_dashboard_storage_key()) || '';
         } catch (error) {
-            pageId = '';
+            rawState = '';
+        }
+
+        var pageId = '';
+        var recordId = null;
+        if (rawState) {
+            try {
+                var parsed = JSON.parse(rawState);
+                if (parsed && typeof parsed === 'object') {
+                    pageId = parsed.pageId || '';
+                    recordId = parsed.recordId || null;
+                } else {
+                    pageId = rawState;
+                }
+            } catch (e) {
+                pageId = rawState;
+            }
         }
 
         var openFunctions = {
@@ -29,7 +48,13 @@
             'Admin_user_dashboard_02_E': Admin_user_dashboard_02_E_OPEN,
             'Admin_user_dashboard_02_F': Admin_user_dashboard_02_F_OPEN,
             'Admin_user_dashboard_02_G': Admin_user_dashboard_02_G_OPEN,
-            'Admin_user_dashboard_02_H': Admin_user_dashboard_02_H_OPEN,
+            'Admin_user_dashboard_02_H': function() {
+                if (recordId) {
+                    Admin_user_dashboard_02_H_OPEN(recordId);
+                } else {
+                    Admin_user_dashboard_02_A_OPEN();
+                }
+            },
             'Admin_user_dashboard_02_I': Admin_user_dashboard_02_I_OPEN,
             'Admin_user_dashboard_03_A': Admin_user_dashboard_03_A_OPEN,
             'Admin_user_dashboard_03_B': Admin_user_dashboard_03_B_OPEN,
@@ -150,11 +175,27 @@
     }
 
     
-    function Admin_user_dashboard_02_H_OPEN() {
+    function Admin_user_dashboard_02_H_OPEN(paymentId) {
+        var activeId = paymentId || window.currentAdminPaymentSlipId || null;
         Admin_user_dashboard_close_all();
         document.getElementById("Admin_user_dashboard_02_H").style.display = "";
-        Admin_user_dashboard_remember_page("Admin_user_dashboard_02_H");
+        Admin_user_dashboard_remember_page("Admin_user_dashboard_02_H", activeId);
         setSidebarActive('payment');
+
+        if (activeId) {
+            window.currentAdminPaymentSlipId = activeId;
+            if (typeof loadPaymentSlipDetail === 'function') {
+                loadPaymentSlipDetail(activeId);
+            }
+        } else {
+            window.currentAdminPaymentSlipId = null;
+            if (typeof showAdminPaymentSlipEmptyState === 'function') {
+                showAdminPaymentSlipEmptyState(
+                    'No Receipt Selected',
+                    'No payment receipt ID was provided. Please choose a payment from the list to view its receipt.'
+                );
+            }
+        }
     }
 
     

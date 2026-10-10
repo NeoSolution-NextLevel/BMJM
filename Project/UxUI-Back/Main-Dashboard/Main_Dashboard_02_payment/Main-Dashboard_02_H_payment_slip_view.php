@@ -230,6 +230,71 @@ $payment_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
   .bank-review-controls{display:none;gap:8px;flex-direction:column;}.bank-review-controls textarea{width:100%;min-height:72px;resize:vertical;border:1px solid var(--payment-slip-border);border-radius:6px;padding:9px;font:inherit;font-size:12px;}
   .bank-review-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;}.bank-review-approve,.bank-review-reject{height:38px;border:0;border-radius:6px;color:#fff;font-weight:700;cursor:pointer;}.bank-review-approve{background:#17633A;}.bank-review-reject{background:#B73A3A;}
 
+  /* ---------- Empty state ---------- */
+  .payment-slip-empty-state{
+    display:none;
+    grid-column:1/-1;
+    width:100%;
+    padding:56px 28px;
+    background:var(--payment-slip-white);
+    border:1px dashed var(--payment-slip-border);
+    border-radius:var(--payment-slip-radius-md);
+    text-align:center;
+    box-shadow:var(--payment-slip-shadow-sm);
+  }
+  .payment-slip-empty-icon{
+    width:64px;
+    height:64px;
+    margin:0 auto 16px;
+    border-radius:50%;
+    background:var(--payment-slip-cream-100);
+    color:var(--payment-slip-green-700);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .payment-slip-empty-icon svg{width:32px;height:32px;}
+  .payment-slip-empty-title{
+    font-family:'Poppins',Inter,sans-serif;
+    font-size:18px;
+    font-weight:600;
+    color:var(--payment-slip-green-950);
+    margin:0 0 8px;
+  }
+  .payment-slip-empty-desc{
+    font-size:13px;
+    color:var(--payment-slip-ink-600);
+    max-width:440px;
+    margin:0 auto 24px;
+    line-height:1.5;
+  }
+  .payment-slip-empty-actions{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .payment-slip-btn-back{
+    height:42px;
+    padding:0 22px;
+    border-radius:var(--payment-slip-radius-sm);
+    border:none;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:600;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--payment-slip-green-800);
+    color:var(--payment-slip-cream-50);
+    box-shadow:var(--payment-slip-shadow-sm);
+    transition:background .15s ease, transform .1s ease;
+    text-decoration:none;
+  }
+  .payment-slip-btn-back:hover{background:var(--payment-slip-green-950);}
+  .payment-slip-btn-back:active{transform:translateY(1px);}
+  .payment-slip-btn-back svg{width:16px;height:16px;}
+
   .payment-slip-sitefoot{
     text-align:center;font-size:11px;color:var(--payment-slip-ink-400);
     padding:22px 0 0;
@@ -248,7 +313,7 @@ $payment_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
       min-height:0 !important;height:auto !important;background:#fff !important;
     }
     .payment-slip-sidebar,.payment-slip-topbar,.payment-slip-breadcrumb,
-    .payment-slip-panel-header,.payment-slip-actions,.payment-slip-sitefoot{display:none !important;}
+    .payment-slip-panel-header,.payment-slip-actions,.payment-slip-sitefoot,.payment-slip-empty-state{display:none !important;}
     .payment-slip-app{display:block;}
     .payment-slip-main{padding:0;}
     .payment-slip-panel{border:none;box-shadow:none;border-radius:0;}
@@ -283,7 +348,7 @@ $payment_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
   <!-- ================= MAIN ================= -->
   <main class="payment-slip-main">
-    <p class="payment-slip-breadcrumb"><a href="dashboard.php">Dashboard</a> / <a href="payment-list.php">Payment List</a> / <span>Payment Slip View</span></p>
+    <p class="payment-slip-breadcrumb"><a href="javascript:void(0)" onclick="main_dashboard_00_OPEN()">Dashboard</a> / <a href="javascript:void(0)" onclick="main_dashboard_02_A_OPEN()">Payment List</a> / <span>Payment Slip View</span></p>
 
     <section class="payment-slip-panel" aria-label="Payment slip view">
 
@@ -299,6 +364,28 @@ $payment_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
       <div class="payment-slip-body">
 
+        <!-- ===== Empty state (shown when no receipt ID or receipt not found) ===== -->
+        <div class="payment-slip-empty-state" id="payment-slip-empty-state">
+          <div class="payment-slip-empty-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="9" y1="15" x2="15" y2="15"></line>
+            </svg>
+          </div>
+          <h4 class="payment-slip-empty-title" id="payment-slip-empty-title">No Receipt Selected</h4>
+          <p class="payment-slip-empty-desc" id="payment-slip-empty-desc">No payment receipt ID was found. Please choose a payment from the list to view its receipt.</p>
+          <div class="payment-slip-empty-actions">
+            <button type="button" class="payment-slip-btn-back" onclick="main_dashboard_02_A_OPEN()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              Back to Payment List
+            </button>
+          </div>
+        </div>
+
         <!-- ===== Printable receipt ===== -->
         <div class="payment-slip-receipt" id="payment-slip-receipt">
           <div class="payment-slip-receipt-header">
@@ -306,7 +393,7 @@ $payment_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
               <img src="../assets/images/common-images/logo.png" class="payment-slip-logo" alt="Bambalapitiya Jumma Masjid logo">
               <div class="payment-slip-org-copy"><p class="payment-slip-org-name">BAMBALAPITIYA JUMMA MASJID</p><p class="payment-slip-org-sub">Official payment receipt</p><p class="payment-slip-org-line">Bambalapitiya, Colombo, Sri Lanka</p><p class="payment-slip-org-line">info@bmjm.lk &nbsp;|&nbsp; www.bmjm.lk</p></div>
             </div>
-            <div class="payment-slip-document"><p class="payment-slip-document-label">Receipt number</p><p class="payment-slip-document-number" id="payment-slip-number">#0000</p><p class="payment-slip-document-date" id="payment-slip-date">-</p></div>
+            <div class="payment-slip-document"><p class="payment-slip-document-label">Receipt number</p><p class="payment-slip-document-number" id="payment-slip-number">-</p><p class="payment-slip-document-date" id="payment-slip-date">-</p></div>
           </div>
 
           <div class="payment-slip-content">
@@ -315,15 +402,15 @@ $payment_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
           <div class="payment-slip-meta">
             <div class="payment-slip-meta-row">
               <span class="payment-slip-meta-label">Name</span>
-              <span class="payment-slip-meta-value" id="payment-slip-name">Abdul Rasheed M.</span>
+              <span class="payment-slip-meta-value" id="payment-slip-name">-</span>
             </div>
             <div class="payment-slip-meta-row">
               <span class="payment-slip-meta-label">Mobile</span>
-              <span class="payment-slip-meta-value" id="payment-slip-mobile">+94 71 234 5678</span>
+              <span class="payment-slip-meta-value" id="payment-slip-mobile">-</span>
             </div>
             <div class="payment-slip-meta-row">
               <span class="payment-slip-meta-label">Address</span>
-              <span class="payment-slip-meta-value" id="payment-slip-address">Road 1, Bambalapitiya</span>
+              <span class="payment-slip-meta-value" id="payment-slip-address">-</span>
             </div>
             <div class="payment-slip-meta-row"><span class="payment-slip-meta-label">Method</span><span class="payment-slip-meta-value" id="payment-slip-method">-</span></div>
             <div class="payment-slip-meta-row"><span class="payment-slip-meta-label">Status</span><span class="payment-slip-meta-value" id="payment-slip-review-status">-</span></div>
@@ -334,10 +421,10 @@ $payment_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
               <tr><th>Reason</th><th class="payment-slip-col-amount">Amount - LKR</th></tr>
             </thead>
             <tbody id="payment-slip-items">
-              <tr><td>Zakath</td><td class="payment-slip-col-amount">788.00</td></tr>
+              <tr><td colspan="2" style="text-align:center;color:var(--payment-slip-ink-400);padding:14px;">Loading receipt details...</td></tr>
             </tbody>
             <tfoot>
-              <tr><td>Total Paid Amount</td><td class="payment-slip-col-amount" id="payment-slip-total">788.00</td></tr>
+              <tr><td>Total Paid Amount</td><td class="payment-slip-col-amount" id="payment-slip-total">-</td></tr>
             </tfoot>
           </table>
 

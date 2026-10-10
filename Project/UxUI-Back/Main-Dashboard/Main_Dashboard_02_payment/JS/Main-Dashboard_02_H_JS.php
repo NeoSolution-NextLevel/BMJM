@@ -18,10 +18,36 @@ function openPaymentSlipView(slipId) {
     window.currentMainPaymentSlipId = slipId;
     window.currentMainBankSlipId = 0;
     if (typeof main_dashboard_02_H_OPEN === 'function') {
-        main_dashboard_02_H_OPEN();
+        main_dashboard_02_H_OPEN(slipId);
+    } else {
+        resetMainPaymentSlipView();
+        loadPaymentSlipDetail(slipId);
     }
-    resetMainPaymentSlipView();
-    loadPaymentSlipDetail(slipId);
+}
+
+function showMainPaymentSlipEmptyState(title, desc) {
+    var emptyBox = document.getElementById('payment-slip-empty-state');
+    var receiptBox = document.getElementById('payment-slip-receipt');
+    var actionsBox = document.querySelector('#Main_dashboard_02_H .payment-slip-actions');
+    var titleEl = document.getElementById('payment-slip-empty-title');
+    var descEl = document.getElementById('payment-slip-empty-desc');
+
+    if (title && titleEl) titleEl.textContent = title;
+    if (desc && descEl) descEl.textContent = desc;
+
+    if (emptyBox) emptyBox.style.display = 'block';
+    if (receiptBox) receiptBox.style.display = 'none';
+    if (actionsBox) actionsBox.style.display = 'none';
+}
+
+function showMainPaymentSlipReceipt() {
+    var emptyBox = document.getElementById('payment-slip-empty-state');
+    var receiptBox = document.getElementById('payment-slip-receipt');
+    var actionsBox = document.querySelector('#Main_dashboard_02_H .payment-slip-actions');
+
+    if (emptyBox) emptyBox.style.display = 'none';
+    if (receiptBox) receiptBox.style.display = 'block';
+    if (actionsBox) actionsBox.style.display = 'flex';
 }
 
 function handleMainBankSlipImageError() {
@@ -34,6 +60,8 @@ function handleMainBankSlipImageError() {
 }
 
 function renderMainPaymentSlip(p, slipId) {
+    showMainPaymentSlipReceipt();
+
     var nameElem = document.getElementById('payment-slip-name');
     var mobileElem = document.getElementById('payment-slip-mobile');
     var addressElem = document.getElementById('payment-slip-address');
@@ -51,10 +79,10 @@ function renderMainPaymentSlip(p, slipId) {
     var numberElem = document.getElementById('payment-slip-number');
     var dateElem = document.getElementById('payment-slip-date');
 
-    var memberName = p.person_name || (p.membership_no ? 'Member #' + p.membership_no : 'Payment #' + p.id);
+    var memberName = p.person_name || (p.membership_no ? 'Member #' + p.membership_no : 'Payment #' + (p.id || slipId));
     if (nameElem) nameElem.textContent = memberName;
-    if (mobileElem) mobileElem.textContent = p.phone_number || 'N/A';
-    if (addressElem) addressElem.textContent = p.address || 'N/A';
+    if (mobileElem) mobileElem.textContent = p.phone_number || '-';
+    if (addressElem) addressElem.textContent = p.address || '-';
     if (numberElem) numberElem.textContent = '#' + String(p.id || slipId).padStart(5, '0');
     if (dateElem) dateElem.textContent = p.payment_date || (p.sdt ? p.sdt.split(' ')[0] : '-');
 
@@ -118,24 +146,47 @@ function renderMainPaymentSlip(p, slipId) {
 function resetMainPaymentSlipView() {
     var statusElem = document.getElementById('payment-slip-status');
     if (statusElem) statusElem.textContent = '';
-}
+    var rejectReason = document.getElementById('bank-review-reject-reason');
+    if (rejectReason) rejectReason.value = '';
 
-function renderEmptyMainPaymentSlip() {
     var nameElem = document.getElementById('payment-slip-name');
     var mobileElem = document.getElementById('payment-slip-mobile');
     var addressElem = document.getElementById('payment-slip-address');
     var itemsElem = document.getElementById('payment-slip-items');
     var totalElem = document.getElementById('payment-slip-total');
+    var methodElem = document.getElementById('payment-slip-method');
+    var reviewStatusElem = document.getElementById('payment-slip-review-status');
+    var numberElem = document.getElementById('payment-slip-number');
+    var dateElem = document.getElementById('payment-slip-date');
 
-    if (nameElem) nameElem.textContent = 'N/A';
-    if (mobileElem) mobileElem.textContent = 'N/A';
-    if (addressElem) addressElem.textContent = 'N/A';
-    if (itemsElem) itemsElem.innerHTML = '<tr><td colspan="2">No payment slip details found.</td></tr>';
-    if (totalElem) totalElem.textContent = '0.00';
+    if (nameElem) nameElem.textContent = '-';
+    if (mobileElem) mobileElem.textContent = '-';
+    if (addressElem) addressElem.textContent = '-';
+    if (numberElem) numberElem.textContent = '-';
+    if (dateElem) dateElem.textContent = '-';
+    if (methodElem) methodElem.textContent = '-';
+    if (reviewStatusElem) reviewStatusElem.textContent = '-';
+    if (itemsElem) itemsElem.innerHTML = '<tr><td colspan="2" style="text-align:center;color:var(--payment-slip-ink-400);padding:14px;">Loading receipt details...</td></tr>';
+    if (totalElem) totalElem.textContent = '-';
+}
+
+function renderEmptyMainPaymentSlip(message) {
+    showMainPaymentSlipEmptyState(
+        'Receipt Not Found',
+        message || 'No payment slip details could be found for this receipt. Please return to the payment list and try again.'
+    );
 }
 
 function loadPaymentSlipDetail(slipId) {
-    if (!slipId) return;
+    if (!slipId) {
+        showMainPaymentSlipEmptyState(
+            'No Receipt Selected',
+            'No payment receipt ID was provided. Please choose a payment from the list to view its receipt.'
+        );
+        return;
+    }
+
+    resetMainPaymentSlipView();
 
     $.ajax({
         url: "<?php echo $pth; ?>View-List/Payment/single_payment_slip.php",
@@ -147,11 +198,18 @@ function loadPaymentSlipDetail(slipId) {
             if (Array.isArray(data) && data.length > 0) {
                 renderMainPaymentSlip(data[0], slipId);
             } else {
-                renderEmptyMainPaymentSlip();
+                showMainPaymentSlipEmptyState(
+                    'Receipt Not Found',
+                    'Payment receipt #' + slipId + ' could not be found or has been removed.'
+                );
             }
         },
         error: function(err) {
             console.error("Error fetching single payment slip:", err);
+            showMainPaymentSlipEmptyState(
+                'Unable to Load Receipt',
+                'Unable to retrieve payment receipt #' + slipId + '. Please check your connection or return to the payment list.'
+            );
         }
     });
 }
