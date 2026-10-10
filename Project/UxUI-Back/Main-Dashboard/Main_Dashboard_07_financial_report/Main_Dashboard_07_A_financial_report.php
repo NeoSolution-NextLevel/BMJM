@@ -1,8 +1,9 @@
-﻿<?php 
+<?php 
     $pth = "../"; 
     $active_page = "financial-report";
     $page_title = "Financial Report · BMJM Admin";
-include '../UxUI-Back/Includes/header.php'; 
+    $bmjm_suppress_shared_header = true;
+    include '../UxUI-Back/Includes/header.php'; 
 ?>
 
 <style>

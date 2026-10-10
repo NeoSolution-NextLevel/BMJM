@@ -28,7 +28,12 @@ function fetchProjectList() {
 function paymentProjectRender() {
     const listEl = document.getElementById("payment-project-list");
     const emptyEl = document.getElementById("payment-project-empty");
-    const searchVal = document.getElementById("payment-project-search").value.toLowerCase();
+    const searchInput = document.getElementById("payment-project-search");
+    const searchVal = searchInput ? searchInput.value.trim().toLowerCase() : "";
+
+    if (!listEl || !emptyEl) {
+        return;
+    }
     
     let html = "";
     let count = 0;
@@ -105,8 +110,12 @@ function selectPaymentProject(id, name) {
 }
 
 function showEmptyState(msg) {
-    document.getElementById("payment-project-list").innerHTML = "";
-    let emptyEl = document.getElementById("payment-project-empty");
+    const listEl = document.getElementById("payment-project-list");
+    const emptyEl = document.getElementById("payment-project-empty");
+    if (!listEl || !emptyEl) {
+        return;
+    }
+    listEl.innerHTML = "";
     emptyEl.innerText = msg;
     emptyEl.style.display = "block";
 }
